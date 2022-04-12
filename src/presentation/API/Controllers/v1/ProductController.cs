@@ -1,16 +1,18 @@
 ﻿namespace API.Controllers.v1
 {
+    using API.Cache;
     using ApplicationLayer.Services.Product.Commands;
     using ApplicationLayer.Services.Product.Queries;
     using ApplicationLayer.Services.Product.Queries.Requests;
     using DomainLayer.Entities.Product;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
 
     [ApiVersion("1")]
     public class ProductController : BaseController<ProductEntity>
     {
-        public ProductController(IMediator mediator) : base(mediator)
+        public ProductController(IMemoryCache cache, IMediator mediator) : base(cache, mediator)
         {
         }
 
@@ -23,10 +25,18 @@
         {
             try
             {
-                var results = await Mediator.Send(new ProductsGetRequest() { OrderBy = p => p.Name });
-                if (results.Any())
+                if (!CacheProvider.TryGetValue(CacheKeys.Products, out IEnumerable<ProductGetResponse> products))
                 {
-                    return Ok(results);
+                    var results = await Mediator.Send(new ProductsGetRequest() { OrderBy = p => p.Name });
+                    if (results.Any())
+                    {
+                        CacheProvider.Set(CacheKeys.Products, results, CacheEntryOptions.Default);
+                        return Ok(results);
+                    }
+                }
+                else
+                {
+                    return Ok(products);
                 }
 
                 return NotFound();
