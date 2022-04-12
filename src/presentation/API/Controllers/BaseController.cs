@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/")]
-    public abstract class BaseController<T> : ControllerBase where T : AuditableEntity
+    [Route("api/v{version:apiVersion}/[controller]")]
+    public abstract class BaseController<T> : Controller where T : AuditableEntity
     {
         private IMediator _mediator;
 
