@@ -1,4 +1,4 @@
-﻿namespace API.Controllers
+﻿namespace API.Controllers.v1
 {
     using ApplicationLayer.Services.Product.Commands;
     using ApplicationLayer.Services.Product.Queries;
@@ -14,10 +14,11 @@
         }
 
         [HttpGet]
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<ProductGetResponse>>>GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProducts()
         {
             try
             {
@@ -36,6 +37,7 @@
         }
 
         [HttpGet("{Id}")]
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -58,6 +60,7 @@
         }
 
         [HttpPut]
+        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
@@ -72,7 +75,7 @@
                 {
                     return Ok(result);
                 }
-                else if(result.UpToDate)
+                else if (result.UpToDate)
                 {
                     return NoContent();
                 }

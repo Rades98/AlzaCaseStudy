@@ -1,8 +1,5 @@
 using API.Registrations;
-using ApplicationLayer.Services.Product.Queries;
-using ApplicationLayer.Services.Product.Queries.Requests;
 using Autofac.Extensions.DependencyInjection;
-using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddServices(builder.Configuration);
 builder.Services.AddLogging();
+builder.Services.AddApiVersioning();
 
 var app = builder.Build();
 
