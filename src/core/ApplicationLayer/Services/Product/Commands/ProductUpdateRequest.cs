@@ -29,14 +29,15 @@
                 if(entity.Description == request.Description)
                 {
                     response.UpdateMessage = "Product is already up to date";
+                    response.UpToDate = true;
                     return response;
                 }
 
                 try
                 {
                     entity.Description = request.Description;
-                    response.UpdateMessage = $"Product ({entity.Id} : {entity.Name}) has been updated with description {entity.Description}";
-                    response.Updated = true;
+                    response.UpdateMessage = $"Product ({entity.Id} : {entity.Name}) has been updated with description \"{entity.Description}\"";
+                    response.Updated = response.UpToDate = true;
 
                     _dbContext.Products.Update(entity);
                     await _dbContext.SaveChangesAsync(cancellationToken);
