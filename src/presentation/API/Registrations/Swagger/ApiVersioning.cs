@@ -1,21 +1,24 @@
-﻿namespace API.Registrations.Swagger
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
+
+namespace API.Registrations.Swagger
 {
     public static class ApiVersioning
     {
-        public static IServiceCollection AddApiVersioning(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddCustomApiVersioning(this IServiceCollection services)
         {
             services.AddApiVersioning(o =>
             {
                 o.AssumeDefaultVersionWhenUnspecified = true;
-                o.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                o.DefaultApiVersion = new ApiVersion(1, 0);
                 o.ReportApiVersions = true;
+                o.ApiVersionSelector = new CurrentImplementationApiVersionSelector(o);
             });
 
-            services.AddVersionedApiExplorer(
-            options =>
+            services.AddVersionedApiExplorer(o =>
             {
-                options.GroupNameFormat = "'v'VVV";
-                options.SubstituteApiVersionInUrl = true;
+                o.GroupNameFormat = "'v'VVV";
+                o.SubstituteApiVersionInUrl = true;
             });
 
             return services;

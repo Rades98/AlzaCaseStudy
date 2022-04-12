@@ -7,6 +7,7 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
+    [ApiVersion("1")]
     public class ProductController : BaseController<ProductEntity>
     {
         public ProductController(IMediator mediator) : base(mediator)
@@ -38,6 +39,7 @@
 
         [HttpGet("{Id}")]
         [MapToApiVersion("1")]
+        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -61,6 +63,7 @@
 
         [HttpPut]
         [MapToApiVersion("1")]
+        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
