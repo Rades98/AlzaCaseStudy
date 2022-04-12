@@ -6,7 +6,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Database;
 
-    public static class DependencyInjection
+    public static class DependencyRegistrations
     {
         public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)
         {
