@@ -4,7 +4,7 @@
     {
         public bool Updated { get; set; } = false;
         public bool UpToDate { get; set; } = false;
-        public string UpdateMessage { get; set; } = "Product not found";
+        public string UpdateMessage { get; set; } = CommandMessages.NotFound;
 
         internal ProductUpdateResponse() { }
     }

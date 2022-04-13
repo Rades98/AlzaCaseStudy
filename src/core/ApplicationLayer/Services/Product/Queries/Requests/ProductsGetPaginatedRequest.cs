@@ -6,8 +6,8 @@
 
     public class ProductsGetPaginatedRequest : IRequest<IEnumerable<ProductGetResponse>>
     {
-        public Func<ProductEntity, object> OrderBy { internal get; set; } = product => product.Id;
-        public bool OrderByDesc { internal get; set; } = false;
+        public Func<ProductEntity, object> OrderBy { get; set; } = product => product.Id;
+        public bool OrderByDesc { get; set; } = false;
 
         public int PageNumber { get; set; } = 1;
 
