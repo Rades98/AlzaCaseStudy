@@ -1,8 +1,8 @@
-﻿using DomainLayer.Entities.Product;
-using Microsoft.EntityFrameworkCore;
-
-namespace PersistenceLayer.Database.Extensions
+﻿namespace PersistenceLayer.Database.Extensions
 {
+    using DomainLayer.Entities.Product;
+    using Microsoft.EntityFrameworkCore;
+
     internal static class ModelBuilderExtensions
     {
         private static readonly DateTime _created = new(2022, 4, 12, 17, 00, 00, 222, DateTimeKind.Local);

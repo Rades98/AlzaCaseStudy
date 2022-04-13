@@ -1,11 +1,11 @@
 ﻿namespace PersistenceLayer
 {
     using ApplicationLayer.Interfaces;
+    using Database;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Database;
-    using PersistenceLayer.Repositories;
+    using Repositories;
 
     public static class DependencyRegistrations
     {

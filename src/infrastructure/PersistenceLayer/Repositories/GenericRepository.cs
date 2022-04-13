@@ -1,9 +1,9 @@
 ﻿namespace PersistenceLayer.Repositories
 {
     using ApplicationLayer.Interfaces;
+    using Database.Extensions.LINQ;
     using DomainLayer.Entities;
     using Microsoft.EntityFrameworkCore;
-    using PersistenceLayer.Database.Extensions.LINQ;
     using System.Linq;
     using System.Threading.Tasks;
     using X.PagedList;

@@ -1,9 +1,9 @@
 ﻿namespace API.Controllers.v1
 {
-    using API.Cache;
     using ApplicationLayer.Services.Product.Commands;
     using ApplicationLayer.Services.Product.Queries;
     using ApplicationLayer.Services.Product.Queries.Requests;
+    using Cache;
     using DomainLayer.Entities.Product;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
@@ -53,7 +53,7 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetById(Guid id)
+        public async Task<ActionResult<ProductGetResponse?>> GetById(Guid id)
         {
             try
             {

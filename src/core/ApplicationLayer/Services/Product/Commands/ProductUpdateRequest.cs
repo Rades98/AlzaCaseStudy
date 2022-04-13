@@ -1,7 +1,7 @@
 ﻿namespace ApplicationLayer.Services.Product.Commands
 {
-    using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
+    using Interfaces;
     using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
@@ -27,7 +27,7 @@
                     return response;
                 }
 
-                if(entity.Description == request.Description)
+                if (entity.Description == request.Description)
                 {
                     response.UpdateMessage = CommandMessages.UpToDate;
                     response.UpToDate = true;
@@ -41,7 +41,7 @@
                     response.Updated = response.UpToDate = true;
 
                     await _repo.Update(entity);
- 
+
                 }
                 catch (Exception ex)
                 {

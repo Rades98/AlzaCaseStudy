@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
-
-namespace API.Registrations.Swagger
+﻿namespace API.Registrations.Swagger
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Versioning;
+
     public static class ApiVersioning
     {
         public static IServiceCollection AddCustomApiVersioning(this IServiceCollection services)

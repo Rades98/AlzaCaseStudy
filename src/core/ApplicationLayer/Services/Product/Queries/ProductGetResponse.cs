@@ -1,13 +1,13 @@
-﻿using DomainLayer.Entities.Product;
-
-namespace ApplicationLayer.Services.Product.Queries
+﻿namespace ApplicationLayer.Services.Product.Queries
 {
+    using DomainLayer.Entities.Product;
+
     public class ProductGetResponse
     {
-        public Uri? ImgUri { get; set; } 
+        public Uri? ImgUri { get; set; }
         public string? Name { get; set; }
         public decimal Price { get; set; }
-        public string? Description { get; set; }     
+        public string? Description { get; set; }
         public Guid Id { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Changed { get; set; }

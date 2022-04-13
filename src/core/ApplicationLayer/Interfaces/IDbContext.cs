@@ -12,7 +12,7 @@
 
         #region Tables
 
-        public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<ProductEntity> Products { get; }
 
         public DbSet<TEntity> Set<TEntity>() where TEntity : class;
 

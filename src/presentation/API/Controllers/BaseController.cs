@@ -1,16 +1,16 @@
-﻿using DomainLayer.Entities;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-
-namespace API.Controllers
+﻿namespace API.Controllers
 {
+    using DomainLayer.Entities;
+    using MediatR;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Memory;
+
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     public abstract class BaseController<T> : Controller where T : AuditableEntity
     {
-        private IMediator _mediator;
-        private IMemoryCache _cacheProvider;
+        private readonly IMediator _mediator;
+        private readonly IMemoryCache _cacheProvider;
         public IMediator Mediator => _mediator;
         public IMemoryCache CacheProvider => _cacheProvider;
 

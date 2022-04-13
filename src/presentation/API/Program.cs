@@ -1,6 +1,5 @@
 using API.Registrations;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -36,5 +35,3 @@ app.UseSwaggerUI(options =>
 });
 
 app.Run();
-
-
