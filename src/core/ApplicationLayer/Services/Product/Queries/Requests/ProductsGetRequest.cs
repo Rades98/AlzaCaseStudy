@@ -1,10 +1,8 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries.Requests
 {
-    using ApplicationLayer.Extensions.LINQ;
     using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
     using MediatR;
-    using Microsoft.EntityFrameworkCore;
 
     public class ProductsGetRequest : IRequest<IEnumerable<ProductGetResponse>>
     {
@@ -13,21 +11,15 @@
 
         public class Handler : IRequestHandler<ProductsGetRequest, IEnumerable<ProductGetResponse>>
         {
-            private IDbContext _dbContext;
+            private readonly IGenericRepository<ProductEntity> _repo;
 
-            public Handler(IDbContext dbContext) => _dbContext = dbContext;
+            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
 
             public async Task<IEnumerable<ProductGetResponse>> Handle(ProductsGetRequest request, CancellationToken cancellationToken)
             {
-                var products = await _dbContext.Products
-                    .ToListAsync(cancellationToken);
+                var products = await _repo.GetAll(request.OrderByDesc, request.OrderBy);
 
-                return products
-                    .IfThenElse(
-                        () => request.OrderByDesc,
-                        e => e.OrderByDescending(request.OrderBy),
-                        e => e.OrderBy(request.OrderBy))
-                    .Select(x => (ProductGetResponse)x);
+                return products.Select(x => (ProductGetResponse)x);
             }
         }
     }

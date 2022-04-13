@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Extensions.LINQ
+﻿namespace PersistenceLayer.Database.Extensions.LINQ
 {
     internal static class LINQExtensions
     {

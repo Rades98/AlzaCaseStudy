@@ -1,6 +1,7 @@
 ﻿namespace ApplicationLayer.Services.Product.Commands
 {
     using ApplicationLayer.Interfaces;
+    using DomainLayer.Entities.Product;
     using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
@@ -12,14 +13,14 @@
 
         public class Handler : IRequestHandler<ProductUpdateRequest, ProductUpdateResponse>
         {
-            private readonly IDbContext _dbContext;
+            private readonly IGenericRepository<ProductEntity> _repo;
 
-            public Handler(IDbContext dbContext) => _dbContext = dbContext;
+            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
 
             public async Task<ProductUpdateResponse> Handle(ProductUpdateRequest request, CancellationToken cancellationToken)
             {
                 var response = new ProductUpdateResponse();
-                var entity = await _dbContext.Products.FindAsync(request.Id);
+                var entity = await _repo.Get(request.Id);
 
                 if (entity is null)
                 {
@@ -39,8 +40,7 @@
                     response.UpdateMessage = $"Product ({entity.Id} : {entity.Name}) has been updated with description \"{entity.Description}\"";
                     response.Updated = response.UpToDate = true;
 
-                    _dbContext.Products.Update(entity);
-                    await _dbContext.SaveChangesAsync(cancellationToken);
+                    await _repo.Update(entity);
  
                 }
                 catch (Exception ex)

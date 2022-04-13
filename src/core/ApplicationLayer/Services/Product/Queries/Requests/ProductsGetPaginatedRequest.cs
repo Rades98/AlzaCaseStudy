@@ -1,10 +1,8 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries.Requests
 {
-    using ApplicationLayer.Extensions.LINQ;
     using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
     using MediatR;
-    using X.PagedList;
 
     public class ProductsGetPaginatedRequest : IRequest<IEnumerable<ProductGetResponse>>
     {
@@ -17,18 +15,13 @@
 
         public class Handler : IRequestHandler<ProductsGetPaginatedRequest, IEnumerable<ProductGetResponse>>
         {
-            private IDbContext _dbContext;
+            private readonly IGenericRepository<ProductEntity> _repo;
 
-            public Handler(IDbContext dbContext) => _dbContext = dbContext;
+            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
 
             public async Task<IEnumerable<ProductGetResponse>> Handle(ProductsGetPaginatedRequest request, CancellationToken cancellationToken)
             {
-                var products = await _dbContext.Products
-                    .IfThenElse(
-                        () => request.OrderByDesc,
-                        e => e.OrderByDescending(request.OrderBy),
-                        e => e.OrderBy(request.OrderBy))
-                    .ToPagedListAsync(request.PageNumber, request.PageSize, cancellationToken);
+                var products = await _repo.GetAllPaginated(request.PageNumber, request.PageSize, request.OrderByDesc, request.OrderBy);
 
                 return products.Select(x => (ProductGetResponse)x);
             }

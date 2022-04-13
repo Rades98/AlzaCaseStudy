@@ -1,8 +1,8 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries.Requests
 {
     using ApplicationLayer.Interfaces;
+    using DomainLayer.Entities.Product;
     using MediatR;
-    using Microsoft.EntityFrameworkCore;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -12,15 +12,15 @@
 
         public class Handler : IRequestHandler<ProductGetRequest, ProductGetResponse>
         {
-            private IDbContext _dbContext;
+            private readonly IGenericRepository<ProductEntity> _repo;
 
-            public Handler(IDbContext dbContext) => _dbContext = dbContext;
+            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
 
             public async Task<ProductGetResponse> Handle(ProductGetRequest request, CancellationToken cancellationToken)
             {
-                var product = await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == request.Id, cancellationToken);
+                var product = await _repo.Get(request.Id);
 
-                if(product is null)
+                if (product is null)
                 {
                     return new ProductGetResponse();
                 }
