@@ -1,10 +1,10 @@
 ﻿namespace ApplicationLayer
 {
-    using ApplicationLayer.Utils;
     using FluentValidation;
     using MediatR;
     using Microsoft.Extensions.DependencyInjection;
     using System.Reflection;
+    using Utils;
 
     public static class DependencyRegistrations
     {

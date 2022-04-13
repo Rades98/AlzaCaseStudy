@@ -1,7 +1,7 @@
-﻿using Serilog;
-
-namespace API.Registrations
+﻿namespace API.Registrations
 {
+    using Serilog;
+
     public static class LoggingRegistration
     {
         public static IHostBuilder AddLogger(this IHostBuilder builder)

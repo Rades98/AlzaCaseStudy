@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-
-namespace API.Cache
+﻿namespace API.Cache
 {
+    using Microsoft.Extensions.Caching.Memory;
+
     public class CacheEntryOptions : MemoryCacheEntryOptions
     {
         private static readonly Lazy<CacheEntryOptions> _lazy = new(() => new());

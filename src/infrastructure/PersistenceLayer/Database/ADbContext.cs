@@ -32,7 +32,7 @@
 
         #region Tables
 
-        public DbSet<ProductEntity> Products { get; set; }
+        public DbSet<ProductEntity> Products => Set<ProductEntity>();
 
         #endregion
 

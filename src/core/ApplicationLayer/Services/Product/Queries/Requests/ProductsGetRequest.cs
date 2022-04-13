@@ -1,7 +1,7 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries.Requests
 {
-    using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
+    using Interfaces;
     using MediatR;
 
     public class ProductsGetRequest : IRequest<IEnumerable<ProductGetResponse>>
