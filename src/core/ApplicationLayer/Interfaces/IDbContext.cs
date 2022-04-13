@@ -14,6 +14,8 @@
 
         public DbSet<ProductEntity> Products { get; set; }
 
+        public DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
         #endregion
     }
 }

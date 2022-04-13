@@ -28,6 +28,8 @@
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        public new DbSet<TEntity> Set<TEntity>() where TEntity : class => base.Set<TEntity>();
+
         #region Tables
 
         public DbSet<ProductEntity> Products { get; set; }
