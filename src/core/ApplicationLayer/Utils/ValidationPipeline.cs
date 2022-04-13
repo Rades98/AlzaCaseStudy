@@ -4,6 +4,11 @@
     using MediatR;
     using Microsoft.Extensions.Logging;
 
+    /// <summary>
+    /// Generic validation pipeline
+    /// </summary>
+    /// <typeparam name="TRequest">Request</typeparam>
+    /// <typeparam name="TResponse">Response</typeparam>
     public class ValidationPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;

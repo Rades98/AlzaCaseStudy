@@ -6,6 +6,12 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Request handling request for updating description of product choosen by Id
+    /// </summary>
+    /// <returns>
+    /// Update state optionaly updated message
+    /// </returns>
     public class ProductUpdateRequest : IRequest<ProductUpdateResponse>
     {
         public Guid Id { get; set; }
@@ -20,7 +26,7 @@
             public async Task<ProductUpdateResponse> Handle(ProductUpdateRequest request, CancellationToken cancellationToken)
             {
                 var response = new ProductUpdateResponse();
-                var entity = await _repo.Get(request.Id);
+                var entity = await _repo.GetAsync(request.Id, cancellationToken);
 
                 if (entity is null)
                 {
@@ -40,7 +46,7 @@
                     response.UpdateMessage = $"Product ({entity.Id} : {entity.Name}) has been updated with description \"{entity.Description}\"";
                     response.Updated = response.UpToDate = true;
 
-                    await _repo.Update(entity);
+                    await _repo.UpdateAsync(entity, cancellationToken);
 
                 }
                 catch (Exception ex)

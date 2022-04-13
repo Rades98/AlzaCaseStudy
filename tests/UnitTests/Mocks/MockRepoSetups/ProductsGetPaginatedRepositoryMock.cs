@@ -6,6 +6,7 @@
     using Moq;
     using System;
     using System.Linq;
+    using System.Threading;
     using X.PagedList;
 
     public class ProductsGetPaginatedRepositoryMock : ProductRepositoryBaseMock
@@ -29,11 +30,12 @@
 
             #region Mock repo setups
 
-            mockRepo.Setup(repo => repo.GetAllPaginated(
+            mockRepo.Setup(repo => repo.GetAllPaginatedAsync(
                 ProductsGetPaginatedRequest.PageNumber,
                 ProductsGetPaginatedRequest.PageSize,
                 ProductsGetPaginatedRequest.OrderByDesc,
-                ProductsGetPaginatedRequest.OrderBy
+                ProductsGetPaginatedRequest.OrderBy, 
+                CancellationToken.None
                 ))
                 .ReturnsAsync
                 (products

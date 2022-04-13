@@ -14,36 +14,40 @@
 
         public GenericRepository(IDbContext dbContext) => _dbContext = dbContext;
 
-        public async Task<T?> Get(Guid id)
+        /// <inheritdoc/>
+        public async Task<T?> GetAsync(Guid id, CancellationToken cancellationToken)
         {
-            return await _dbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.Set<T>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<IReadOnlyList<T>> GetAll(bool orderByDesc, Func<T, object> orderBy)
-        {
-            return await _dbContext.Set<T>()
-                    .IfThenElse(
-                        () => orderByDesc,
-                        e => e.OrderByDescending(orderBy),
-                        e => e.OrderBy(orderBy))
-                    .ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<T>> GetAllPaginated(int pageNum, int pageSize, bool orderByDesc, Func<T, object> orderBy)
+        /// <inheritdoc/>
+        public async Task<IReadOnlyList<T>> GetAllAsync(bool orderByDesc, Func<T, object> orderBy, CancellationToken cancellationToken)
         {
             return await _dbContext.Set<T>()
                     .IfThenElse(
                         () => orderByDesc,
                         e => e.OrderByDescending(orderBy),
                         e => e.OrderBy(orderBy))
-                    .ToPagedListAsync(pageNum, pageSize);
+                    .ToListAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public async Task<IReadOnlyList<T>> GetAllPaginatedAsync(int pageNum, int pageSize, bool orderByDesc, Func<T, object> orderBy, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Set<T>()
+                    .IfThenElse(
+                        () => orderByDesc,
+                        e => e.OrderByDescending(orderBy),
+                        e => e.OrderBy(orderBy))
+                    .ToPagedListAsync(pageNum, pageSize, cancellationToken);
 
         }
 
-        public async Task Update(T entity)
+        /// <inheritdoc/>
+        public async Task UpdateAsync(T entity, CancellationToken cancellationToken)
         {
             _dbContext.Set<T>().Update(entity);
-            await _dbContext.SaveChangesAsync(new CancellationToken());
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -3,6 +3,9 @@
     using FluentValidation;
     using Requests;
 
+    /// <summary>
+    /// Shared validator for Get based requests
+    /// </summary>
     public class ProductGetValidator : AbstractValidator<ProductGetRequest>
     {
         public ProductGetValidator()

@@ -5,7 +5,7 @@
     using DomainLayer.Entities.Product;
     using Moq;
     using System;
-
+    using System.Threading;
 
     public class ProductUpdateRepositoryMock : ProductRepositoryBaseMock
     {
@@ -41,9 +41,9 @@
 
             #region Mock repo setups
 
-            mockRepo.Setup(repo => repo.Get(ProductUpdateRequest.Id)).ReturnsAsync(products.Find(x => x.Id == ProductUpdateRequest.Id));
+            mockRepo.Setup(repo => repo.GetAsync(ProductUpdateRequest.Id, CancellationToken.None)).ReturnsAsync(products.Find(x => x.Id == ProductUpdateRequest.Id));
 
-            mockRepo.Setup(repo => repo.Get(ProductUpdateRequestUptoDate.Id)).ReturnsAsync(products.Find(x => x.Id == ProductUpdateRequestUptoDate.Id));
+            mockRepo.Setup(repo => repo.GetAsync(ProductUpdateRequestUptoDate.Id, CancellationToken.None)).ReturnsAsync(products.Find(x => x.Id == ProductUpdateRequestUptoDate.Id));
 
             #endregion
 

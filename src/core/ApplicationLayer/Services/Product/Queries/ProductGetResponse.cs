@@ -1,7 +1,9 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries
 {
     using DomainLayer.Entities.Product;
-
+    /// <summary>
+    /// Shared response for Get based requests
+    /// </summary>
     public class ProductGetResponse
     {
         public Uri? ImgUri { get; set; }

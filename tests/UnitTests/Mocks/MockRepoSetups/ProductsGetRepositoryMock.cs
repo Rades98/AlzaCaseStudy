@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
 
     public class ProductsGetRepositoryMock : ProductRepositoryBaseMock
     {
@@ -38,16 +39,20 @@
 
             #region Mock repo setups
 
-            mockRepo.Setup(repo => repo.GetAll(
-                 ProductsGetRequest.OrderByDesc, ProductsGetRequest.OrderBy
+            mockRepo.Setup(repo => repo.GetAllAsync(
+                ProductsGetRequest.OrderByDesc, 
+                ProductsGetRequest.OrderBy, 
+                CancellationToken.None
                  ))
                  .ReturnsAsync(products
                      .ToList()
                      .OrderBy(ProductsGetRequest.OrderBy)
                      .ToList());
 
-            mockRepo.Setup(repo => repo.GetAll(
-                ProductsGetRequestWhenNone.OrderByDesc, ProductsGetRequestWhenNone.OrderBy
+            mockRepo.Setup(repo => repo.GetAllAsync(
+                ProductsGetRequestWhenNone.OrderByDesc, 
+                ProductsGetRequestWhenNone.OrderBy, 
+                CancellationToken.None
                 ))
                 .ReturnsAsync(new List<ProductEntity>());
 

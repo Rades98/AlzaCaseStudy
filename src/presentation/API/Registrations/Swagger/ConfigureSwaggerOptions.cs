@@ -18,12 +18,12 @@
             options.SwaggerDoc("v2", CreateInfoForApiVersion("v2"));
         }
 
-        private static OpenApiInfo CreateInfoForApiVersion(/*ApiVersionDescription description*/ string version)
+        private static OpenApiInfo CreateInfoForApiVersion(string version)
         {
             var info = new OpenApiInfo()
             {
                 Title = "Alza api",
-                Version = /*description.ApiVersion.ToString(),*/ version,
+                Version = version,
                 TermsOfService = new Uri("https://alza.cz/terms"),
                 Contact = new OpenApiContact
                 {
@@ -34,7 +34,7 @@
                 License = new OpenApiLicense
                 {
                     Name = "License",
-                    Url = new Uri("https://alza.cz/license")
+                    Url = new Uri("https://opensource.org/licenses")
                 }
             };
 

@@ -2,6 +2,9 @@
 
 namespace ApplicationLayer.Services.Product.Commands
 {
+    /// <summary>
+    /// validator for <see cref="ProductUpdateRequest"/>
+    /// </summary>
     internal class ProductUpdateValidator : AbstractValidator<ProductUpdateRequest>
     {
         private const int MAX_DESCRIPTION_LENGHT = 250;
