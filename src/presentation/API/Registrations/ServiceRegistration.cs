@@ -10,10 +10,10 @@
         {
             services.RegisterDatabase(configuration);
             services.AddApplicationServices();
-            services.AddLogging();
             services.AddCustomApiVersioning();
             services.ConfigureOptions<ConfigureSwaggerOptions>();
             services.AddSwaggerGen();
+            services.AddMemoryCache();
 
             return services;
         }
