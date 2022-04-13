@@ -19,7 +19,7 @@
             var result = await handler.Handle(ProductsGetRequest, CancellationToken.None);
 
             //Assert
-            result.ToList().Count.ShouldBe(ProductsCount);
+            result?.ToList().Count.ShouldBe(ProductsCount);
         }
 
         [Fact]
@@ -32,7 +32,7 @@
             var result = await handler.Handle(ProductsGetRequestWhenNone, CancellationToken.None);
 
             //Assert
-            result.ToList().Count.ShouldBe(0);
+            result.ShouldBe(null);
         }
     }
 }

@@ -4,6 +4,11 @@
     using Microsoft.Extensions.Logging;
     using System.Diagnostics;
 
+    /// <summary>
+    /// Generic logging pipeline
+    /// </summary>
+    /// <typeparam name="TRequest">Request</typeparam>
+    /// <typeparam name="TResponse">Response</typeparam>
     public class RequestLoggingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly Stopwatch _stopwatch;

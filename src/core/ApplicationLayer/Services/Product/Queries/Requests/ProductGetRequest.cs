@@ -6,6 +6,12 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Query to obtain product by id
+    /// </summary>
+    /// <returns>
+    /// product with specified id if there is none returns null
+    /// </returns>
     public class ProductGetRequest : IRequest<ProductGetResponse?>
     {
         public Guid Id { get; set; }
@@ -18,7 +24,7 @@
 
             public async Task<ProductGetResponse?> Handle(ProductGetRequest request, CancellationToken cancellationToken)
             {
-                var product = await _repo.Get(request.Id);
+                var product = await _repo.GetAsync(request.Id, cancellationToken);
 
                 if (product is null)
                 {

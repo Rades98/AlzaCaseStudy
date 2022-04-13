@@ -1,6 +1,7 @@
 ﻿namespace PersistenceLayer.Database
 {
     using ApplicationLayer.Interfaces;
+    using DomainLayer.Entities;
     using DomainLayer.Entities.Product;
     using Extensions;
     using Microsoft.EntityFrameworkCore;
@@ -16,28 +17,35 @@
                 .SeedData();
         }
 
+        /// <inheritdoc/>
         public override int SaveChanges()
         {
             ChangeStateInfo();
             return base.SaveChanges();
         }
 
+        /// <inheritdoc/>
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             ChangeStateInfo();
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        /// <inheritdoc/>
         public new DbSet<TEntity> Set<TEntity>() where TEntity : class => base.Set<TEntity>();
 
         #region Tables
 
+        /// <inheritdoc/>
         public DbSet<ProductEntity> Products => Set<ProductEntity>();
 
         #endregion
 
         #region private methods 
 
+        /// <summary>
+        /// Manages changes for auditable entities
+        /// </summary>
         private void ChangeStateInfo()
         {
             ChangeTracker.Entries<ProductEntity>()

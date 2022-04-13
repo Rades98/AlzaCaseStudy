@@ -1,5 +1,8 @@
 ﻿namespace ApplicationLayer.Services.Product.Commands
 {
+    /// <summary>
+    /// Response for <see cref="ProductUpdateRequest"/>
+    /// </summary>
     public class ProductUpdateResponse
     {
         public bool Updated { get; set; } = false;

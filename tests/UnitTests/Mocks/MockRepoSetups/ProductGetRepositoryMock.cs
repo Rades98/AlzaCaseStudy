@@ -5,6 +5,7 @@
     using DomainLayer.Entities.Product;
     using Moq;
     using System;
+    using System.Threading;
 
     public class ProductGetRepositoryMock : ProductRepositoryBaseMock
     {
@@ -32,7 +33,7 @@
 
             #region Mock repo setups
 
-            mockRepo.Setup(repo => repo.Get(ProductGetRequest.Id)).ReturnsAsync(products.Find(x => x.Id == ProductGetRequest.Id));
+            mockRepo.Setup(repo => repo.GetAsync(ProductGetRequest.Id, CancellationToken.None)).ReturnsAsync(products.Find(x => x.Id == ProductGetRequest.Id));
 
             #endregion
 

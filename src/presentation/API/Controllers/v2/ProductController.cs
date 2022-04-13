@@ -7,6 +7,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 
+    /// <summary>
+    /// Products endpoint v2
+    /// </summary>
+    /// <seealso cref="BaseController{ProductEntity}"/>
     [ApiVersion("2")]
     public class ProductController : BaseController<ProductEntity>
     {
@@ -14,6 +18,15 @@
         {
         }
 
+        //Maybe it should be better to return blank list of ProductGetResponse
+        /// <summary>
+        /// Get all product paged by params
+        /// </summary>
+        /// <param name="pageSize">Number of records per page</param>
+        /// <param name="pageNum">Number of page to show</param>
+        /// <remarks>
+        /// Returns paged products as specified, otherwise null
+        /// </remarks>
         [HttpGet]
         [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]

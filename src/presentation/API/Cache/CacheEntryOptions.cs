@@ -2,6 +2,9 @@
 {
     using Microsoft.Extensions.Caching.Memory;
 
+    /// <summary>
+    /// Options for cache
+    /// </summary>
     public class CacheEntryOptions : MemoryCacheEntryOptions
     {
         private static readonly Lazy<CacheEntryOptions> _lazy = new(() => new());

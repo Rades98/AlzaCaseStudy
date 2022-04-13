@@ -9,6 +9,10 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 
+    /// <summary>
+    /// Products endpoint v1
+    /// </summary>
+    /// <seealso cref="BaseController{ProductEntity}"/>
     [ApiVersion("1")]
     public class ProductController : BaseController<ProductEntity>
     {
@@ -16,6 +20,12 @@
         {
         }
 
+        /// <summary>
+        /// Get all products
+        /// </summary>
+        /// <remarks>
+        /// Returns all products, if there is none, returns null
+        /// </remarks>
         [HttpGet]
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -47,6 +57,13 @@
             }
         }
 
+        /// <summary>
+        /// Get product by its Id
+        /// </summary>
+        /// <param name="id">Product id</param>
+        /// <remarks>
+        /// Returns product found by id, if there is none, returns null
+        /// </remarks>
         [HttpGet("{Id}")]
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
@@ -71,6 +88,14 @@
             }
         }
 
+        /// <summary>
+        /// Updates product description specified by Id
+        /// </summary>
+        /// <param name="id">Product id </param>
+        /// <param name="description">New description for optionally found Product</param>
+        /// <remarks>
+        /// Returns updated product if operation was succesfull, otherwise returns status
+        /// </remarks>
         [HttpPut]
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
