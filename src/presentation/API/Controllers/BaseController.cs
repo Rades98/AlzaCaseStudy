@@ -11,16 +11,9 @@ namespace API.Controllers
     {
         private IMediator _mediator;
         private IMemoryCache _cacheProvider;
-        private IMediator mediator;
-
         public IMediator Mediator => _mediator;
         public IMemoryCache CacheProvider => _cacheProvider;
 
         protected BaseController(IMemoryCache cache, IMediator mediator) => (_cacheProvider, _mediator) = (cache, mediator);
-
-        protected BaseController(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
     }
 }
