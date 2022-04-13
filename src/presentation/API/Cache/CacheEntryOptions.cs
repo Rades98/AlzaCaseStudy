@@ -7,14 +7,12 @@
     /// </summary>
     public class CacheEntryOptions : MemoryCacheEntryOptions
     {
-        private static readonly Lazy<CacheEntryOptions> _lazy = new(() => new());
-
-        public static CacheEntryOptions Default => _lazy.Value;
-
-        public CacheEntryOptions()
+        public static CacheEntryOptions Default => new()
         {
-            AbsoluteExpiration = DateTime.Now.AddMinutes(5);
-            SlidingExpiration = TimeSpan.FromMinutes(2);
-        }
+            AbsoluteExpiration = DateTime.Now.AddMinutes(5),
+            SlidingExpiration = TimeSpan.FromMinutes(2)
+        };
+
+
     }
 }
