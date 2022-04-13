@@ -7,17 +7,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{20F29549-844
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{813A9AAE-D00C-40F1-9740-26568BDD0F60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainLayer", "src\core\DomainLayer\DomainLayer.csproj", "{EDE8A2E1-8564-45A7-A2CD-231F6A10BADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainLayer", "src\core\DomainLayer\DomainLayer.csproj", "{EDE8A2E1-8564-45A7-A2CD-231F6A10BADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLayer", "src\core\ApplicationLayer\ApplicationLayer.csproj", "{D909BC65-22E3-4929-AAC1-4EBFE0CADD4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationLayer", "src\core\ApplicationLayer\ApplicationLayer.csproj", "{D909BC65-22E3-4929-AAC1-4EBFE0CADD4D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{5CB034E1-9654-46AA-8A4A-8D0EB5400ABF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistenceLayer", "src\infrastructure\PersistenceLayer\PersistenceLayer.csproj", "{8951F6C8-4F90-4E15-9A6C-B15D8A1F1158}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersistenceLayer", "src\infrastructure\PersistenceLayer\PersistenceLayer.csproj", "{8951F6C8-4F90-4E15-9A6C-B15D8A1F1158}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "presentation", "presentation", "{88A46601-1CD7-4947-AB89-7CB09BE08787}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\presentation\API\API.csproj", "{0C382777-9C8C-4217-B022-928D4683D5A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "src\presentation\API\API.csproj", "{0C382777-9C8C-4217-B022-928D4683D5A1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5C106C7E-330C-4508-8582-4627DF00F561}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{1EE3F206-A07D-4EDD-AB98-71F7043850E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +45,10 @@ Global
 		{0C382777-9C8C-4217-B022-928D4683D5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C382777-9C8C-4217-B022-928D4683D5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C382777-9C8C-4217-B022-928D4683D5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EE3F206-A07D-4EDD-AB98-71F7043850E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EE3F206-A07D-4EDD-AB98-71F7043850E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EE3F206-A07D-4EDD-AB98-71F7043850E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EE3F206-A07D-4EDD-AB98-71F7043850E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +61,7 @@ Global
 		{8951F6C8-4F90-4E15-9A6C-B15D8A1F1158} = {5CB034E1-9654-46AA-8A4A-8D0EB5400ABF}
 		{88A46601-1CD7-4947-AB89-7CB09BE08787} = {20F29549-844F-4223-9885-6F78EB61EE32}
 		{0C382777-9C8C-4217-B022-928D4683D5A1} = {88A46601-1CD7-4947-AB89-7CB09BE08787}
+		{1EE3F206-A07D-4EDD-AB98-71F7043850E0} = {5C106C7E-330C-4508-8582-4627DF00F561}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FDCF347-19C6-444D-A204-23312B9858FB}

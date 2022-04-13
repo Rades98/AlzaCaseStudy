@@ -1,6 +1,6 @@
 ﻿namespace PersistenceLayer.Database.Extensions.LINQ
 {
-    internal static class LINQExtensions
+    public static class LINQExtensions
     {
         /// <summary>
         /// LINQ equivalent to "?" operator

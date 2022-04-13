@@ -29,7 +29,7 @@
 
                 if(entity.Description == request.Description)
                 {
-                    response.UpdateMessage = "Product is already up to date";
+                    response.UpdateMessage = CommandMessages.UpToDate;
                     response.UpToDate = true;
                     return response;
                 }
