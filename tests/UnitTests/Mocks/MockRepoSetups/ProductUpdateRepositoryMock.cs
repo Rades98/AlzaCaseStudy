@@ -11,21 +11,21 @@
     {
         public static IGenericRepository<ProductEntity> ProductRepository => GetProductRepository().Object;
 
-        public static ProductUpdateRequest ProductUpdateRequest => new()
+        public static readonly ProductUpdateRequest ProductUpdateRequest = new()
         {
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
             Description = "Some awesome new description"
         };
 
-        public static ProductUpdateRequest ProductUpdateRequestUptoDate => new()
+        public static readonly ProductUpdateRequest ProductUpdateRequestUptoDate = new()
         {
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
             Description = "Some awesome new description"
         };
 
-        public static ProductUpdateRequest ProductUpdateRequestNotFound => new()
+        public static readonly ProductUpdateRequest ProductUpdateRequestNotFound = new()
         {
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
             Description = "Some awesome new description"
         };
 

@@ -11,14 +11,14 @@
     {
         public static IGenericRepository<ProductEntity> ProductRepository => GetProductRepository().Object;
 
-        public static ProductGetRequest ProductGetRequest => new()
+        public readonly static ProductGetRequest ProductGetRequest = new()
         {
-            Id = new Guid("3054191e-0b54-436d-9e85-4ac7f8ef1277"),
+            Id = Guid.NewGuid(),
         };
 
-        public static ProductGetRequest ProductGetRequestNotFound => new()
+        public readonly static ProductGetRequest ProductGetRequestNotFound = new()
         {
-            Id = new Guid("7167A0A8-4795-44DD-AB96-EB507C6AEF5A"),
+            Id = Guid.NewGuid(),
         };
 
         private static Mock<IGenericRepository<ProductEntity>> GetProductRepository()
