@@ -14,23 +14,23 @@
     {
         private static readonly List<ProductGetResponse> _responses = new()
         {
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
-            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = new Guid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
+            new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = Guid.NewGuid(), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" },
         };
 
         public static List<ProductGetResponse> Response => _responses;
@@ -45,12 +45,12 @@
 
         public static ProductGetRequest ProductGetRequest => new()
         {
-            Id = new()
+            Id = Guid.NewGuid()
         };
 
         public static ProductGetRequest ProductGetRequestNotFound => new()
         {
-            Id = new()
+            Id = Guid.NewGuid()
         };
 
         public static ProductsGetPaginatedRequest ProductsGetPaginatedRequest => new()

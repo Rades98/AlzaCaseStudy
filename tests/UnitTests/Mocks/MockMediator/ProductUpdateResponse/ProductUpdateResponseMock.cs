@@ -50,7 +50,7 @@
         public static ProductUpdateRequest ProductUpdateRequest => new()
         {
             Description = _productUpdateDescription,
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
         };
 
         #endregion
@@ -69,7 +69,7 @@
         public static ProductUpdateRequest ProductUpdateRequestNotFound => new()
         {
             Description = _productUpdateDescription,
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
         };
 
         #endregion
@@ -91,7 +91,7 @@
         public static ProductUpdateRequest ProductUpdateRequestUpToDate => new()
         {
             Description = "Smth lol",
-            Id = new Guid(),
+            Id = Guid.NewGuid(),
         };
 
         #endregion
