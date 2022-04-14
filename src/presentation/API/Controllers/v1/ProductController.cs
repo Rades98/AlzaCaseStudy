@@ -100,7 +100,6 @@
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ProductUpdateResponse>> Update(Guid id, string description)
@@ -112,10 +111,6 @@
                 if (result.Updated)
                 {
                     return Ok(result);
-                }
-                else if (result.UpToDate)
-                {
-                    return NoContent();
                 }
 
                 return NotFound(result);

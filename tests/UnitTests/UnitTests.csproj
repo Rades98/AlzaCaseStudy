@@ -25,6 +25,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\core\ApplicationLayer\ApplicationLayer.csproj" />
+    <ProjectReference Include="..\..\src\presentation\API\API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Products\Controller\v2\" />
   </ItemGroup>
 
 </Project>

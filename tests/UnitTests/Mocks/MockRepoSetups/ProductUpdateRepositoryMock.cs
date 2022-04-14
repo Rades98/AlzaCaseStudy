@@ -13,19 +13,19 @@
 
         public static ProductUpdateRequest ProductUpdateRequest => new()
         {
-            Id = new Guid("c8a55f25-dbf7-41a4-87a9-4766f87e45d3"),
+            Id = new Guid(),
             Description = "Some awesome new description"
         };
 
         public static ProductUpdateRequest ProductUpdateRequestUptoDate => new()
         {
-            Id = new Guid("587392f1-ed02-471c-b97d-475ca66e5a4f"),
+            Id = new Guid(),
             Description = "Some awesome new description"
         };
 
         public static ProductUpdateRequest ProductUpdateRequestNotFound => new()
         {
-            Id = new Guid("7167A0A8-4795-44DD-AB96-EB507C6AEF5A"),
+            Id = new Guid(),
             Description = "Some awesome new description"
         };
 
