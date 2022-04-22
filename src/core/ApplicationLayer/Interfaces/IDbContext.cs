@@ -1,6 +1,5 @@
 ﻿namespace ApplicationLayer.Interfaces
 {
-    using DomainLayer.Entities;
     using DomainLayer.Entities.Product;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -26,7 +25,7 @@
         /// </summary>
         /// <param name="cancellationToken">cancellation token</param>
         /// <returns>int status</returns>
-        
+
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
         #region Tables

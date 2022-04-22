@@ -12,9 +12,10 @@
     /// <returns>
     /// product with specified id if there is none returns null
     /// </returns>
-    public class ProductGetRequest : IRequest<ProductGetResponse?>
+    public class ProductGetRequest : IRequest<ProductGetResponse?>, ICacheableWithIdQuery
     {
         public Guid Id { get; set; }
+        public string CacheKey => Cache.CacheKeys.Products;
 
         public class Handler : IRequestHandler<ProductGetRequest, ProductGetResponse?>
         {

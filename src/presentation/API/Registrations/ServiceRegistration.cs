@@ -9,6 +9,7 @@
     {
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.RegisterDatabase(configuration);
             services.AddApplicationServices();
             services.AddCustomApiVersioning();
@@ -17,8 +18,7 @@
             {
                 o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
             });
-            services.AddMemoryCache();
-
+            
             return services;
         }
     }

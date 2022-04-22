@@ -12,10 +12,12 @@
     /// <returns>
     /// Update state optionaly updated message
     /// </returns>
-    public class ProductUpdateRequest : IRequest<ProductUpdateResponse>
+    public class ProductUpdateRequest : IRequest<ProductUpdateResponse>, IInvalidableCommand
     {
         public Guid Id { get; set; }
         public string Description { get; set; } = "";
+
+        public string CacheKey => Cache.CacheKeys.Products;
 
         public class Handler : IRequestHandler<ProductUpdateRequest, ProductUpdateResponse>
         {
@@ -35,7 +37,7 @@
 
                 if (entity.Description == request.Description)
                 {
-                    response.UpdateMessage = CommandMessages.UpToDate;
+                    response.UpdateMessage = ProductCommandMessages.UpToDate;
                     response.UpToDate = true;
                     return response;
                 }

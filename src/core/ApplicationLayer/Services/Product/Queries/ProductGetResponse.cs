@@ -1,10 +1,11 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries
 {
+    using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
     /// <summary>
     /// Shared response for Get based requests
     /// </summary>
-    public class ProductGetResponse
+    public class ProductGetResponse : IRecord
     {
         public Uri? ImgUri { get; set; }
         public string? Name { get; set; }

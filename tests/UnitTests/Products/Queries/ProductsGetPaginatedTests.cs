@@ -19,7 +19,7 @@
             var result = await handler.Handle(ProductsGetPaginatedRequest, CancellationToken.None);
 
             //Assert
-            result.ToList().Count.ShouldBe(ProductsGetPaginatedRequest.PageSize);
+            result!.ToList().Count.ShouldBe(ProductsGetPaginatedRequest.PageSize);
         }
     }
 }
