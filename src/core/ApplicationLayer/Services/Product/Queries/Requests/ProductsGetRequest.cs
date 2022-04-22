@@ -10,10 +10,11 @@
     /// <returns>
     ///  List of products or null, if there are none
     /// </returns>
-    public class ProductsGetRequest : IRequest<IEnumerable<ProductGetResponse>>
+    public class ProductsGetRequest : IRequest<IEnumerable<ProductGetResponse>>, ICacheableQuery
     {
         public Func<ProductEntity, object> OrderBy { get; set; } = product => product.Id;
         public bool OrderByDesc { get; set; } = false;
+        public string CacheKey => Cache.CacheKeys.Products;
 
         public class Handler : IRequestHandler<ProductsGetRequest, IEnumerable<ProductGetResponse>?>
         {

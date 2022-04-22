@@ -33,7 +33,7 @@
             //Assert
             result.Updated.ShouldBe(false);
             result.UpToDate.ShouldBe(true);
-            result.UpdateMessage.ShouldBe(CommandMessages.UpToDate);
+            result.UpdateMessage.ShouldBe(ProductCommandMessages.UpToDate);
         }
 
         [Fact]
@@ -47,7 +47,7 @@
 
             //Assert
             result.Updated.ShouldBe(false);
-            result.UpdateMessage.ShouldBe(CommandMessages.NotFound);
+            result.UpdateMessage.ShouldBe(ProductCommandMessages.NotFound);
         }
     }
 }

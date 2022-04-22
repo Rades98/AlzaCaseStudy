@@ -3,57 +3,49 @@
     using ApplicationLayer.Services.Product.Commands;
     using ApplicationLayer.Services.Product.Queries;
     using ApplicationLayer.Services.Product.Queries.Requests;
-    using Cache;
     using DomainLayer.Entities.Product;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     /// <summary>
     /// Products endpoint v1
     /// </summary>
     /// <seealso cref="BaseController{ProductEntity}"/>
     [ApiVersion("1")]
-    public class ProductController : BaseController<ProductEntity>
+    public class ProductsController : BaseController<ProductEntity>
     {
-        public ProductController(IMemoryCache cache, IMediator mediator) : base(cache, mediator)
+        public ProductsController(IMediator mediator) : base(mediator)
         {
         }
 
         /// <summary>
         /// Get all products
         /// </summary>
+        /// <param name="cancellationToken">cancelation token</param>
         /// <remarks>
         /// Returns all products, if there is none, returns null
         /// </remarks>
         [HttpGet]
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProducts(CancellationToken cancellationToken = default)
         {
             try
             {
-                if (!CacheProvider.TryGetValue(CacheKeys.Products, out IEnumerable<ProductGetResponse> products))
+                var results = await Mediator.Send(new ProductsGetRequest() { OrderBy = p => p.Name }, cancellationToken);
+
+                if (results.Any())
                 {
-                    var results = await Mediator.Send(new ProductsGetRequest() { OrderBy = p => p.Name });
-                    if (results.Any())
-                    {
-                        CacheProvider.Set(CacheKeys.Products, results, CacheEntryOptions.Default);
-                        return Ok(results);
-                    }
-                }
-                else
-                {
-                    return Ok(products);
+                    return Ok(results);
                 }
 
                 return NotFound();
             }
             catch (Exception e)
             {
-                return UnprocessableEntity(e.Message);
+                return BadRequest(e.Message);
             }
         }
 
@@ -61,20 +53,21 @@
         /// Get product by its Id
         /// </summary>
         /// <param name="id">Product id</param>
+        /// <param name="cancellationToken">cancelation token</param>
         /// <remarks>
         /// Returns product found by id, if there is none, returns null
         /// </remarks>
-        [HttpGet("{Id}")]
+        [HttpGet("{id}")]
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ProductGetResponse?>> GetById(Guid id)
+        public async Task<ActionResult<ProductGetResponse?>> GetById(Guid id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var results = await Mediator.Send(new ProductGetRequest() { Id = id });
+                var results = await Mediator.Send(new ProductGetRequest() { Id = id }, cancellationToken);
                 if (results is not null)
                 {
                     return Ok(results);
@@ -84,29 +77,30 @@
             }
             catch (Exception e)
             {
-                return UnprocessableEntity(e.Message);
+                return BadRequest(e.Message);
             }
         }
 
         /// <summary>
-        /// Updates product description specified by Id
+        /// Updates product description
         /// </summary>
         /// <param name="id">Product id </param>
         /// <param name="description">New description for optionally found Product</param>
+        /// <param name="cancellationToken">cancelation token</param>
         /// <remarks>
         /// Returns updated product if operation was succesfull, otherwise returns status
         /// </remarks>
-        [HttpPut]
+        [HttpPatch]
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ProductUpdateResponse>> Update(Guid id, string description)
+        public async Task<ActionResult<ProductUpdateResponse>> Update(Guid id, string description, CancellationToken cancellationToken = default)
         {
             try
             {
-                var result = await Mediator.Send(new ProductUpdateRequest { Id = id, Description = description });
+                var result = await Mediator.Send(new ProductUpdateRequest { Id = id, Description = description }, cancellationToken);
 
                 if (result.Updated)
                 {
@@ -117,7 +111,7 @@
             }
             catch (Exception e)
             {
-                return UnprocessableEntity(e.Message);
+                return BadRequest(e.Message);
             }
 
         }

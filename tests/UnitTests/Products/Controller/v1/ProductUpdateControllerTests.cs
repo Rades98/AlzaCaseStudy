@@ -17,7 +17,7 @@
         public async void UpdateTest()
         {
             //Arrange
-            var controller = new ProductController(_memoryCache, Mediator);
+            var controller = new ProductsController(Mediator);
 
             //Act
             var actionResult = await controller.Update(ProductUpdateRequest.Id, ProductUpdateRequest.Description);
@@ -33,7 +33,7 @@
         public async void UpdateTestNotFound()
         {
             //Arrange
-            var controller = new ProductController(_memoryCache, Mediator);
+            var controller = new ProductsController(Mediator);
 
             //Act
             var actionResult = await controller.Update(ProductUpdateRequestNotFound.Id, ProductUpdateRequestNotFound.Description);
@@ -49,7 +49,7 @@
         public async void UpdateTestUpToDate()
         {
             //Arrange
-            var controller = new ProductController(_memoryCache, Mediator);
+            var controller = new ProductsController(Mediator);
 
             //Act
             var actionResult = await controller.Update(ProductUpdateRequestUpToDate.Id, ProductUpdateRequestUpToDate.Description);
