@@ -83,8 +83,6 @@
                 new ProductEntity() { Name = "Pagination test item 50", Created = _created, Price = 0, Id = new Guid("53a01ec6-10fc-4977-8e4e-b8422e1f7481"), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test pagination data" },
             };
 
-
-
             modelBuilder.Entity<ProductEntity>()
                 .HasData(smth, smth2);
 

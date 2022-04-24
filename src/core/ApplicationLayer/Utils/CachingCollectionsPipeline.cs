@@ -1,8 +1,7 @@
 ﻿namespace ApplicationLayer.Utils
 {
-    using ApplicationLayer.Interfaces.Cache;
     using Cache;
-    using Interfaces;
+    using Interfaces.Cache;
     using MediatR;
     using Microsoft.Extensions.Caching.Distributed;
     using Microsoft.Extensions.Logging;
