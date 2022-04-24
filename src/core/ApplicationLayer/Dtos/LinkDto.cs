@@ -1,5 +1,8 @@
 ﻿namespace ApplicationLayer.Dtos
 {
+    /// <summary>
+    /// LinkDto for HATEOAS
+    /// </summary>
     public class LinkDto
     {
         public string Href { get; private set; }

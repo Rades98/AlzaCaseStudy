@@ -12,7 +12,5 @@
             AbsoluteExpiration = DateTime.Now.AddMinutes(5),
             SlidingExpiration = TimeSpan.FromMinutes(2)
         };
-
-
     }
 }
