@@ -1,5 +1,6 @@
 ﻿namespace ApplicationLayer.Utils
 {
+    using ApplicationLayer.Interfaces.Cache;
     using Cache;
     using Interfaces;
     using MediatR;

@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Interfaces
+﻿namespace ApplicationLayer.Interfaces.Cache
 {
     /// <summary>
     /// Cacheable query (cache on get and load from cache)
