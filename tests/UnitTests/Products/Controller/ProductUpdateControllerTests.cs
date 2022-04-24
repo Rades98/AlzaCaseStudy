@@ -1,26 +1,23 @@
-﻿namespace UnitTests.Products.Controller.v1
+﻿namespace UnitTests.Products.Controller
 {
-    using API.Controllers.v1;
+    using API.Controllers.Products.v1;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
-    using Moq;
-    using Shouldly;
     using Mocks.MockMediator.ProductUpdateResponse;
+    using Shouldly;
+    using UnitTests.Mocks.MockMediator;
     using Xunit;
 
     public class ProductUpdateControllerTests : ProductUpdateResponseMock
     {
-        private readonly IMemoryCache _memoryCache = new Mock<IMemoryCache>().Object;
-
         [Fact]
         public async void UpdateTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator);
+            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
 
             //Act
-            var actionResult = await controller.Update(ProductUpdateRequest.Id, ProductUpdateRequest.Description);
+            var actionResult = await controller.UpdateAsync(ProductUpdateRequest.Id, ProductUpdateRequest.Description);
 
             //Assert
             var result = actionResult.Result as OkObjectResult;
@@ -33,10 +30,10 @@
         public async void UpdateTestNotFound()
         {
             //Arrange
-            var controller = new ProductsController(Mediator);
+            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
 
             //Act
-            var actionResult = await controller.Update(ProductUpdateRequestNotFound.Id, ProductUpdateRequestNotFound.Description);
+            var actionResult = await controller.UpdateAsync(ProductUpdateRequestNotFound.Id, ProductUpdateRequestNotFound.Description);
 
             //Assert
             var result = actionResult.Result as OkObjectResult;
@@ -49,10 +46,10 @@
         public async void UpdateTestUpToDate()
         {
             //Arrange
-            var controller = new ProductsController(Mediator);
+            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
 
             //Act
-            var actionResult = await controller.Update(ProductUpdateRequestUpToDate.Id, ProductUpdateRequestUpToDate.Description);
+            var actionResult = await controller.UpdateAsync(ProductUpdateRequestUpToDate.Id, ProductUpdateRequestUpToDate.Description);
 
             //Assert
             var result = actionResult.Result as OkObjectResult;

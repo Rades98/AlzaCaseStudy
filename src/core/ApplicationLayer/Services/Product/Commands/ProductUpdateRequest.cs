@@ -1,5 +1,6 @@
 ﻿namespace ApplicationLayer.Services.Product.Commands
 {
+    using ApplicationLayer.Interfaces.Cache;
     using DomainLayer.Entities.Product;
     using Interfaces;
     using MediatR;

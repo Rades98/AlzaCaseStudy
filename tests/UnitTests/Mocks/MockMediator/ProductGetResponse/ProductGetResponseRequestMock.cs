@@ -10,7 +10,7 @@
     using System.Threading;
     using X.PagedList;
 
-    public class ProductGetResponseRequestMock
+    public abstract class ProductGetResponseRequestMock
     {
         private static readonly List<ProductGetResponse> _responses = new()
         {
@@ -61,7 +61,7 @@
             PageSize = 4,
         };
 
-        public static List<ProductGetResponse> ProductsGetPaginatedResponse => 
+        public static List<ProductGetResponse> ProductsGetPaginatedResponse =>
             _responses
                 .OrderBy(o => o.Name)
                 .ToPagedList(ProductsGetPaginatedRequest.PageNumber, ProductsGetPaginatedRequest.PageSize)
@@ -73,7 +73,7 @@
             var mockMediator = new Mock<IMediator>();
             _responses.Add(new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = ProductGetRequest.Id, ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" });
 
-            
+
 
             mockMediator.Setup(m => m.Send(ProductsGetRequest, CancellationToken.None)).ReturnsAsync(_responses);
             mockMediator.Setup(m => m.Send(ProductsGetPaginatedRequest, CancellationToken.None))

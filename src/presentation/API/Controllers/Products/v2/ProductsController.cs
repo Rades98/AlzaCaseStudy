@@ -1,11 +1,11 @@
-﻿namespace API.Controllers.v2
+﻿namespace API.Controllers.Products.v2
 {
     using ApplicationLayer.Services.Product.Queries;
     using ApplicationLayer.Services.Product.Queries.Requests;
     using DomainLayer.Entities.Product;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     /// <summary>
     /// Products endpoint v2
@@ -14,7 +14,7 @@
     [ApiVersion("2")]
     public class ProductsController : BaseController<ProductEntity>
     {
-        public ProductsController(IMediator mediator) : base(mediator)
+        public ProductsController(IMediator mediator, IActionDescriptorCollectionProvider adcp) : base(mediator, adcp)
         {
         }
 
@@ -33,14 +33,14 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProducts(int pageSize, int pageNum, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProductsAsync(int pageSize, int pageNum, CancellationToken cancellationToken = default)
         {
             try
             {
                 var results = await Mediator.Send(new ProductsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = pageNum, PageSize = pageSize }, cancellationToken);
                 if (results.Any())
                 {
-                    return Ok(results);
+                    return Ok(results.Select(product => RestfullProductGetResponse(product)));
                 }
 
                 return NotFound();
@@ -49,6 +49,31 @@
             {
                 return BadRequest(e.Message);
             }
+        }
+
+        private ProductGetResponse RestfullProductGetResponse(ProductGetResponse response)
+        {
+            var all = UrlLink("all", nameof(GetProductsAsync), new { pageSize = "xy", pageNum = "xy" });
+            var self = UrlLink("_self", nameof(v1.ProductsController.GetByIdAsync), new { id = response.Id });
+            var update = UrlLink("update", nameof(v1.ProductsController.UpdateAsync), new { id = response.Id, description = "new_description" });
+
+
+            if (all is not null)
+            {
+                response.Links.Add(all);
+            }
+
+            if (self is not null)
+            {
+                response.Links.Add(self);
+            }
+
+            if (update is not null)
+            {
+                response.Links.Add(update);
+            }
+
+            return response;
         }
     }
 }

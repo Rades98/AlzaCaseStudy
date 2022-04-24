@@ -9,9 +9,9 @@
     using System.Collections.Generic;
     using System.Threading;
 
-    public class ProductUpdateResponseMock
+    public abstract class ProductUpdateResponseMock
     {
-        public static IMediator Mediator => GetMediator().Object;
+        public static readonly IMediator Mediator = GetMediator().Object;
 
         private static Mock<IMediator> GetMediator()
         {

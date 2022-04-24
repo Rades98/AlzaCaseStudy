@@ -1,4 +1,4 @@
-﻿namespace API.Controllers.v1
+﻿namespace API.Controllers.Products.v1
 {
     using ApplicationLayer.Services.Product.Commands;
     using ApplicationLayer.Services.Product.Queries;
@@ -6,6 +6,7 @@
     using DomainLayer.Entities.Product;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     /// <summary>
     /// Products endpoint v1
@@ -14,7 +15,7 @@
     [ApiVersion("1")]
     public class ProductsController : BaseController<ProductEntity>
     {
-        public ProductsController(IMediator mediator) : base(mediator)
+        public ProductsController(IMediator mediator, IActionDescriptorCollectionProvider adcp) : base(mediator, adcp)
         {
         }
 
@@ -25,12 +26,12 @@
         /// <remarks>
         /// Returns all products, if there is none, returns null
         /// </remarks>
-        [HttpGet]
+        [HttpGet(Name = nameof(GetProductsAsync))]
         [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProducts(CancellationToken cancellationToken = default)
+        public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProductsAsync(CancellationToken cancellationToken = default)
         {
             try
             {
@@ -38,7 +39,7 @@
 
                 if (results.Any())
                 {
-                    return Ok(results);
+                    return Ok(results.Select(product => RestfullProductGetResponse(product)));
                 }
 
                 return NotFound();
@@ -57,20 +58,20 @@
         /// <remarks>
         /// Returns product found by id, if there is none, returns null
         /// </remarks>
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = nameof(GetByIdAsync))]
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ProductGetResponse?>> GetById(Guid id, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<ProductGetResponse?>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             try
             {
-                var results = await Mediator.Send(new ProductGetRequest() { Id = id }, cancellationToken);
-                if (results is not null)
+                var result = await Mediator.Send(new ProductGetRequest() { Id = id }, cancellationToken);
+                if (result is not null)
                 {
-                    return Ok(results);
+                    return Ok(RestfullProductGetResponse(result));
                 }
 
                 return NotFound();
@@ -90,19 +91,19 @@
         /// <remarks>
         /// Returns updated product if operation was succesfull, otherwise returns status
         /// </remarks>
-        [HttpPatch]
+        [HttpPatch(Name = nameof(UpdateAsync))]
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ProductUpdateResponse>> Update(Guid id, string description, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<ProductUpdateResponse>> UpdateAsync(Guid id, string description, CancellationToken cancellationToken = default)
         {
             try
             {
                 var result = await Mediator.Send(new ProductUpdateRequest { Id = id, Description = description }, cancellationToken);
 
-                if (result.Updated)
+                if (result.Updated || result.UpToDate)
                 {
                     return Ok(result);
                 }
@@ -114,6 +115,31 @@
                 return BadRequest(e.Message);
             }
 
+        }
+
+        private ProductGetResponse RestfullProductGetResponse(ProductGetResponse response)
+        {
+            var all = UrlLink("all", nameof(GetProductsAsync));
+            var self = UrlLink("_self", nameof(GetByIdAsync), new { id = response.Id });
+            var update = UrlLink("update", nameof(UpdateAsync), new { id = response.Id, description = "new_description" });
+
+
+            if (all is not null)
+            {
+                response.Links.Add(all);
+            }
+
+            if (self is not null)
+            {
+                response.Links.Add(self);
+            }
+
+            if (update is not null)
+            {
+                response.Links.Add(update);
+            }
+
+            return response;
         }
     }
 }

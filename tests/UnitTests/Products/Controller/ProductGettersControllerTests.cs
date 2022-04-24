@@ -1,9 +1,10 @@
-﻿namespace UnitTests.Products.Controller.v1
+﻿namespace UnitTests.Products.Controller
 {
-    using API.Controllers.v1;
+    using API.Controllers.Products.v1;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Shouldly;
+    using UnitTests.Mocks.MockMediator;
     using UnitTests.Mocks.MockMediator.ProductGetResponse;
     using Xunit;
 
@@ -13,10 +14,10 @@
         public async void GetTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator);
+            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
 
             //Act
-            var actionResult = await controller.GetProducts();
+            var actionResult = await controller.GetProductsAsync();
 
             //Assert
             var result = actionResult.Result as OkObjectResult;
@@ -27,10 +28,10 @@
         public async void GetByIdTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator);
+            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
 
             //Act
-            var actionResult = await controller.GetById(ProductGetRequest.Id);
+            var actionResult = await controller.GetByIdAsync(ProductGetRequest.Id);
 
             //Assert
             var result = actionResult.Result as OkObjectResult;
@@ -41,10 +42,10 @@
         public async void GetByIdNotFoundTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator);
+            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
 
             //Act
-            var actionResult = await controller.GetById(ProductGetRequestNotFound.Id);
+            var actionResult = await controller.GetByIdAsync(ProductGetRequestNotFound.Id);
 
             //Assert
             var result = actionResult.Result as OkObjectResult;
@@ -55,10 +56,10 @@
         public async void GetPagedTest()
         {
             //Arrange
-            var controller = new API.Controllers.v2.ProductsController(Mediator);
+            var controller = new API.Controllers.Products.v2.ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
 
             //Act
-            var actionResult = await controller.GetProducts(ProductsGetPaginatedRequest.PageSize, ProductsGetPaginatedRequest.PageNumber);
+            var actionResult = await controller.GetProductsAsync(ProductsGetPaginatedRequest.PageSize, ProductsGetPaginatedRequest.PageNumber);
 
             //Assert
             var result = actionResult.Result as OkObjectResult;
