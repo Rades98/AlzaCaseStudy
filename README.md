@@ -9,6 +9,7 @@ This repo contains:
 - Unit tests covering functionality on multiple layers
 - Logging
 - Caching of loaded data from database
+- HATEOAS
 
 <h2>Architecture</h2>
 
@@ -17,7 +18,7 @@ This repo contains:
 I tried to adhere all good principles and standards like:
 - [REST best practices](https://www.vinaysahni.com/best-practices-for-a-pragmatic-restful-api?fbclid=IwAR2oTRiYnQI71XZnpRj4DrFHV-TJ5whT-NAGJEqmvENIfbsnXyGHUygQ2K4)
 - [Structured logging](https://code-maze.com/structured-logging-in-asp-net-core-with-serilog/)
-- [SOLID design principles](https://www.c-sharpcorner.com/UploadFile/damubetha/solid-principles-in-C-Sharp/)
+- [SOLID design principles](https://en.wikipedia.org/wiki/HATEOAS#cite_note-Fielding-Ch5-2)
 
 <h3>Design patterns</h3>
 
@@ -27,7 +28,9 @@ I tried to adhere all good principles and standards like:
 
 - [Mediator pattern](https://en.wikipedia.org/wiki/Mediator_pattern) Behavioral pattern for object interaction interaction
 
-Those two design patterns fits each other [CQRS & Mediator](https://medium.com/@darshana-edirisinghe/cqrs-and-mediator-design-patterns-f11d2e9e9c2e)
+- [HATEOAS](https://cs.wikipedia.org/wiki/HATEOAS#cite_note-Fielding-Ch5-2) constraint of the REST application architecture that distinguishes it from other network application architectures
+
+CQRS and Mediator fits each other [CQRS & Mediator](https://medium.com/@darshana-edirisinghe/cqrs-and-mediator-design-patterns-f11d2e9e9c2e)
 
 <h2>Tools</h2>
 
