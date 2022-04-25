@@ -1,8 +1,8 @@
 ﻿namespace API.Registrations
 {
-    using API.Registrations.Swagger;
     using ApplicationLayer;
     using PersistenceLayer;
+    using Swagger;
     using System.Reflection;
 
     public static class ServiceRegistration
@@ -14,11 +14,11 @@
             services.AddApplicationServices();
             services.AddCustomApiVersioning();
             services.ConfigureOptions<ConfigureSwaggerOptions>();
-            services.AddSwaggerGen(o => 
+            services.AddSwaggerGen(o =>
             {
                 o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
             });
-            
+
             return services;
         }
     }

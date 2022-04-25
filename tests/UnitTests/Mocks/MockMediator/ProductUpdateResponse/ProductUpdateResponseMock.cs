@@ -15,7 +15,6 @@
 
         private static Mock<IMediator> GetMediator()
         {
-
             var mockMediator = new Mock<IMediator>();
 
             var response = new List<ProductGetResponse>

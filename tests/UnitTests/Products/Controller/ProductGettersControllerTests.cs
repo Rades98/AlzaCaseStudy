@@ -1,6 +1,7 @@
 ﻿namespace UnitTests.Products.Controller
 {
     using API.Controllers.Products.v1;
+    using DomainLayer.Entities.Product;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Shouldly;
@@ -14,7 +15,7 @@
         public async void GetTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
+            var controller = new ProductsController(Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetProductsAsync();
@@ -28,7 +29,7 @@
         public async void GetByIdTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
+            var controller = new ProductsController(Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetByIdAsync(ProductGetRequest.Id);
@@ -42,7 +43,7 @@
         public async void GetByIdNotFoundTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
+            var controller = new ProductsController(Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetByIdAsync(ProductGetRequestNotFound.Id);
@@ -56,7 +57,7 @@
         public async void GetPagedTest()
         {
             //Arrange
-            var controller = new API.Controllers.Products.v2.ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
+            var controller = new API.Controllers.Products.v2.ProductsController(Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetProductsAsync(ProductsGetPaginatedRequest.PageSize, ProductsGetPaginatedRequest.PageNumber);

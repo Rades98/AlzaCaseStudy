@@ -14,11 +14,13 @@
     public abstract class BaseController<T> : Controller where T : AuditableEntity
     {
         private readonly IMediator _mediator;
-        public IMediator Mediator => _mediator;
+        private readonly ILogger<T> _logger;
         private readonly IReadOnlyList<ActionDescriptor> _routes;
 
-        protected BaseController(IMediator mediator, IActionDescriptorCollectionProvider adcp) => (_mediator, _routes) = (mediator, adcp.ActionDescriptors.Items); 
-        
+        public IMediator Mediator => _mediator;
+
+        protected BaseController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<T> logger) => (_mediator, _routes, _logger) = (mediator, adcp.ActionDescriptors.Items, logger);
+
         internal LinkDto? UrlLink(string relation, string routeName, object? values = null)
         {
             var route = _routes.FirstOrDefault(f =>
@@ -26,6 +28,7 @@
 
             if (route is null || route.ActionConstraints is null)
             {
+                _logger.LogError($"Did not found action constraint for {routeName}");
                 return null;
             }
 
@@ -40,6 +43,7 @@
 
             if (url is null)
             {
+                _logger.LogError($"Failed when creating url for {routeName}");
                 return null;
             }
 

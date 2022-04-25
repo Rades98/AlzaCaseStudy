@@ -3,7 +3,7 @@
     using Interfaces;
     using Interfaces.Cache;
     using MediatR;
-    using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Logging;
     using Newtonsoft.Json;
     using System.Text;
@@ -17,10 +17,10 @@
         where TRequest : IRequest<TResponse>, ICacheableWithIdQuery
         where TResponse : IRecord
     {
-        private readonly IDistributedCache _cache;
+        private readonly IMemoryCache _cache;
         private readonly ILogger<TResponse> _logger;
 
-        public CachingRecordsPipeline(IDistributedCache cache, ILogger<TResponse> logger) => (_cache, _logger) = (cache, logger);
+        public CachingRecordsPipeline(IMemoryCache cache, ILogger<TResponse> logger) => (_cache, _logger) = (cache, logger);
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -28,7 +28,7 @@
 
             if (cachedResponse != null)
             {
-                var fromCache = JsonConvert.DeserializeObject<IEnumerable<TResponse>>(Encoding.Default.GetString(cachedResponse));
+                var fromCache = JsonConvert.DeserializeObject<IEnumerable<TResponse>>(Encoding.Default.GetString((byte[])cachedResponse));
                 if (fromCache is not null)
                 {
                     var result = fromCache.FirstOrDefault(x => x.Id == request.Id);

@@ -21,7 +21,7 @@ app.UseAuthorization();
 
 app.UseEndpoints(builder => builder.MapControllers());
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>

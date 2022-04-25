@@ -40,7 +40,6 @@
                         e => e.OrderByDescending(orderBy),
                         e => e.OrderBy(orderBy))
                     .ToPagedListAsync(pageNum, pageSize, cancellationToken);
-
         }
 
         /// <inheritdoc/>

@@ -1,6 +1,7 @@
 ﻿namespace UnitTests.Products.Controller
 {
     using API.Controllers.Products.v1;
+    using DomainLayer.Entities.Product;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Mocks.MockMediator.ProductUpdateResponse;
@@ -14,7 +15,7 @@
         public async void UpdateTest()
         {
             //Arrange
-            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
+            var controller = new ProductsController(Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
 
             //Act
             var actionResult = await controller.UpdateAsync(ProductUpdateRequest.Id, ProductUpdateRequest.Description);
@@ -30,7 +31,7 @@
         public async void UpdateTestNotFound()
         {
             //Arrange
-            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
+            var controller = new ProductsController(Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
 
             //Act
             var actionResult = await controller.UpdateAsync(ProductUpdateRequestNotFound.Id, ProductUpdateRequestNotFound.Description);
@@ -46,7 +47,7 @@
         public async void UpdateTestUpToDate()
         {
             //Arrange
-            var controller = new ProductsController(Mediator, ActionDescriptorCollectionProviderMock.ADCP);
+            var controller = new ProductsController(Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
 
             //Act
             var actionResult = await controller.UpdateAsync(ProductUpdateRequestUpToDate.Id, ProductUpdateRequestUpToDate.Description);

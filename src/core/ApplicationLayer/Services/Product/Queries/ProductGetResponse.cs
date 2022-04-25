@@ -3,6 +3,7 @@
     using ApplicationLayer.Dtos;
     using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
+
     /// <summary>
     /// Shared response for Get based requests
     /// </summary>
@@ -16,7 +17,6 @@
         public DateTime Created { get; set; }
         public DateTime? Changed { get; set; }
         public DateTime? Deleted { get; set; }
-
 
         public ProductGetResponse() { }
 

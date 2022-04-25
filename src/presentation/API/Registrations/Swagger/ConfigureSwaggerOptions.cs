@@ -1,6 +1,5 @@
 ﻿namespace API.Registrations.Swagger
 {
-    using Microsoft.AspNetCore.Mvc.ApiExplorer;
     using Microsoft.Extensions.Options;
     using Microsoft.OpenApi.Models;
     using Swashbuckle.AspNetCore.SwaggerGen;
@@ -8,8 +7,7 @@
     /// <summary>
     /// Configures the Swagger generation options.
     /// </summary>
-    /// <remarks>This allows API versioning to define a Swagger document per API version after the
-    /// <see cref="IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+    /// <remarks>This allows API versioning to define a Swagger document per API version after the</remarks>
     public class ConfigureSwaggerOptions : IConfigureOptions<SwaggerGenOptions>
     {
         public void Configure(SwaggerGenOptions options)

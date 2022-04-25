@@ -32,7 +32,7 @@
                     return products.Select(x => (ProductGetResponse)x);
                 }
 
-                return null;           
+                return null;
             }
         }
     }
