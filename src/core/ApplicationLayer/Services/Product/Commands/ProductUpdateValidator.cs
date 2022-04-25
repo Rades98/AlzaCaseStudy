@@ -1,7 +1,7 @@
-﻿using FluentValidation;
-
-namespace ApplicationLayer.Services.Product.Commands
+﻿namespace ApplicationLayer.Services.Product.Commands
 {
+    using FluentValidation;
+
     /// <summary>
     /// validator for <see cref="ProductUpdateRequest"/>
     /// </summary>

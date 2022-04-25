@@ -1,7 +1,6 @@
 ﻿namespace PersistenceLayer.Database
 {
     using ApplicationLayer.Interfaces;
-    using DomainLayer.Entities;
     using DomainLayer.Entities.Product;
     using Extensions;
     using Microsoft.EntityFrameworkCore;

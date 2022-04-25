@@ -1,11 +1,11 @@
 ﻿namespace ApplicationLayer.Cache
 {
-    using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Caching.Memory;
 
     /// <summary>
     /// Options for cache
     /// </summary>
-    public class CacheEntryOptions : DistributedCacheEntryOptions
+    public class CacheEntryOptions : MemoryCacheEntryOptions
     {
         public static CacheEntryOptions Default => new()
         {

@@ -40,8 +40,8 @@
             #region Mock repo setups
 
             mockRepo.Setup(repo => repo.GetAllAsync(
-                ProductsGetRequest.OrderByDesc, 
-                ProductsGetRequest.OrderBy, 
+                ProductsGetRequest.OrderByDesc,
+                ProductsGetRequest.OrderBy,
                 CancellationToken.None
                  ))
                  .ReturnsAsync(products
@@ -50,8 +50,8 @@
                      .ToList());
 
             mockRepo.Setup(repo => repo.GetAllAsync(
-                ProductsGetRequestWhenNone.OrderByDesc, 
-                ProductsGetRequestWhenNone.OrderBy, 
+                ProductsGetRequestWhenNone.OrderByDesc,
+                ProductsGetRequestWhenNone.OrderBy,
                 CancellationToken.None
                 ))
                 .ReturnsAsync(new List<ProductEntity>());

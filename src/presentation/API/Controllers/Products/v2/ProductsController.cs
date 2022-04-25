@@ -14,7 +14,7 @@
     [ApiVersion("2")]
     public class ProductsController : BaseController<ProductEntity>
     {
-        public ProductsController(IMediator mediator, IActionDescriptorCollectionProvider adcp) : base(mediator, adcp)
+        public ProductsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductEntity> logger) : base(mediator, adcp, logger)
         {
         }
 
@@ -53,10 +53,9 @@
 
         private ProductGetResponse RestfullProductGetResponse(ProductGetResponse response)
         {
-            var all = UrlLink("all", nameof(GetProductsAsync), new { pageSize = "xy", pageNum = "xy" });
+            var all = UrlLink("all", nameof(GetProductsAsync), new { pageSize = 10, pageNum = 1 });
             var self = UrlLink("_self", nameof(v1.ProductsController.GetByIdAsync), new { id = response.Id });
             var update = UrlLink("update", nameof(v1.ProductsController.UpdateAsync), new { id = response.Id, description = "new_description" });
-
 
             if (all is not null)
             {

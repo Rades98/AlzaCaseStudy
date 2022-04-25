@@ -7,6 +7,7 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.Extensions.Logging;
 
     /// <summary>
     /// Products endpoint v1
@@ -15,7 +16,7 @@
     [ApiVersion("1")]
     public class ProductsController : BaseController<ProductEntity>
     {
-        public ProductsController(IMediator mediator, IActionDescriptorCollectionProvider adcp) : base(mediator, adcp)
+        public ProductsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductEntity> logger) : base(mediator, adcp, logger)
         {
         }
 
@@ -114,7 +115,6 @@
             {
                 return BadRequest(e.Message);
             }
-
         }
 
         private ProductGetResponse RestfullProductGetResponse(ProductGetResponse response)
@@ -122,7 +122,6 @@
             var all = UrlLink("all", nameof(GetProductsAsync));
             var self = UrlLink("_self", nameof(GetByIdAsync), new { id = response.Id });
             var update = UrlLink("update", nameof(UpdateAsync), new { id = response.Id, description = "new_description" });
-
 
             if (all is not null)
             {

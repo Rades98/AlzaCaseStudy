@@ -32,7 +32,6 @@
                 .Where(failure => failure != null && failure.Severity == Severity.Warning)
                 .ToList();
 
-
             if (failures.Count != 0)
             {
                 failures.ForEach(f => _logger.LogError(f.ErrorMessage));

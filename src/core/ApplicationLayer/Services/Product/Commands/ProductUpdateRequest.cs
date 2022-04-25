@@ -17,7 +17,6 @@
     {
         public Guid Id { get; set; }
         public string Description { get; set; } = "";
-
         public string CacheKey => Cache.CacheKeys.Products;
 
         public class Handler : IRequestHandler<ProductUpdateRequest, ProductUpdateResponse>

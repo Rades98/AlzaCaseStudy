@@ -2,7 +2,7 @@
 {
     using Interfaces.Cache;
     using MediatR;
-    using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -12,14 +12,14 @@
     /// <typeparam name="TResponse">response</typeparam>
     public class CacheRemovingPipeline<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>, IInvalidableCommand
     {
-        private readonly IDistributedCache _cache;
+        private readonly IMemoryCache _cache;
         private readonly ILogger<TResponse> _logger;
 
-        public CacheRemovingPipeline(IDistributedCache cache, ILogger<TResponse> logger) => (_cache, _logger) = (cache, logger);
+        public CacheRemovingPipeline(IMemoryCache cache, ILogger<TResponse> logger) => (_cache, _logger) = (cache, logger);
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            await _cache.RemoveAsync(request.CacheKey, cancellationToken);
+            _cache.Remove(request.CacheKey);
             _logger.LogInformation($"Removed from Cache : '{request.CacheKey}'.");
             return await next();
         }

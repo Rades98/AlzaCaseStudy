@@ -73,8 +73,6 @@
             var mockMediator = new Mock<IMediator>();
             _responses.Add(new ProductGetResponse() { Name = "test item", Created = DateTime.Now, Price = 0, Id = ProductGetRequest.Id, ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test data" });
 
-
-
             mockMediator.Setup(m => m.Send(ProductsGetRequest, CancellationToken.None)).ReturnsAsync(_responses);
             mockMediator.Setup(m => m.Send(ProductsGetPaginatedRequest, CancellationToken.None))
                 .ReturnsAsync(ProductsGetPaginatedResponse);
