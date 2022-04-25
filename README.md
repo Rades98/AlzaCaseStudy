@@ -69,10 +69,6 @@ CQRS and Mediator fits each other [CQRS & Mediator](https://medium.com/@darshana
     <td>Logging</td>
   </tr>
   <tr>
-    <td>Serilog</td>
-    <td>Logging</td>
-  </tr>
-  <tr>
     <td>Swashbuckle.AspNetCore</td>
     <td>Swagger tools for documentation</td>
   </tr>
