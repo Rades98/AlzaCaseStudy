@@ -20,7 +20,6 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 
-
 app.UseEndpoints(builder =>
 {
     builder.MapControllers();

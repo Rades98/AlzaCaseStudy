@@ -6,7 +6,6 @@ namespace API.Registrations.HealthChecks
     {
         public static IHealthChecksBuilder AddCustomHealthChecks(this IServiceCollection services, IConfiguration configuration)
         {
-
             var builder = services.AddHealthChecks();
 
             builder.AddCheck<HealthCheckDbContextCheck>(nameof(HealthCheckDbContextCheck));
