@@ -1,5 +1,7 @@
 using API.Registrations;
 using Autofac.Extensions.DependencyInjection;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +20,15 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthorization();
 
-
-app.UseEndpoints(builder => builder.MapControllers());
+app.UseEndpoints(builder =>
+{
+    builder.MapControllers();
+    builder.MapHealthChecks("/hc", new HealthCheckOptions()
+    {
+        Predicate = _ => true,
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+});
 
 if (app.Environment.IsDevelopment())
 {
@@ -30,5 +39,7 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
     });
 }
+
+app.UseHealthChecksUI(config => config.UIPath = "/hc-ui");
 
 app.Run();
