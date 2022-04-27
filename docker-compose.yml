@@ -11,5 +11,17 @@ services:
     build:
       context: .
       dockerfile: src/presentation/API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Release
+      - ASPNETCORE_URLS=https://+:443;
+      #dotnet dev-certs https -ep %USERPROFILE%\.aspnet\https\aspnetapp.pfx -p SuperCool_CertPW --trust
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=SuperCool_CertPW 
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    ports:
+      - "58419:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ~/.aspnet/https:/https:ro
     depends_on:
       - db
