@@ -2,6 +2,8 @@ using API.Registrations;
 using Autofac.Extensions.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.EntityFrameworkCore;
+using PersistenceLayer.Database;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,5 +43,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHealthChecksUI(config => config.UIPath = "/hc-ui");
+
+
+using (var context = app.Services.GetService(typeof(ADbContext)) as ADbContext)
+{
+    if (context is not null)
+    {
+        context.Database.Migrate();
+    }
+}
 
 app.Run();
