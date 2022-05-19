@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseResponseCompression();
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseRouting();
