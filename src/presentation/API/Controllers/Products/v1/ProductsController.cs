@@ -32,23 +32,18 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProductsAsync(CancellationToken cancellationToken = default)
         {
-            try
-            {
-                var results = await Mediator.Send(new ProductsGetRequest() { OrderBy = p => p.Name }, cancellationToken);
+            var results = await Mediator.Send(new ProductsGetRequest() { OrderBy = p => p.Name }, cancellationToken);
 
-                if (results.Any())
-                {
-                    return Ok(results.Select(product => RestfullProductGetResponse(product)));
-                }
-
-                return NotFound();
-            }
-            catch (Exception e)
+            if (results.Any())
             {
-                return BadRequest(e.Message);
+                return Ok(results.Select(product => RestfullProductGetResponse(product)));
             }
+
+            return NotFound();
         }
 
         /// <summary>
@@ -65,22 +60,17 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ProductGetResponse?>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            try
+            var result = await Mediator.Send(new ProductGetRequest() { Id = id }, cancellationToken);
+            if (result is not null)
             {
-                var result = await Mediator.Send(new ProductGetRequest() { Id = id }, cancellationToken);
-                if (result is not null)
-                {
-                    return Ok(RestfullProductGetResponse(result));
-                }
+                return Ok(RestfullProductGetResponse(result));
+            }
 
-                return NotFound();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            return NotFound();
         }
 
         /// <summary>
@@ -98,23 +88,18 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ProductUpdateResponse>> UpdateAsync(Guid id, string description, CancellationToken cancellationToken = default)
         {
-            try
-            {
-                var result = await Mediator.Send(new ProductUpdateRequest { Id = id, Description = description }, cancellationToken);
+            var result = await Mediator.Send(new ProductUpdateRequest { Id = id, Description = description }, cancellationToken);
 
-                if (result.Updated || result.UpToDate)
-                {
-                    return Ok(result);
-                }
-
-                return NotFound(result);
-            }
-            catch (Exception e)
+            if (result.Updated || result.UpToDate)
             {
-                return BadRequest(e.Message);
+                return Ok(result);
             }
+
+            return NotFound(result);
         }
 
         private ProductGetResponse RestfullProductGetResponse(ProductGetResponse response)

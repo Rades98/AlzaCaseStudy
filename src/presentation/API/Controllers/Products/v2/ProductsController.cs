@@ -33,22 +33,17 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<ProductGetResponse>>> GetProductsAsync(int pageSize, int pageNum, CancellationToken cancellationToken = default)
         {
-            try
+            var results = await Mediator.Send(new ProductsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = pageNum, PageSize = pageSize }, cancellationToken);
+            if (results.Any())
             {
-                var results = await Mediator.Send(new ProductsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = pageNum, PageSize = pageSize }, cancellationToken);
-                if (results.Any())
-                {
-                    return Ok(results.Select(product => RestfullProductGetResponse(product)));
-                }
+                return Ok(results.Select(product => RestfullProductGetResponse(product)));
+            }
 
-                return NotFound();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
+            return NotFound();
         }
 
         private ProductGetResponse RestfullProductGetResponse(ProductGetResponse response)
