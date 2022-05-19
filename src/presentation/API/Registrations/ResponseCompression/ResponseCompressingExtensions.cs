@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.ResponseCompression;
-using System.IO.Compression;
-
-namespace API.Registrations.ResponseCompression
+﻿namespace API.Registrations.ResponseCompression
 {
+    using Microsoft.AspNetCore.ResponseCompression;
+    using System.IO.Compression;
+
     public static class ResponseCompressingExtensions
     {
         public static void ConfigureResponseCompression(this IServiceCollection services)
@@ -15,8 +15,8 @@ namespace API.Registrations.ResponseCompression
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
-                options.Providers.Add<GzipCompressionProvider>(); 
-            });         
+                options.Providers.Add<GzipCompressionProvider>();
+            });
         }
     }
 }
