@@ -1,6 +1,6 @@
 ﻿namespace API.Middleware
 {
-    using API.Models;
+    using Models;
     using System.Net;
 
     /// <summary>

@@ -29,12 +29,12 @@
             {
                 var products = await _repo.GetAllPaginatedAsync(request.PageNumber, request.PageSize, request.OrderByDesc, request.OrderBy, cancellationToken);
 
-                if(products.Count > 0)
+                if (products.Count > 0)
                 {
                     return products.Select(x => (ProductGetResponse)x);
                 }
 
-                return null; 
+                return null;
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries.Requests
 {
-    using ApplicationLayer.Interfaces.Cache;
+    using Interfaces.Cache;
     using DomainLayer.Entities.Product;
     using Interfaces;
     using MediatR;
@@ -27,7 +27,7 @@
             {
                 var products = await _repo.GetAllAsync(request.OrderByDesc, request.OrderBy, cancellationToken);
 
-                if(products.Count > 0)
+                if (products.Count > 0)
                 {
                     return products.Select(x => (ProductGetResponse)x);
                 }

@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-
-namespace API.Models
+﻿namespace API.Models
 {
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Response for production env in case of error
     /// </summary>

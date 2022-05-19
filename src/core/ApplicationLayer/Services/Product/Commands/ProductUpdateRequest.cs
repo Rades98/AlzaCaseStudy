@@ -1,8 +1,8 @@
 ﻿namespace ApplicationLayer.Services.Product.Commands
 {
-    using ApplicationLayer.Interfaces.Cache;
     using DomainLayer.Entities.Product;
     using Interfaces;
+    using Interfaces.Cache;
     using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
@@ -58,7 +58,6 @@
                 }
 
                 return response;
-
             }
         }
     }

@@ -1,9 +1,9 @@
 ﻿namespace API.Registrations
 {
-    using API.Registrations.HealthChecks;
-    using API.Registrations.ResponseCompression;
     using ApplicationLayer;
+    using HealthChecks;
     using PersistenceLayer;
+    using ResponseCompression;
     using Swagger;
     using System.Reflection;
 
@@ -21,7 +21,7 @@
             {
                 o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
             });
-            services.AddCustomHealthChecks(configuration);         
+            services.AddCustomHealthChecks(configuration);
 
             return services;
         }

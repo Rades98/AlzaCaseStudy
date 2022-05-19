@@ -1,6 +1,6 @@
 ﻿namespace API.Extensions
 {
-    using API.Middleware;
+    using Middleware;
 
     public static class ExceptionHandlingExtensions
     {

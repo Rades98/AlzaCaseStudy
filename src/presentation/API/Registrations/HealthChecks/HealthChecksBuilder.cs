@@ -1,7 +1,7 @@
-﻿using API.HealthChecks;
-
-namespace API.Registrations.HealthChecks
+﻿namespace API.Registrations.HealthChecks
 {
+    using API.HealthChecks;
+
     public static class HealthChecksBuilder
     {
         public static IHealthChecksBuilder AddCustomHealthChecks(this IServiceCollection services, IConfiguration configuration)
@@ -12,7 +12,7 @@ namespace API.Registrations.HealthChecks
 
             services.AddHealthChecksUI()
                     .AddSqlServerStorage(configuration.GetConnectionString("HealthChecksDb"));
-                    
+
             return builder;
         }
     }
