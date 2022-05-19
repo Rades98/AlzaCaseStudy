@@ -1,6 +1,7 @@
 ﻿namespace API.Registrations
 {
     using API.Registrations.HealthChecks;
+    using API.Registrations.ResponseCompression;
     using ApplicationLayer;
     using PersistenceLayer;
     using Swagger;
@@ -10,6 +11,7 @@
     {
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.ConfigureResponseCompression();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.RegisterDatabase(configuration);
             services.AddApplicationServices();
@@ -19,7 +21,7 @@
             {
                 o.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
             });
-            services.AddCustomHealthChecks(configuration);
+            services.AddCustomHealthChecks(configuration);         
 
             return services;
         }
