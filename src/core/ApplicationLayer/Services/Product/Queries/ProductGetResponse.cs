@@ -1,8 +1,8 @@
 ﻿namespace ApplicationLayer.Services.Product.Queries
 {
-    using ApplicationLayer.Dtos;
-    using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
+    using Dtos;
+    using Interfaces;
 
     /// <summary>
     /// Shared response for Get based requests

@@ -40,7 +40,7 @@
 
             if (warnings.Count != 0)
             {
-                failures.ForEach(f => _logger.LogWarning(f.ErrorMessage));
+                warnings.ForEach(f => _logger.LogWarning(f.ErrorMessage));
             }
 
             return next();

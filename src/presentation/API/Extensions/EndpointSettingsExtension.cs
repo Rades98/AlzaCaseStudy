@@ -17,7 +17,8 @@
                 });
             });
 
-            app.UseHealthChecksUI(config => {
+            app.UseHealthChecksUI(config =>
+            {
                 config.UIPath = "/hc-ui";
             });
         }
