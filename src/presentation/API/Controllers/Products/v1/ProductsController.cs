@@ -94,7 +94,7 @@
         {
             var result = await Mediator.Send(new ProductUpdateRequest { Id = id, Description = description }, cancellationToken);
 
-            if (result.Updated || result.UpToDate)
+            if (result is not null && (result.Updated || result.UpToDate))
             {
                 return Ok(result);
             }
