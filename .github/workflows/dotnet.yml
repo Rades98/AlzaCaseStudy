@@ -20,6 +20,8 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./AlzaCaseStudy.sln
     - name: Build
-      run: dotnet build ./src/presentation/API/API.csproj --no-restore
+      run: dotnet build ./src/presentation/API/API.csproj --no-restore    
+    - name: Build Tests
+      run: dotnet build ./tests/UnitTests/UnitTests.csproj --no-restore
     - name: Test
       run: dotnet test tests/UnitTests/bin/Debug/net6.0/UnitTests.dll --no-build --verbosity normal
