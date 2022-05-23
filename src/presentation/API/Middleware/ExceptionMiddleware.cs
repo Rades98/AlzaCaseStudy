@@ -1,5 +1,6 @@
 ﻿namespace API.Middleware
 {
+    using ApplicationLayer.Exceptions;
     using Models;
     using System.Net;
 
@@ -43,6 +44,10 @@
                 case BadHttpRequestException _:
                     message = "Bad request";
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+                case UserLoginException uex:
+                    message = uex.Message;
+                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                     break;
                     //and so on...
             }

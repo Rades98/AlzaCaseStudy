@@ -2,6 +2,7 @@
 {
     using ApplicationLayer.Interfaces;
     using DomainLayer.Entities.Product;
+    using DomainLayer.Entities.Users;
     using Extensions;
     using Microsoft.EntityFrameworkCore;
 
@@ -37,6 +38,9 @@
 
         /// <inheritdoc/>
         public DbSet<ProductEntity> Products => Set<ProductEntity>();
+        public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();
+        public DbSet<UserEntity> Users => Set<UserEntity>();
+        public DbSet<UserRoleRelationEntity> UserRoleRelation => Set<UserRoleRelationEntity>();
 
         #endregion
 
