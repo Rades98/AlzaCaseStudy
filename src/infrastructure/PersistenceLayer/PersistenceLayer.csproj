@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\UserRolesCodeList\UserRolesCodeList.csproj" />
     <ProjectReference Include="..\..\core\ApplicationLayer\ApplicationLayer.csproj" />
+    <ProjectReference Include="..\UserRolesCodeList\UserRolesCodeList.csproj" />
   </ItemGroup>
 
 </Project>

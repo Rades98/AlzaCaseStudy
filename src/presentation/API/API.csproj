@@ -37,8 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\UserRolesCodeList\UserRolesCodeList.csproj" />
     <ProjectReference Include="..\..\infrastructure\PersistenceLayer\PersistenceLayer.csproj" />
+    <ProjectReference Include="..\..\infrastructure\UserRolesCodeList\UserRolesCodeList.csproj" />
   </ItemGroup>
 
   <ItemGroup>
