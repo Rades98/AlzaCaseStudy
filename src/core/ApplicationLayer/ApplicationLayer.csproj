@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\Users\Queries\**" />
+    <EmbeddedResource Remove="Services\Users\Queries\**" />
+    <None Remove="Services\Users\Queries\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.4.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
@@ -20,10 +26,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Users\Queries\" />
   </ItemGroup>
 
 </Project>
