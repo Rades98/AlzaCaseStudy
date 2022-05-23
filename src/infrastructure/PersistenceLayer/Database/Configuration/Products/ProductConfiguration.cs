@@ -1,10 +1,10 @@
-﻿namespace PersistenceLayer.Database.Configuration
+﻿namespace PersistenceLayer.Database.Configuration.Products
 {
     using DomainLayer.Entities.Product;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal class DbConfigurations : IEntityTypeConfiguration<ProductEntity>
+    internal class ProductConfigurations : IEntityTypeConfiguration<ProductEntity>
     {
         public void Configure(EntityTypeBuilder<ProductEntity> builder)
         {

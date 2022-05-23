@@ -5,9 +5,11 @@
     using ApplicationLayer.Services.Product.Queries.Requests;
     using DomainLayer.Entities.Product;
     using MediatR;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Logging;
+    using UserRolesCodeList;
 
     /// <summary>
     /// Products endpoint v1
@@ -82,11 +84,13 @@
         /// <remarks>
         /// Returns updated product if operation was succesfull, otherwise returns status
         /// </remarks>
-        [HttpPatch(Name = nameof(UpdateAsync))]
+        [HttpPatch(Name = nameof(UpdateAsync)), Authorize(Roles = UserRoles.Admin)]
         [MapToApiVersion("1")]
         [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status408RequestTimeout)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

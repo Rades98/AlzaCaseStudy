@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Utils
+﻿namespace ApplicationLayer.Utils.Pipelines
 {
     using MediatR;
     using Microsoft.Extensions.Logging;

@@ -1,6 +1,8 @@
 ﻿namespace PersistenceLayer.Database.Extensions
 {
+    using ApplicationLayer.Utils.PasswordHashing;
     using DomainLayer.Entities.Product;
+    using DomainLayer.Entities.Users;
     using Microsoft.EntityFrameworkCore;
 
     internal static class ModelBuilderExtensions
@@ -83,12 +85,52 @@
                 new ProductEntity() { Name = "Pagination test item 50", Created = _created, Price = 0, Id = new Guid("53a01ec6-10fc-4977-8e4e-b8422e1f7481"), ImgUri = new Uri("http://www.pagination.xx/pag"), Description = "Test pagination data" },
             };
 
+
+
+            var userRoles = new List<UserRoleEntity>()
+            {
+                new UserRoleEntity()
+                {
+                    Id = new Guid("7CFD3E28-C6ED-48B9-8D08-424751E77EAF"),
+                    Name = UserRolesCodeList.UserRoles.Admin,
+                    Created = _created
+                }
+            };
+
+
+            // Admin
+            // aJc48262_1Kjkz>X!
+            PasswordHashing.CreatePasswordHash("aJc48262_1Kjkz>X!", out byte[] pwHash, out byte[] pwSalt);
+
+            var users = new List<UserEntity>()
+            {
+                new()
+                {
+                    Id=new Guid("1D984227-1A68-4AA2-98FE-8C398E02FF85"),
+                    Name = "Admin",
+                    UserName = "Admin",
+                    Surname = "Admin",
+                    PasswordHash = pwHash,
+                    PasswordSalt = pwSalt,
+                    Email = "some@email.com",
+                    Created = _created
+                }
+            };
+
             modelBuilder.Entity<ProductEntity>()
                 .HasData(smth, smth2);
 
             //Add pagination test data
             modelBuilder.Entity<ProductEntity>()
                 .HasData(pagData);
+
+            //Add user roles
+            modelBuilder.Entity<UserRoleEntity>()
+                .HasData(userRoles);
+
+            //Add user
+            modelBuilder.Entity<UserEntity>()
+                .HasData(users);
 
             return modelBuilder;
         }

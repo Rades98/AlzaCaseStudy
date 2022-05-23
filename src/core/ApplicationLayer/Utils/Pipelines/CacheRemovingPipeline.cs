@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Utils
+﻿namespace ApplicationLayer.Utils.Pipelines
 {
     using Interfaces.Cache;
     using MediatR;
