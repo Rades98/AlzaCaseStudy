@@ -5,6 +5,7 @@
     using DomainLayer.Entities;
     using Microsoft.EntityFrameworkCore;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
     using X.PagedList;
 
@@ -47,6 +48,29 @@
         {
             _dbContext.Set<T>().Update(entity);
             await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public async Task<IReadOnlyList<T>> GetAllWhereAsync(Func<T, bool> whereClause, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Set<T>()
+                .Where(whereClause)
+                .ToListAsync(cancellationToken);
+        }
+
+
+        /// <inheritdoc/>
+        public async Task<IReadOnlyList<T2>> SelectAsync<T2>(Func<T, T2> selectClause, CancellationToken cancellationToken) where T2 : class
+        {
+            return await _dbContext.Set<T>()
+                .Select(selectClause)
+                .ToListAsync(cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public async Task<T?> FirstOrDefault(Expression<Func<T, bool>> clause, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Set<T>().FirstOrDefaultAsync(clause, cancellationToken);
         }
     }
 }
