@@ -45,7 +45,7 @@
 
                 var roleRelations = await _userRoleRelationRepo.GetAllWhereAsync(rr => rr.UserId == user.Id, cancellationToken);
 
-                var roles = (await _userRoleRepo.SelectAsync<string>(role => role.Name, cancellationToken)).ToList();
+                var roles = (await _userRoleRepo.SelectAsync(role => role.Name, cancellationToken)).ToList();
 
                 return new UserLoginResponse()
                 {

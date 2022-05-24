@@ -60,11 +60,11 @@
 
 
         /// <inheritdoc/>
-        public async Task<List<object>> SelectAsync(Func<T, object> selectClause, CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<T2>> SelectAsync<T2>(Func<T, T2> selectClause, CancellationToken cancellationToken) where T2 : class
         {
             return await _dbContext.Set<T>()
                 .Select(selectClause)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
         }
 
         /// <inheritdoc/>

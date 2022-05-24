@@ -51,7 +51,7 @@ namespace ApplicationLayer.Interfaces
         /// <param name="selectClause">select clause</param>
         /// <param name="cancellationToken">cancellation token</param>
         /// <returns></returns>
-        public Task<IReadOnlyList<T2>> SelectAsync<T2>(Func<T, object> selectClause, CancellationToken cancellationToken) where T2 : class;
+        public Task<IReadOnlyList<T2>> SelectAsync<T2>(Func<T, T2> selectClause, CancellationToken cancellationToken) where T2 : class;
 
         /// <summary>
         /// First or default
