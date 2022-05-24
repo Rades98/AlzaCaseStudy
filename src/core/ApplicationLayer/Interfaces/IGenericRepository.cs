@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Entities;
+using System.Linq.Expressions;
 
 namespace ApplicationLayer.Interfaces
 {
@@ -26,6 +27,14 @@ namespace ApplicationLayer.Interfaces
         public Task<IReadOnlyList<T>> GetAllAsync(bool orderByDesc, Func<T, object> orderBy, CancellationToken cancellationToken);
 
         /// <summary>
+        /// Get all where
+        /// </summary>
+        /// <param name="whereClause">Where cleuse</param>
+        /// <param name="cancellationToken">cancellation token</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<T>> GetAllWhereAsync(Func<T, bool> whereClause, CancellationToken cancellationToken);
+
+        /// <summary>
         /// Get all entities in page of specified size
         /// </summary>
         /// <param name="pageNum">Page number</param>
@@ -35,6 +44,22 @@ namespace ApplicationLayer.Interfaces
         /// <param name="cancellationToken">cancellation token</param>
         /// <returns>Paged List of entities</returns>
         public Task<IReadOnlyList<T>> GetAllPaginatedAsync(int pageNum, int pageSize, bool orderByDesc, Func<T, object> orderBy, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Select async
+        /// </summary>
+        /// <param name="selectClause">select clause</param>
+        /// <param name="cancellationToken">cancellation token</param>
+        /// <returns></returns>
+        public Task<IReadOnlyList<T2>> SelectAsync<T2>(Func<T, object> selectClause, CancellationToken cancellationToken) where T2 : class;
+
+        /// <summary>
+        /// First or default
+        /// </summary>
+        /// <param name="clause">where clause</param>
+        /// <param name="cancellationToken">cancellation token</param>
+        /// <returns></returns>
+        public Task<T?> FirstOrDefault(Expression<Func<T, bool>> clause, CancellationToken cancellationToken);
 
         /// <summary>
         /// Update entity

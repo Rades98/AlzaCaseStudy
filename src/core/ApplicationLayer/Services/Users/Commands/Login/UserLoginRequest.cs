@@ -31,7 +31,7 @@
             public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
             {
                 // add procedure to obtain these data, cause there is no way to make it generic and nice
-                var user = (await _userRepo.GetAllAsync(false, x => x.UserName, cancellationToken)).FirstOrDefault(u => u.Name == request.UserName);
+                var user = await _userRepo.FirstOrDefault(u => u.Name == request.UserName, cancellationToken);
 
                 if (user == null)
                 {
@@ -43,9 +43,9 @@
                     throw new UserLoginException("Wrong PW");
                 }
 
-                var roleRelations = (await _userRoleRelationRepo.GetAllAsync(false, x => x.UserId, cancellationToken)).Where(rr => rr.UserId == user.Id).ToList();
+                var roleRelations = await _userRoleRelationRepo.GetAllWhereAsync(rr => rr.UserId == user.Id, cancellationToken);
 
-                var roles = (await _userRoleRepo.GetAllAsync(false, x => x.Id, cancellationToken)).Select(role => role.Name).ToList();
+                var roles = (await _userRoleRepo.SelectAsync<string>(role => role.Name, cancellationToken)).ToList();
 
                 return new UserLoginResponse()
                 {
