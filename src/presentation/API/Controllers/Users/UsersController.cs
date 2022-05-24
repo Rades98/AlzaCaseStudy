@@ -26,7 +26,7 @@
         /// <param name="user">user to log in</param>
         /// <param name="cancellationToken">cancelation token</param>
         /// <remarks>
-        /// Returns all products, if there is none, returns null
+        /// Returns token if credentials were correct
         /// </remarks>
         [HttpPost(Name = nameof(LoginUserAsync))]
         [MapToApiVersion("1")]
