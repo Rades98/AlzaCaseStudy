@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\core\ApplicationLayer\ApplicationLayer.csproj" />
+    <ProjectReference Include="..\ProductCategoryCodeList\ProductCategoryCodeList.csproj" />
     <ProjectReference Include="..\UserRolesCodeList\UserRolesCodeList.csproj" />
   </ItemGroup>
 

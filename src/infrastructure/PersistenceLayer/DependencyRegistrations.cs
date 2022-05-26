@@ -11,7 +11,10 @@
     {
         public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ADbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ADb")))
+            services.AddDbContext<ADbContext>(options => {
+                options.UseSqlServer(configuration.GetConnectionString("ADb"));
+                options.EnableSensitiveDataLogging();
+            })
                     .AddScoped<IDbContext>(provider => provider.GetRequiredService<ADbContext>())
                     .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             return services;
