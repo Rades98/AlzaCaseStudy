@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "tests\UnitTest
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{2BD4FF10-30D7-48E2-A7B3-5E85E562A298}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserRolesCodeList", "src\infrastructure\UserRolesCodeList\UserRolesCodeList.csproj", "{9C00107C-DCCA-4331-BA0D-293A239AB9FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserRolesCodeList", "src\infrastructure\UserRolesCodeList\UserRolesCodeList.csproj", "{9C00107C-DCCA-4331-BA0D-293A239AB9FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

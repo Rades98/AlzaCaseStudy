@@ -4,9 +4,7 @@
     using Exceptions;
     using Interfaces;
     using MediatR;
-    using Microsoft.IdentityModel.Tokens;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
+    using System.Linq.Expressions;
     using Utils.PasswordHashing;
 
     public class UserLoginRequest : IRequest<UserLoginResponse>
@@ -17,7 +15,6 @@
 
         public class Handler : IRequestHandler<UserLoginRequest, UserLoginResponse>
         {
-            //This logic should be in some procedure
             private readonly IGenericRepository<UserEntity> _userRepo;
             private readonly IGenericRepository<UserRoleEntity> _userRoleRepo;
             private readonly IGenericRepository<UserRoleRelationEntity> _userRoleRelationRepo;
@@ -30,49 +27,29 @@
 
             public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
             {
-                // add procedure to obtain these data, cause there is no way to make it generic and nice
-                var user = await _userRepo.FirstOrDefault(u => u.Name == request.UserName, cancellationToken);
+                var user = await _userRepo.FirstOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken);
 
                 if (user == null)
                 {
-                    throw new UserLoginException("User not found");
+                    throw new UserLoginException(UserLoginException.UsrNotFound);
                 }
 
                 if (!PasswordHashing.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                 {
-                    throw new UserLoginException("Wrong PW");
+                    throw new UserLoginException(UserLoginException.WrongPw);
                 }
 
-                var roleRelations = await _userRoleRelationRepo.GetAllWhereAsync(rr => rr.UserId == user.Id, cancellationToken);
+                var roleRelations = await _userRoleRelationRepo
+                    .GetAllWhereAsync(rr => rr.UserId == user.Id, cancellationToken);
 
-                var roles = (await _userRoleRepo.SelectAsync(role => role.Name, cancellationToken)).ToList();
+                var roles = (await _userRoleRepo.GetAllWhereAsync(role => roleRelations.Select(x => x.RoleId).Contains(role.Id), cancellationToken)).Select(role => role.Name).ToList();
 
                 return new UserLoginResponse()
                 {
-                    UserName = user.Name,
-                    Token = CreateToken(user.Name, request.Token, roles),
+                    UserName = user.UserName,
+                    Token = PasswordHashing.CreateToken(user.UserName, request.Token, roles),
                     Roles = roles
                 };
-            }
-
-            private static string CreateToken(string name, byte[] appToken, List<string> roles)
-            {
-                List<Claim> claims = new()
-                {
-                    new Claim(ClaimTypes.Name, name),
-                };
-
-                roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
-
-                var key = new SymmetricSecurityKey(appToken);
-
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddDays(1), signingCredentials: creds);
-
-                var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-                return jwt;
             }
         }
     }
