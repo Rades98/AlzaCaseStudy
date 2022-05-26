@@ -38,10 +38,12 @@
 
         /// <inheritdoc/>
         public DbSet<ProductEntity> Products => Set<ProductEntity>();
+        public DbSet<ProductCategoryEntity> ProductCategories => Set<ProductCategoryEntity>();
+
         public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();
         public DbSet<UserEntity> Users => Set<UserEntity>();
         public DbSet<UserRoleRelationEntity> UserRoleRelation => Set<UserRoleRelationEntity>();
-
+        
         #endregion
 
         #region private methods 

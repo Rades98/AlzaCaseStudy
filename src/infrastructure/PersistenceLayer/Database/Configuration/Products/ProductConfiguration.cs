@@ -32,6 +32,11 @@
 
             builder.Property(product => product.Description)
                 .HasMaxLength(250);
+
+            builder
+                .HasOne(x => x.ProductCategory)
+                .WithMany(x => x.Products)
+                .HasForeignKey(x => x.ProductCategoryId);
         }
     }
 }
