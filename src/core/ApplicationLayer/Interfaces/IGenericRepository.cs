@@ -1,4 +1,5 @@
 ﻿using DomainLayer.Entities;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace ApplicationLayer.Interfaces
@@ -59,7 +60,7 @@ namespace ApplicationLayer.Interfaces
         /// <param name="clause">where clause</param>
         /// <param name="cancellationToken">cancellation token</param>
         /// <returns></returns>
-        public Task<T?> FirstOrDefault(Expression<Func<T, bool>> clause, CancellationToken cancellationToken);
+        public Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> clause, CancellationToken cancellationToken);
 
         /// <summary>
         /// Update entity
@@ -67,5 +68,13 @@ namespace ApplicationLayer.Interfaces
         /// <param name="entity">Entity to update</param>
         /// <param name="cancellationToken">cancellation token</param>
         public Task UpdateAsync(T entity, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Include
+        /// </summary>
+        /// <typeparam name="TProperty">Property</typeparam>
+        /// <param name="navigationPropertyPath">navigation property path</param>
+        /// <returns></returns>
+        public IIncludableQueryable<T, TProperty> Include<TProperty>(Expression<Func<T, TProperty>> navigationPropertyPath);
     }
 }

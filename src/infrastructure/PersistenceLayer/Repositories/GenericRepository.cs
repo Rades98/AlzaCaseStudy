@@ -4,6 +4,7 @@
     using Database.Extensions.LINQ;
     using DomainLayer.Entities;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Query;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
@@ -68,9 +69,15 @@
         }
 
         /// <inheritdoc/>
-        public async Task<T?> FirstOrDefault(Expression<Func<T, bool>> clause, CancellationToken cancellationToken)
+        public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> clause, CancellationToken cancellationToken)
         {
             return await _dbContext.Set<T>().FirstOrDefaultAsync(clause, cancellationToken);
+        }
+
+        /// <inheritdoc/>
+        public IIncludableQueryable<T, TProperty> Include<TProperty>(Expression<Func<T, TProperty>> navigationPropertyPath)
+        {
+            return _dbContext.Set<T>().Include(navigationPropertyPath);
         }
     }
 }
