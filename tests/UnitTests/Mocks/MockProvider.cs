@@ -31,7 +31,7 @@
 
         public static readonly IMediator Mediator = GetMediator().Object;
 
-        public static readonly IGenericRepository<ProductEntity> ProductRepository = GetProductRepository();
+        public static readonly IGenericRepository<ProductDetailEntity> ProductRepository = GetProductRepository();
 
         public static readonly IGenericRepository<UserEntity> UserRepository = GetUserRepository();
         public static readonly IGenericRepository<UserEntity> UserRepository_NoUsr = GetUserRepository_NoUsr();
@@ -64,9 +64,9 @@
 
         #region Product repo
 
-        private static IGenericRepository<ProductEntity> GetProductRepository()
+        private static IGenericRepository<ProductDetailEntity> GetProductRepository()
         {
-            var mockRepo = new Mock<IGenericRepository<ProductEntity>>();
+            var mockRepo = new Mock<IGenericRepository<ProductDetailEntity>>();
 
             mockRepo.Setup(repo => repo.GetAsync(ProductsRepositoryRequestsMock.ProductGetRequest.Id, CancellationToken.None))
                 .ReturnsAsync(ProductsRepositoryResultsMock.Products.Find(x => x.Id == ProductsRepositoryRequestsMock.ProductGetRequest.Id));
@@ -99,7 +99,7 @@
                 ProductsRepositoryRequestsMock.ProductsGetRequestWhenNone.OrderBy,
                 CancellationToken.None
                 ))
-                .ReturnsAsync(new List<ProductEntity>());
+                .ReturnsAsync(new List<ProductDetailEntity>());
 
             return mockRepo.Object;
         }

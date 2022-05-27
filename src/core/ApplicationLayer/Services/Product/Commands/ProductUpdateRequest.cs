@@ -21,9 +21,9 @@
 
         public class Handler : IRequestHandler<ProductUpdateRequest, ProductUpdateResponse>
         {
-            private readonly IGenericRepository<ProductEntity> _repo;
+            private readonly IGenericRepository<ProductDetailEntity> _repo;
 
-            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
+            public Handler(IGenericRepository<ProductDetailEntity> repo) => _repo = repo;
 
             public async Task<ProductUpdateResponse> Handle(ProductUpdateRequest request, CancellationToken cancellationToken)
             {

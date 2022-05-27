@@ -5,13 +5,23 @@ BEGIN
 	VALUES(
 		NEWID(),
 		@OrderID,
-		(SELECT TOP 1  Prod.Id FROM [dbo].[Products] Prod WHERE Prod.Id NOT IN (SELECT orderItem.ProductId FROM [dbo].[OrderItems] orderItem) AND Prod.ProductCode=@ProductCode),
+		(
+			SELECT TOP 1 Product.Id
+			FROM [dbo].[Products] Product
+			INNER JOIN [dbo].[ProductDetails] ProDet ON ProDet.Id=Product.ProductDetailId AND ProDet.ProductCode=@ProductCode
+			INNER JOIN [dbo].[ProductCategories] ProCat ON ProCat.Id=ProDet.ProductCategoryId 
+			WHERE Product.Id NOT IN (SELECT OI.ProductId FROM [dbo].[OrderItems] OI )
+		),
 		GETDATE()
 	)
 
 	UPDATE [dbo].[Orders]
 	SET 
-	Total = (SELECT SUM(Prod.Price) from [dbo].[Products] Prod WHERE Prod.Id IN (SELECT OrderIts.ProductId FROM [dbo].[OrderItems] OrderIts WHERE OrderIts.OrderId=@OrderID)),
+	Total = (
+		SELECT SUM(ProDet.Price) FROM [dbo].[ProductDetails] ProDet
+		INNER JOIN [dbo].[Products] Prod ON Prod.ProductDetailId=ProDet.Id
+		WHERE Prod.Id IN (SELECT OrderIts.ProductId FROM [dbo].[OrderItems] OrderIts WHERE OrderIts.OrderId=@OrderID)
+	),
 	Changed = GETDATE()
 	WHERE Id=@OrderID
 END;

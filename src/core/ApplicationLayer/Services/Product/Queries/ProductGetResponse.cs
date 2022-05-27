@@ -21,7 +21,7 @@
         public ProductGetResponse() { }
 
         //Used for retyping from entity to product response dto
-        public static explicit operator ProductGetResponse(ProductEntity v)
+        public static explicit operator ProductGetResponse(ProductDetailEntity v)
         {
             return new ProductGetResponse()
             {

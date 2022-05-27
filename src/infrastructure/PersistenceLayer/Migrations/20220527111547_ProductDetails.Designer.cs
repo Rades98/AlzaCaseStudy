@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersistenceLayer.Database;
 
@@ -11,9 +12,10 @@ using PersistenceLayer.Database;
 namespace PersistenceLayer.Migrations
 {
     [DbContext(typeof(ADbContext))]
-    partial class ADbContextModelSnapshot : ModelSnapshot
+    [Migration("20220527111547_ProductDetails")]
+    partial class ProductDetails
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,9 +54,6 @@ namespace PersistenceLayer.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("OrderCode")
-                        .IsUnique();
 
                     b.HasIndex("OrderStatusId");
 
@@ -303,9 +302,6 @@ namespace PersistenceLayer.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
-                    b.Property<Guid?>("ProductDetailInfoId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ProductCategoryId");
@@ -314,42 +310,6 @@ namespace PersistenceLayer.Migrations
                         .IsUnique();
 
                     b.ToTable("ProductDetails", (string)null);
-                });
-
-            modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("Changed")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DetailedDescription")
-                        .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Parameters")
-                        .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProductDetailId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductDetailId")
-                        .IsUnique();
-
-                    b.ToTable("ProductDetailInfos", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductEntity", b =>
@@ -433,8 +393,8 @@ namespace PersistenceLayer.Migrations
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Email = "some@email.com",
                             Name = "Admin",
-                            PasswordHash = new byte[] { 72, 179, 69, 224, 178, 170, 47, 46, 203, 59, 175, 80, 224, 7, 241, 24, 101, 0, 180, 81, 255, 175, 44, 214, 44, 117, 77, 181, 138, 167, 75, 203, 175, 136, 130, 76, 25, 196, 11, 106, 1, 222, 109, 26, 130, 169, 204, 245, 178, 213, 60, 18, 167, 221, 138, 67, 1, 32, 81, 23, 4, 86, 79, 203 },
-                            PasswordSalt = new byte[] { 37, 6, 150, 4, 193, 18, 6, 244, 228, 181, 129, 132, 241, 135, 74, 242, 197, 121, 33, 108, 191, 116, 108, 170, 15, 208, 148, 40, 178, 139, 83, 55, 21, 173, 111, 106, 53, 123, 241, 119, 207, 53, 75, 3, 192, 151, 200, 32, 255, 114, 74, 129, 84, 219, 138, 196, 83, 131, 102, 79, 237, 154, 245, 252, 252, 235, 50, 53, 148, 0, 55, 120, 157, 87, 175, 205, 39, 14, 234, 96, 228, 128, 9, 223, 97, 186, 58, 251, 181, 61, 182, 95, 89, 107, 139, 234, 67, 142, 116, 32, 247, 38, 55, 233, 88, 156, 2, 86, 51, 181, 109, 133, 1, 179, 180, 195, 78, 192, 134, 132, 154, 191, 32, 45, 175, 214, 15, 147 },
+                            PasswordHash = new byte[] { 121, 133, 6, 137, 18, 141, 96, 83, 12, 146, 77, 101, 15, 206, 241, 70, 7, 250, 36, 146, 158, 213, 211, 211, 79, 201, 144, 14, 57, 241, 63, 199, 199, 165, 72, 233, 166, 77, 26, 175, 147, 253, 227, 142, 121, 90, 184, 206, 5, 17, 187, 5, 47, 79, 248, 21, 121, 229, 201, 224, 67, 75, 187, 107 },
+                            PasswordSalt = new byte[] { 107, 102, 39, 73, 221, 61, 210, 77, 158, 109, 41, 202, 216, 47, 163, 2, 238, 206, 130, 144, 238, 114, 188, 107, 217, 177, 60, 31, 34, 230, 155, 74, 195, 77, 20, 178, 23, 17, 29, 194, 75, 68, 251, 95, 110, 31, 34, 184, 28, 215, 241, 69, 144, 141, 9, 124, 38, 228, 235, 14, 222, 255, 231, 180, 37, 38, 220, 215, 211, 123, 214, 248, 2, 114, 101, 49, 109, 188, 87, 24, 86, 122, 177, 253, 112, 115, 46, 1, 167, 79, 99, 32, 16, 24, 244, 158, 71, 15, 245, 4, 113, 65, 190, 164, 155, 107, 183, 89, 39, 1, 43, 110, 204, 94, 129, 252, 212, 24, 197, 232, 190, 141, 186, 116, 155, 65, 124, 187 },
                             Surname = "Admin",
                             UserName = "Admin"
                         });
@@ -552,17 +512,6 @@ namespace PersistenceLayer.Migrations
                     b.Navigation("ProductCategory");
                 });
 
-            modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
-                {
-                    b.HasOne("DomainLayer.Entities.Product.ProductDetailEntity", "ProductDetail")
-                        .WithOne("ProductDetailInfo")
-                        .HasForeignKey("DomainLayer.Entities.Product.ProductDetailInfoEntity", "ProductDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductDetail");
-                });
-
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductEntity", b =>
                 {
                     b.HasOne("DomainLayer.Entities.Product.ProductDetailEntity", "ProductDetail")
@@ -612,8 +561,6 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailEntity", b =>
                 {
-                    b.Navigation("ProductDetailInfo");
-
                     b.Navigation("Products");
                 });
 
