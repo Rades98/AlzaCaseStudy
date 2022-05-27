@@ -1,6 +1,7 @@
 ﻿namespace PersistenceLayer.Database.Extensions
 {
     using ApplicationLayer.Utils.PasswordHashing;
+    using DomainLayer.Entities.Orders;
     using DomainLayer.Entities.Product;
     using DomainLayer.Entities.Users;
     using Microsoft.EntityFrameworkCore;
@@ -23,7 +24,7 @@
             var users = new List<UserEntity>()
             {
                 new(){ Id = new Guid("1D984227-1A68-4AA2-98FE-8C398E02FF85"), Name = "Admin", UserName = "Admin", Surname = "Admin", PasswordHash = pwHash, PasswordSalt = pwSalt, Email = "some@email.com", Created = _created }
-            };        
+            };
 
             var productCategories = new List<ProductCategoryEntity>()
             {
@@ -40,9 +41,19 @@
                 new() { Name = "HDD", Id = ProductCategoryCodeList.PCAndAccesories.HddId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.PCAndAccesories.DisksId},
             };
 
+            var orderStatuse = new List<OrderStatusEntity>()
+            {
+                new() {Name = "New", Id = OrderStatusCodeList.OrderStatuses.New },
+                new() {Name = "Created", Id = OrderStatusCodeList.OrderStatuses.Created },
+                new() {Name = "WaitingForPayment", Id = OrderStatusCodeList.OrderStatuses.WaitingForPayment },
+                new() {Name = "InExpedition", Id = OrderStatusCodeList.OrderStatuses.InExpedition },
+                new() {Name = "Delivered", Id = OrderStatusCodeList.OrderStatuses.Delivered },
+            };
+
+
             //Add user roles
             modelBuilder.Entity<UserRoleEntity>()
-                .HasData(userRoles);
+                    .HasData(userRoles);
 
             //Add user
             modelBuilder.Entity<UserEntity>()
@@ -51,6 +62,10 @@
             //Add Product categories
             modelBuilder.Entity<ProductCategoryEntity>()
                 .HasData(productCategories);
+
+            //Add order statuses
+            modelBuilder.Entity<OrderStatusEntity>()
+                .HasData(orderStatuse);
 
             return modelBuilder;
         }
