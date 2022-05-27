@@ -13,15 +13,15 @@
     /// </returns>
     public class ProductsGetRequest : IRequest<IEnumerable<ProductGetResponse>>, ICacheableQuery
     {
-        public Func<ProductEntity, object> OrderBy { get; set; } = product => product.Id;
+        public Func<ProductDetailEntity, object> OrderBy { get; set; } = product => product.Id;
         public bool OrderByDesc { get; set; } = false;
         public string CacheKey => Cache.CacheKeys.Products;
 
         public class Handler : IRequestHandler<ProductsGetRequest, IEnumerable<ProductGetResponse>?>
         {
-            private readonly IGenericRepository<ProductEntity> _repo;
+            private readonly IGenericRepository<ProductDetailEntity> _repo;
 
-            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
+            public Handler(IGenericRepository<ProductDetailEntity> repo) => _repo = repo;
 
             public async Task<IEnumerable<ProductGetResponse>?> Handle(ProductsGetRequest request, CancellationToken cancellationToken)
             {

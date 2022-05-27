@@ -1,14 +1,12 @@
-﻿-- Inserts product to order and calculates final price of order
-
-CREATE OR ALTER PROCEDURE [dbo].[InsertProductToOrder](@OrderID uniqueidentifier, @ProductCode varchar(8))     
+﻿CREATE OR ALTER PROCEDURE GetCategoriesByProduct
 AS
-BEGIN 
-	INSERT INTO  [dbo].[OrderItems] (Id, OrderId, ProductId, Created)
-	VALUES(
-		NEWID(),
-		@OrderID,
-		(SELECT TOP 1  Prod.Id FROM [dbo].[Products] Prod WHERE Prod.Id NOT IN (SELECT TOP(1) orderItem.ProductId FROM [dbo].[OrderItems] orderItem) AND Prod.ProductCode=@ProductCode),
-		GETDATE()
-	)
-END;
+	SELECT DISTINCT ProDet.[Name], Cats.[Name] AS 'Category', Cats.Id AS 'Category Id', CategoryTree 
+	FROM [dbo].[Products] Prods
+	INNER JOIN [dbo].[ProductDetails] ProDet ON ProDet.Id=Prods.ProductDetailId
+	INNER JOIN [dbo].[ProductCategories] Cats ON ProDet.ProductCategoryId=Cats.Id
+	CROSS APPLY 
+    ( SELECT
+          [dbo].[GetProductParentTree](Cats.Id) AS CategoryTree
+    ) AS z
+
 GO

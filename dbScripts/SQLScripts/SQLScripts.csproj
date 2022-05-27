@@ -42,7 +42,7 @@
     <None Update="Procedures\ProductCategories\GetCategoriesByProduct.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestingDataInserts\InsertProducts.sql">
+    <None Update="TestingDataInserts\InsertTestData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

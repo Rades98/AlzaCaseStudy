@@ -20,9 +20,9 @@
 
         public class Handler : IRequestHandler<ProductGetRequest, ProductGetResponse?>
         {
-            private readonly IGenericRepository<ProductEntity> _repo;
+            private readonly IGenericRepository<ProductDetailEntity> _repo;
 
-            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
+            public Handler(IGenericRepository<ProductDetailEntity> repo) => _repo = repo;
 
             public async Task<ProductGetResponse?> Handle(ProductGetRequest request, CancellationToken cancellationToken)
             {

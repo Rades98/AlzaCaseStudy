@@ -12,7 +12,7 @@
     /// </returns>
     public class ProductsGetPaginatedRequest : IRequest<IEnumerable<ProductGetResponse>>
     {
-        public Func<ProductEntity, object> OrderBy { get; set; } = product => product.Id;
+        public Func<ProductDetailEntity, object> OrderBy { get; set; } = product => product.Id;
         public bool OrderByDesc { get; set; } = false;
 
         public int PageNumber { get; set; } = 1;
@@ -21,9 +21,9 @@
 
         public class Handler : IRequestHandler<ProductsGetPaginatedRequest, IEnumerable<ProductGetResponse>?>
         {
-            private readonly IGenericRepository<ProductEntity> _repo;
+            private readonly IGenericRepository<ProductDetailEntity> _repo;
 
-            public Handler(IGenericRepository<ProductEntity> repo) => _repo = repo;
+            public Handler(IGenericRepository<ProductDetailEntity> repo) => _repo = repo;
 
             public async Task<IEnumerable<ProductGetResponse>?> Handle(ProductsGetPaginatedRequest request, CancellationToken cancellationToken)
             {

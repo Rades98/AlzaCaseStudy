@@ -22,6 +22,10 @@
                 .HasMaxLength(10)
                 .IsRequired();
 
+            builder
+                .HasIndex(order => order.OrderCode)
+                .IsUnique();
+
             builder.Property(order => order.Total)
                 .IsRequired();
 

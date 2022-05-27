@@ -4,7 +4,7 @@
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public IEnumerable<ProductEntity>? Products { get; set; }
+        public IEnumerable<ProductDetailEntity>? ProductDetails { get; set; }
 
         public ProductCategoryEntity? ParentProductCategory { get; set; }
         public Guid? ParentProductCategoryId { get; set; }

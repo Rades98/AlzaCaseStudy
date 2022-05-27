@@ -38,6 +38,8 @@
         #region Tables
 
         public DbSet<ProductEntity> Products => Set<ProductEntity>();
+        public DbSet<ProductDetailEntity> ProductDetails => Set<ProductDetailEntity>();
+        public DbSet<ProductDetailInfoEntity> ProductDetailInfos => Set<ProductDetailInfoEntity>();
         public DbSet<ProductCategoryEntity> ProductCategories => Set<ProductCategoryEntity>();
 
         public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();
