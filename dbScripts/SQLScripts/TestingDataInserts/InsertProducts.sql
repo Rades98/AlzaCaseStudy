@@ -80,3 +80,4 @@ INSERT INTO dbo.Products (Id, Created, [Description], ImgUri, [Name], Price, Pro
 VALUES(NEWID(), GETDATE(), 'Graphic card 8GB DDR6 (14000MHz)', 'http://www.alza.cdn.cz/product', 'GAINWARD GeForce RTX 3060 Ti Ghost LHR', 15900.00, '3F91A56D-57E5-4079-9E23-E6064502E447', 'AAAA0009')
 INSERT INTO dbo.Products (Id, Created, [Description], ImgUri, [Name], Price, ProductCategoryId, ProductCode)
 VALUES(NEWID(), GETDATE(), 'Graphic card 8GB DDR6 (14000MHz)', 'http://www.alza.cdn.cz/product', 'GAINWARD GeForce RTX 3060 Ti Ghost LHR', 15900.00, '3F91A56D-57E5-4079-9E23-E6064502E447', 'AAAA0009')
+
