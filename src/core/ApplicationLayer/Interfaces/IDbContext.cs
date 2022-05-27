@@ -31,11 +31,6 @@
         #region Tables
 
         /// <summary>
-        /// Product db set
-        /// </summary>
-        public DbSet<ProductEntity> Products { get; }
-
-        /// <summary>
         /// Generic DB set
         /// </summary>
         /// <typeparam name="TEntity">Entity name</typeparam>

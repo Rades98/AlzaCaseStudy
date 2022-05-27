@@ -33,6 +33,10 @@
             builder.Property(product => product.Description)
                 .HasMaxLength(250);
 
+            builder.Property(product => product.ProductCode)
+                .HasMaxLength(8)
+                .IsRequired();
+
             builder
                 .HasOne(x => x.ProductCategory)
                 .WithMany(x => x.Products)

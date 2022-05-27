@@ -1,6 +1,7 @@
 ﻿namespace PersistenceLayer.Database
 {
     using ApplicationLayer.Interfaces;
+    using DomainLayer.Entities.Orders;
     using DomainLayer.Entities.Product;
     using DomainLayer.Entities.Users;
     using Extensions;
@@ -36,7 +37,6 @@
 
         #region Tables
 
-        /// <inheritdoc/>
         public DbSet<ProductEntity> Products => Set<ProductEntity>();
         public DbSet<ProductCategoryEntity> ProductCategories => Set<ProductCategoryEntity>();
 
@@ -44,6 +44,10 @@
         public DbSet<UserEntity> Users => Set<UserEntity>();
         public DbSet<UserRoleRelationEntity> UserRoleRelation => Set<UserRoleRelationEntity>();
         
+        public DbSet<OrderEntity> Orders => Set<OrderEntity>();
+        public DbSet<OrderItemEntity> OrderDetails => Set<OrderItemEntity>();
+        public DbSet<OrderStatusEntity> OrderStatuses => Set<OrderStatusEntity>();
+
         #endregion
 
         #region private methods 

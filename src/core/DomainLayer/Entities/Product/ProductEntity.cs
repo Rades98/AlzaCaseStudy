@@ -8,5 +8,6 @@
         public string? Description { get; set; }
         public ProductCategoryEntity ProductCategory { get; set; } = new();
         public Guid ProductCategoryId { get; set; } = new();
+        public string ProductCode { get; set; } = string.Empty;
     }
 }
