@@ -28,4 +28,9 @@
     <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Orders\Commands\" />
+    <Folder Include="Services\Orders\Queries\" />
+  </ItemGroup>
+
 </Project>

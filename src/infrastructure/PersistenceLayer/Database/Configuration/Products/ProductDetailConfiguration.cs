@@ -1,4 +1,4 @@
-﻿namespace PersistenceLayer.Database.Configuration.pds
+﻿namespace PersistenceLayer.Database.Configuration.Products
 {
     using DomainLayer.Entities.Product;
     using Microsoft.EntityFrameworkCore;

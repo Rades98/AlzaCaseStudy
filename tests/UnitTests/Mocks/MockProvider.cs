@@ -4,11 +4,11 @@
     using ApplicationLayer.Services.Users.Commands.Login;
     using DomainLayer.Entities.Product;
     using DomainLayer.Entities.Users;
-    using GenericRepo.Products;
+    using GenericRepo.ProductDetails;
     using GenericRepo.Users;
     using GenericRepo.Users.UserRoleRelations;
     using GenericRepo.Users.UserRoles;
-    using Mediator.Products;
+    using Mediator.ProductDetails;
     using Mediator.Users;
     using MediatR;
     using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -44,15 +44,15 @@
         {
             var mockMediator = new Mock<IMediator>();
 
-            mockMediator.Setup(m => m.Send(ProductsMediatorRequestsMock.ProductsGetRequest, CancellationToken.None))
-                .ReturnsAsync(ProductsMediatorResponsesMock.ProductsGetResponse);
-            mockMediator.Setup(m => m.Send(ProductsMediatorRequestsMock.ProductsGetPaginatedRequest, CancellationToken.None))
-                .ReturnsAsync(ProductsMediatorResponsesMock.ProductsGetPaginatedResponse);
+            mockMediator.Setup(m => m.Send(ProductDetailsMediatorRequestsMock.ProductsGetRequest, CancellationToken.None))
+                .ReturnsAsync(ProductDetailsMediatorResponsesMock.ProductsGetResponse);
+            mockMediator.Setup(m => m.Send(ProductDetailsMediatorRequestsMock.ProductsGetPaginatedRequest, CancellationToken.None))
+                .ReturnsAsync(ProductDetailsMediatorResponsesMock.ProductsGetPaginatedResponse);
 
-            mockMediator.Setup(m => m.Send(ProductsMediatorRequestsMock.ProductUpdateRequest, CancellationToken.None))
-                .ReturnsAsync(ProductsMediatorResponsesMock.ProductUpdateResponse);
-            mockMediator.Setup(m => m.Send(ProductsMediatorRequestsMock.ProductUpdateRequestNotFound, CancellationToken.None))
-                .ReturnsAsync(ProductsMediatorResponsesMock.ProductUpdateResponseNotFound);
+            mockMediator.Setup(m => m.Send(ProductDetailsMediatorRequestsMock.ProductUpdateRequest, CancellationToken.None))
+                .ReturnsAsync(ProductDetailsMediatorResponsesMock.ProductUpdateResponse);
+            mockMediator.Setup(m => m.Send(ProductDetailsMediatorRequestsMock.ProductUpdateRequestNotFound, CancellationToken.None))
+                .ReturnsAsync(ProductDetailsMediatorResponsesMock.ProductUpdateResponseNotFound);
 
             mockMediator.Setup(m => m.Send(It.IsAny<UserLoginRequest>(), CancellationToken.None))
                 .ReturnsAsync(UsersMediatorResponsesMock.UserLoginResponse);
@@ -68,35 +68,35 @@
         {
             var mockRepo = new Mock<IGenericRepository<ProductDetailEntity>>();
 
-            mockRepo.Setup(repo => repo.GetAsync(ProductsRepositoryRequestsMock.ProductGetRequest.Id, CancellationToken.None))
-                .ReturnsAsync(ProductsRepositoryResultsMock.Products.Find(x => x.Id == ProductsRepositoryRequestsMock.ProductGetRequest.Id));
+            mockRepo.Setup(repo => repo.GetAsync(ProductDetailsRepositoryRequestsMock.ProductGetRequest.Id, CancellationToken.None))
+                .ReturnsAsync(ProductDetailsRepositoryResultsMock.Products.Find(x => x.Id == ProductDetailsRepositoryRequestsMock.ProductGetRequest.Id));
 
-            mockRepo.Setup(repo => repo.GetAsync(ProductsRepositoryRequestsMock.ProductUpdateRequest.Id, CancellationToken.None))
-                .ReturnsAsync(ProductsRepositoryResultsMock.Products.Find(x => x.Id == ProductsRepositoryRequestsMock.ProductUpdateRequest.Id));
+            mockRepo.Setup(repo => repo.GetAsync(ProductDetailsRepositoryRequestsMock.ProductUpdateRequest.Id, CancellationToken.None))
+                .ReturnsAsync(ProductDetailsRepositoryResultsMock.Products.Find(x => x.Id == ProductDetailsRepositoryRequestsMock.ProductUpdateRequest.Id));
 
-            mockRepo.Setup(repo => repo.GetAsync(ProductsRepositoryRequestsMock.ProductUpdateRequestUptoDate.Id, CancellationToken.None))
-                .ReturnsAsync(ProductsRepositoryResultsMock.Products.Find(x => x.Id == ProductsRepositoryRequestsMock.ProductUpdateRequestUptoDate.Id));
+            mockRepo.Setup(repo => repo.GetAsync(ProductDetailsRepositoryRequestsMock.ProductUpdateRequestUptoDate.Id, CancellationToken.None))
+                .ReturnsAsync(ProductDetailsRepositoryResultsMock.Products.Find(x => x.Id == ProductDetailsRepositoryRequestsMock.ProductUpdateRequestUptoDate.Id));
 
             mockRepo.Setup(repo => repo.GetAllPaginatedAsync(
-                ProductsRepositoryRequestsMock.ProductsGetPaginatedRequest.PageNumber,
-                ProductsRepositoryRequestsMock.ProductsGetPaginatedRequest.PageSize,
-                ProductsRepositoryRequestsMock.ProductsGetPaginatedRequest.OrderByDesc,
-                ProductsRepositoryRequestsMock.ProductsGetPaginatedRequest.OrderBy,
+                ProductDetailsRepositoryRequestsMock.ProductsGetPaginatedRequest.PageNumber,
+                ProductDetailsRepositoryRequestsMock.ProductsGetPaginatedRequest.PageSize,
+                ProductDetailsRepositoryRequestsMock.ProductsGetPaginatedRequest.OrderByDesc,
+                ProductDetailsRepositoryRequestsMock.ProductsGetPaginatedRequest.OrderBy,
                 CancellationToken.None
                 ))
                 .ReturnsAsync
-                (ProductsRepositoryResultsMock.GetAllPaginatedResponse);
+                (ProductDetailsRepositoryResultsMock.GetAllPaginatedResponse);
 
             mockRepo.Setup(repo => repo.GetAllAsync(
-                ProductsRepositoryRequestsMock.ProductsGetRequest.OrderByDesc,
-                ProductsRepositoryRequestsMock.ProductsGetRequest.OrderBy,
+                ProductDetailsRepositoryRequestsMock.ProductsGetRequest.OrderByDesc,
+                ProductDetailsRepositoryRequestsMock.ProductsGetRequest.OrderBy,
                 CancellationToken.None
                  ))
-                 .ReturnsAsync(ProductsRepositoryResultsMock.GetAllResponse);
+                 .ReturnsAsync(ProductDetailsRepositoryResultsMock.GetAllResponse);
 
             mockRepo.Setup(repo => repo.GetAllAsync(
-                ProductsRepositoryRequestsMock.ProductsGetRequestWhenNone.OrderByDesc,
-                ProductsRepositoryRequestsMock.ProductsGetRequestWhenNone.OrderBy,
+                ProductDetailsRepositoryRequestsMock.ProductsGetRequestWhenNone.OrderByDesc,
+                ProductDetailsRepositoryRequestsMock.ProductsGetRequestWhenNone.OrderBy,
                 CancellationToken.None
                 ))
                 .ReturnsAsync(new List<ProductDetailEntity>());
