@@ -48,6 +48,7 @@
                 new() {Name = "WaitingForPayment", Id = OrderStatusCodeList.OrderStatuses.WaitingForPayment },
                 new() {Name = "InExpedition", Id = OrderStatusCodeList.OrderStatuses.InExpedition },
                 new() {Name = "Delivered", Id = OrderStatusCodeList.OrderStatuses.Delivered },
+                new() {Name = "Canceled", Id = OrderStatusCodeList.OrderStatuses.Canceled },
             };
 
 

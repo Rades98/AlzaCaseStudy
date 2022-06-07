@@ -33,7 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dbScripts", "dbScripts", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLScripts", "dbScripts\SQLScripts\SQLScripts.csproj", "{5DB30E82-C937-4C67-85E0-0944300060BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderStatusCodeList", "src\infrastructure\OrderStatusCodeList\OrderStatusCodeList.csproj", "{F7BA8B5C-6C54-47EE-9415-5D02A1BCA1AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderStatusCodeList", "src\infrastructure\OrderStatusCodeList\OrderStatusCodeList.csproj", "{F7BA8B5C-6C54-47EE-9415-5D02A1BCA1AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
