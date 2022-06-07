@@ -17,5 +17,7 @@
         //Order is delivered
         public static readonly Guid Delivered = new("953FF38D-BA59-41FE-9246-594D6AF35B1F");
 
+        //Cancelled order
+        public static readonly Guid Canceled = new("B0B29346-D5C0-401A-8466-F0780686F072");
     }
 }
