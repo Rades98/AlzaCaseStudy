@@ -1,6 +1,8 @@
 ﻿namespace ApplicationLayer.Interfaces
 {
+    using DomainLayer.Entities.Orders;
     using DomainLayer.Entities.Product;
+    using DomainLayer.Entities.Users;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Infrastructure;
 
@@ -36,6 +38,19 @@
         /// <typeparam name="TEntity">Entity name</typeparam>
         /// <returns>DBset of specified entity</returns>
         public DbSet<TEntity> Set<TEntity>() where TEntity : class;
+
+        public DbSet<ProductEntity> Products { get; }
+        public DbSet<ProductDetailEntity> ProductDetails { get; }
+        public DbSet<ProductDetailInfoEntity> ProductDetailInfos { get; }
+        public DbSet<ProductCategoryEntity> ProductCategories { get; }
+
+        public DbSet<UserRoleEntity> UserRoles { get; }
+        public DbSet<UserEntity> Users { get; }
+        public DbSet<UserRoleRelationEntity> UserRoleRelation { get; }
+
+        public DbSet<OrderEntity> Orders { get; }
+        public DbSet<OrderItemEntity> OrderItems { get; }
+        public DbSet<OrderStatusEntity> OrderStatuses { get; }
 
         #endregion
     }

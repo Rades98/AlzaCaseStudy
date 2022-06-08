@@ -8,13 +8,13 @@
     using Microsoft.AspNetCore.Mvc.Infrastructure;
 
     /// <summary>
-    /// Products endpoint v2
+    /// Products endpoints v2
     /// </summary>
-    /// <seealso cref="BaseController{ProductEntity}"/>
+    /// <seealso cref="BaseController{ProductDetailEntity}"/>
     [ApiVersion("2")]
-    public class ProductDetailsController : BaseController<ProductEntity>
+    public class ProductDetailsController : BaseController<ProductDetailEntity>
     {
-        public ProductDetailsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductEntity> logger) : base(mediator, adcp, logger)
+        public ProductDetailsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductDetailEntity> logger) : base(mediator, adcp, logger)
         {
         }
 

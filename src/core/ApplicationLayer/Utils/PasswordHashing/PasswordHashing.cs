@@ -21,11 +21,11 @@
             return computedHash.SequenceEqual(pwHash);
         }
 
-        public static string CreateToken(string name, byte[] appToken, List<string> roles)
+        public static string CreateToken(Guid id, byte[] appToken, List<string> roles)
         {
             List<Claim> claims = new()
                 {
-                    new Claim(ClaimTypes.Name, name),
+                    new Claim(ClaimTypes.NameIdentifier, id.ToString()),
                 };
 
             roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));

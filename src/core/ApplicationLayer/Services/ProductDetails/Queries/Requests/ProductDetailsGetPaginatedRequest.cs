@@ -4,6 +4,9 @@
     using DomainLayer.Entities.Product;
     using Interfaces;
     using MediatR;
+    using Extensions;
+    using X.PagedList;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Query to obtain all products wit pagination settings
@@ -22,13 +25,18 @@
 
         public class Handler : IRequestHandler<ProductDetailsGetPaginatedRequest, IEnumerable<ProductDetailGetResponse>?>
         {
-            private readonly IGenericRepository<ProductDetailEntity> _repo;
-
-            public Handler(IGenericRepository<ProductDetailEntity> repo) => _repo = repo;
+            private readonly IDbContext _dbContext;
+            public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
             public async Task<IEnumerable<ProductDetailGetResponse>?> Handle(ProductDetailsGetPaginatedRequest request, CancellationToken cancellationToken)
             {
-                var products = await _repo.GetAllPaginatedAsync(request.PageNumber, request.PageSize, request.OrderByDesc, request.OrderBy, cancellationToken);
+                var products = await _dbContext.ProductDetails
+                    .AsNoTracking()
+                    .IfThenElse(
+                        () => request.OrderByDesc,
+                        e => e.OrderByDescending(request.OrderBy),
+                        e => e.OrderBy(request.OrderBy))
+                    .ToPagedListAsync(request.PageNumber, request.PageSize, cancellationToken);
 
                 if (products.Count > 0)
                 {

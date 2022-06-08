@@ -1,6 +1,9 @@
 ﻿namespace PersistenceLayer.Database.Extensions
 {
     using ApplicationLayer.Utils.PasswordHashing;
+    using CodeLists.OrderStatuses;
+    using CodeLists.ProductCategories;
+    using CodeLists.UserRoles;
     using DomainLayer.Entities.Orders;
     using DomainLayer.Entities.Product;
     using DomainLayer.Entities.Users;
@@ -14,7 +17,7 @@
         {
             var userRoles = new List<UserRoleEntity>()
             {
-                new() { Id = new Guid("7CFD3E28-C6ED-48B9-8D08-424751E77EAF"), Name = UserRolesCodeList.UserRoles.Admin, Created = _created }
+                new() { Id = new Guid("7CFD3E28-C6ED-48B9-8D08-424751E77EAF"), Name = UserRoles.Admin, Created = _created }
             };
 
             // Admin
@@ -28,27 +31,27 @@
 
             var productCategories = new List<ProductCategoryEntity>()
             {
-                new() { Name = "Eshop", Id = ProductCategoryCodeList.ProductCategories.EshopId, Created = _created },
-                new() { Name = "Mobile Devices and accessories", Id = ProductCategoryCodeList.ProductCategories.MobAndAccId, Created = _created , ParentProductCategoryId = ProductCategoryCodeList.ProductCategories.EshopId},
-                new() { Name = "Mobile Phones", Id = ProductCategoryCodeList.MobileAndAccesories.MobilePhonesId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.ProductCategories.MobAndAccId },
-                new() { Name = "Cases", Id = ProductCategoryCodeList.MobileAndAccesories.CasesId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.ProductCategories.MobAndAccId },
-                new() { Name = "Adapters", Id = ProductCategoryCodeList.MobileAndAccesories.AdaptersId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.ProductCategories.MobAndAccId },
+                new() { Name = "Eshop", Id = ProductCategories.EshopId, Created = _created },
+                new() { Name = "Mobile Devices and accessories", Id = ProductCategories.MobAndAccId, Created = _created , ParentProductCategoryId = ProductCategories.EshopId},
+                new() { Name = "Mobile Phones", Id = MobileAndAccesories.MobilePhonesId, Created = _created, ParentProductCategoryId = ProductCategories.MobAndAccId },
+                new() { Name = "Cases", Id = MobileAndAccesories.CasesId, Created = _created, ParentProductCategoryId = ProductCategories.MobAndAccId },
+                new() { Name = "Adapters", Id = MobileAndAccesories.AdaptersId, Created = _created, ParentProductCategoryId = ProductCategories.MobAndAccId },
 
-                new() { Name = "PC and accessories", Id = ProductCategoryCodeList.ProductCategories.PcAndAccId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.ProductCategories.EshopId},
-                new() { Name = "Graphic cards", Id = ProductCategoryCodeList.PCAndAccesories.GraphicCarsId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.ProductCategories.PcAndAccId},
-                new() { Name = "Disks", Id = ProductCategoryCodeList.PCAndAccesories.DisksId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.ProductCategories.PcAndAccId},
-                new() { Name = "SSD", Id = ProductCategoryCodeList.PCAndAccesories.SsdId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.PCAndAccesories.DisksId},
-                new() { Name = "HDD", Id = ProductCategoryCodeList.PCAndAccesories.HddId, Created = _created, ParentProductCategoryId = ProductCategoryCodeList.PCAndAccesories.DisksId},
+                new() { Name = "PC and accessories", Id = ProductCategories.PcAndAccId, Created = _created, ParentProductCategoryId = ProductCategories.EshopId},
+                new() { Name = "Graphic cards", Id = PCAndAccesories.GraphicCarsId, Created = _created, ParentProductCategoryId = ProductCategories.PcAndAccId},
+                new() { Name = "Disks", Id = PCAndAccesories.DisksId, Created = _created, ParentProductCategoryId = ProductCategories.PcAndAccId},
+                new() { Name = "SSD", Id = PCAndAccesories.SsdId, Created = _created, ParentProductCategoryId = PCAndAccesories.DisksId},
+                new() { Name = "HDD", Id = PCAndAccesories.HddId, Created = _created, ParentProductCategoryId = PCAndAccesories.DisksId},
             };
 
             var orderStatuse = new List<OrderStatusEntity>()
             {
-                new() {Name = "New", Id = OrderStatusCodeList.OrderStatuses.New },
-                new() {Name = "Created", Id = OrderStatusCodeList.OrderStatuses.Created },
-                new() {Name = "WaitingForPayment", Id = OrderStatusCodeList.OrderStatuses.WaitingForPayment },
-                new() {Name = "InExpedition", Id = OrderStatusCodeList.OrderStatuses.InExpedition },
-                new() {Name = "Delivered", Id = OrderStatusCodeList.OrderStatuses.Delivered },
-                new() {Name = "Canceled", Id = OrderStatusCodeList.OrderStatuses.Canceled },
+                new() {Name = "New", Id = OrderStatuses.New },
+                new() {Name = "Created", Id = OrderStatuses.Created },
+                new() {Name = "WaitingForPayment", Id = OrderStatuses.WaitingForPayment },
+                new() {Name = "InExpedition", Id = OrderStatuses.InExpedition },
+                new() {Name = "Delivered", Id = OrderStatuses.Delivered },
+                new() {Name = "Canceled", Id = OrderStatuses.Canceled },
             };
 
 

@@ -3,8 +3,10 @@
     using Interfaces.Cache;
     using DomainLayer.Entities.Product;
     using Interfaces;
+    using Extensions;
     using MediatR;
-    using ApplicationLayer.Services.ProductDetails.Queries;
+    using Queries;
+    using Microsoft.EntityFrameworkCore;
 
     /// <summary>
     /// Query to obtain all products
@@ -16,18 +18,26 @@
     {
         public Func<ProductDetailEntity, object> OrderBy { get; set; } = product => product.Id;
         public bool OrderByDesc { get; set; } = false;
-        public string CacheKey => Cache.CacheKeys.Products;
+        public string CacheKey => Cache.CacheKeys.ProductDetails;
 
         public class Handler : IRequestHandler<ProductDetailsGetRequest, IEnumerable<ProductDetailGetResponse>?>
         {
-            private readonly IGenericRepository<ProductDetailEntity> _repo;
+            private readonly IDbContext _dbContext;
 
-            public Handler(IGenericRepository<ProductDetailEntity> repo) => _repo = repo;
+            public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
             public async Task<IEnumerable<ProductDetailGetResponse>?> Handle(ProductDetailsGetRequest request, CancellationToken cancellationToken)
             {
-                var products = await _repo.GetAllAsync(request.OrderByDesc, request.OrderBy, cancellationToken);
+                var products = await _dbContext.ProductDetails
+                    .AsNoTracking()
+                    .ToListAsync(cancellationToken);
 
+                products = products.IfThenElse(
+                        () => request.OrderByDesc,
+                        e => e.OrderByDescending(request.OrderBy),
+                        e => e.OrderBy(request.OrderBy))
+                    .ToList();
+                    
                 if (products.Count > 0)
                 {
                     return products.Select(x => (ProductDetailGetResponse)x);

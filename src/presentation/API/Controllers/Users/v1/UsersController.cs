@@ -1,4 +1,4 @@
-﻿namespace API.Controllers.Users
+﻿namespace API.Controllers.Users.v1
 {
     using API.Models;
     using ApplicationLayer.Services.Users.Commands.Login;

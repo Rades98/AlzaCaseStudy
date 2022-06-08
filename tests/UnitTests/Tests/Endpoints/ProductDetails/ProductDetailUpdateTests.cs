@@ -15,7 +15,7 @@
         public async void UpdateTest()
         {
             //Arrange
-            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
+            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductDetailEntity>.Logger);
 
             //Act
             var actionResult = await controller.UpdateAsync(ProductDetailsMediatorRequestsMock.ProductUpdateRequest.Id, ProductDetailsMediatorRequestsMock.ProductUpdateRequest.Description);
@@ -31,7 +31,7 @@
         public async void UpdateNotFoundTest()
         {
             //Arrange
-            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
+            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductDetailEntity>.Logger);
 
             //Act
             var actionResult = await controller.UpdateAsync(ProductDetailsMediatorRequestsMock.ProductUpdateRequestNotFound.Id, ProductDetailsMediatorRequestsMock.ProductUpdateRequestNotFound.Description);
@@ -47,7 +47,7 @@
         public async void UpdateUpToDateTest()
         {
             //Arrange
-            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
+            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductDetailEntity>.Logger);
 
             //Act
             var actionResult = await controller.UpdateAsync(ProductDetailsMediatorRequestsMock.ProductUpdateRequestUpToDate.Id, ProductDetailsMediatorRequestsMock.ProductUpdateRequestUpToDate.Description);

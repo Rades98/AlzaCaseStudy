@@ -96,3 +96,6 @@ VALUES (@OrderID, 'AAAAA00002', 0, @UserId, (SELECT TOP 1 Id FROM [dbo].OrderSta
 EXEC [dbo].[InsertProductToOrder] @OrderID=@OrderID, @ProductCode='AAAA0010'     
 EXEC [dbo].[InsertProductToOrder] @OrderID=@OrderID, @ProductCode='AAAA0009'    
 EXEC [dbo].[InsertProductToOrder] @OrderID=@OrderID, @ProductCode='AAAA0008'
+
+INSERT INTO [dbo].[Orders] (Id, OrderCode, Total, UserId, OrderStatusId, Created)
+VALUES (NEWID(), 'AAAAA00003', 0, (SELECT TOP 1 Id FROM [dbo].[Users]), '27F83608-434A-4F4B-8315-FF711A97BFF4', GETDATE())

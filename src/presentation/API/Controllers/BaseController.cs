@@ -7,7 +7,10 @@
     using Microsoft.AspNetCore.Mvc.Abstractions;
     using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.Net.Http.Headers;
+    using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
+    using System.Security.Claims;
 
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -48,6 +51,13 @@
             }
 
             return new LinkDto(url, relation, method);
+        }
+
+        internal Guid GetUserIdFromToken()
+        {
+            var accessToken = Request.Headers[HeaderNames.Authorization];
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.ToString().Replace("Bearer ", ""));
+            return new Guid(token.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
     }
 }

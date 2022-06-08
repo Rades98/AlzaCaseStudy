@@ -15,7 +15,7 @@
         public async void GetTest()
         {
             //Arrange
-            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
+            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductDetailEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetProductsAsync();
@@ -29,7 +29,7 @@
         public async void GetByIdTest()
         {
             //Arrange
-            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
+            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductDetailEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetByIdAsync(ProductDetailsMediatorRequestsMock.ProductGetRequest.Id);
@@ -43,7 +43,7 @@
         public async void GetByIdNotFoundTest()
         {
             //Arrange
-            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
+            var controller = new ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductDetailEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetByIdAsync(ProductDetailsMediatorRequestsMock.ProductGetRequestNotFound.Id);
@@ -57,7 +57,7 @@
         public async void GetPagedTest()
         {
             //Arrange
-            var controller = new API.Controllers.ProductDetails.v2.ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductEntity>.Logger);
+            var controller = new API.Controllers.ProductDetails.v2.ProductDetailsController(MockProvider<ProductEntity>.Mediator, MockProvider<ProductEntity>.ADCP, MockProvider<ProductDetailEntity>.Logger);
 
             //Act
             var actionResult = await controller.GetProductsAsync(ProductDetailsMediatorRequestsMock.ProductsGetPaginatedRequest.PageSize, ProductDetailsMediatorRequestsMock.ProductsGetPaginatedRequest.PageNumber);
