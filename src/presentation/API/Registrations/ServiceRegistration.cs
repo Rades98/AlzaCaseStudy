@@ -37,7 +37,7 @@
             {
                 options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
                 {
-                    Description = "Standard Authorization header using the Bearer scheme (\"bearer {token} \")",
+                    Description = "Standard Authorization header using the Bearer scheme (\"Bearer {token} \")",
                     In = ParameterLocation.Header,
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey

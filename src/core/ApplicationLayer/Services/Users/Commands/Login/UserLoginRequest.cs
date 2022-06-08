@@ -4,6 +4,7 @@
     using Exceptions;
     using Interfaces;
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;
     using Utils.PasswordHashing;
 
@@ -15,19 +16,16 @@
 
         public class Handler : IRequestHandler<UserLoginRequest, UserLoginResponse>
         {
-            private readonly IGenericRepository<UserEntity> _userRepo;
-            private readonly IGenericRepository<UserRoleEntity> _userRoleRepo;
-            private readonly IGenericRepository<UserRoleRelationEntity> _userRoleRelationRepo;
+            private readonly IDbContext _dbContext;
 
-            public Handler(
-                IGenericRepository<UserEntity> userRepo,
-                IGenericRepository<UserRoleEntity> userRoleRepo,
-                IGenericRepository<UserRoleRelationEntity> userRoleRelationRepo
-                ) => (_userRepo, _userRoleRepo, _userRoleRelationRepo) = (userRepo, userRoleRepo, userRoleRelationRepo);
+            public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
             public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
             {
-                var user = await _userRepo.FirstOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken);
+                var user = await _dbContext.Users
+                    .Include(x => x.Roles)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken);
 
                 if (user == null)
                 {
@@ -39,15 +37,12 @@
                     throw new UserLoginException(UserLoginException.WrongPw);
                 }
 
-                var roleRelations = await _userRoleRelationRepo
-                    .GetAllWhereAsync(rr => rr.UserId == user.Id, cancellationToken);
-
-                var roles = (await _userRoleRepo.GetAllWhereAsync(role => roleRelations.Select(x => x.RoleId).Contains(role.Id), cancellationToken)).Select(role => role.Name).ToList();
+                var roles = user.Roles?.Select(role => role.Name).ToList();
 
                 return new UserLoginResponse()
                 {
                     UserName = user.UserName,
-                    Token = PasswordHashing.CreateToken(user.UserName, request.Token, roles),
+                    Token = PasswordHashing.CreateToken(user.Id, request.Token, roles!),
                     Roles = roles
                 };
             }

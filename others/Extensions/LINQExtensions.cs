@@ -1,5 +1,9 @@
-﻿namespace PersistenceLayer.Database.Extensions.LINQ
+﻿namespace Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class LINQExtensions
     {
         /// <summary>
@@ -21,5 +25,16 @@
                 ? thenPath(elements)
                 : elsePath(elements);
         }
+
+        public static IQueryable<T> IfThenElse<T>(
+        this IQueryable<T> elements,
+        Func<bool> condition,
+        Func<IQueryable<T>, IQueryable<T>> thenPath,
+        Func<IQueryable<T>, IQueryable<T>> elsePath)
+        {
+            return condition()
+                ? thenPath(elements)
+                : elsePath(elements);
+        }        
     }
 }

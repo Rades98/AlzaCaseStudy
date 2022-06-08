@@ -5,6 +5,7 @@
     using Interfaces;
     using Interfaces.Cache;
     using MediatR;
+    using Microsoft.EntityFrameworkCore;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -17,17 +18,19 @@
     public class ProductDetailGetRequest : IRequest<ProductDetailGetResponse?>, ICacheableWithIdQuery
     {
         public Guid Id { get; set; }
-        public string CacheKey => Cache.CacheKeys.Products;
+        public string CacheKey => Cache.CacheKeys.ProductDetails;
 
         public class Handler : IRequestHandler<ProductDetailGetRequest, ProductDetailGetResponse?>
         {
-            private readonly IGenericRepository<ProductDetailEntity> _repo;
+            private readonly IDbContext _dbContext;
 
-            public Handler(IGenericRepository<ProductDetailEntity> repo) => _repo = repo;
+            public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
             public async Task<ProductDetailGetResponse?> Handle(ProductDetailGetRequest request, CancellationToken cancellationToken)
             {
-                var product = await _repo.GetAsync(request.Id, cancellationToken);
+                var product = await _dbContext.ProductDetails
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x=> x.Id == request.Id, cancellationToken);
 
                 if (product is null)
                 {

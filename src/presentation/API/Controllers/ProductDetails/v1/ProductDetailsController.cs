@@ -3,22 +3,22 @@
     using ApplicationLayer.Services.ProductDetails.Commands;
     using ApplicationLayer.Services.ProductDetails.Queries;
     using ApplicationLayer.Services.ProductDetails.Queries.Requests;
+    using CodeLists.UserRoles;
     using DomainLayer.Entities.Product;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.Extensions.Logging;
-    using UserRolesCodeList;
 
     /// <summary>
-    /// Products endpoint v1
+    /// Products endpoints v1
     /// </summary>
-    /// <seealso cref="BaseController{ProductEntity}"/>
+    /// <seealso cref="BaseController{ProductDetailEntity}"/>
     [ApiVersion("1")]
-    public class ProductDetailsController : BaseController<ProductEntity>
+    public class ProductDetailsController : BaseController<ProductDetailEntity>
     {
-        public ProductDetailsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductEntity> logger) : base(mediator, adcp, logger)
+        public ProductDetailsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductDetailEntity> logger) : base(mediator, adcp, logger)
         {
         }
 

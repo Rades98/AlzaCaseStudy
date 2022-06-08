@@ -26,10 +26,10 @@
         }
 
         /// <inheritdoc/>
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
             ChangeStateInfo();
-            return base.SaveChangesAsync(cancellationToken);
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         /// <inheritdoc/>
@@ -47,7 +47,7 @@
         public DbSet<UserRoleRelationEntity> UserRoleRelation => Set<UserRoleRelationEntity>();
         
         public DbSet<OrderEntity> Orders => Set<OrderEntity>();
-        public DbSet<OrderItemEntity> OrderDetails => Set<OrderItemEntity>();
+        public DbSet<OrderItemEntity> OrderItems => Set<OrderItemEntity>();
         public DbSet<OrderStatusEntity> OrderStatuses => Set<OrderStatusEntity>();
 
         #endregion

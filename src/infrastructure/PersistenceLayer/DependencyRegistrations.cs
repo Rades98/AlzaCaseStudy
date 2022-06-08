@@ -5,18 +5,17 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Repositories;
 
     public static class DependencyRegistrations
     {
         public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ADbContext>(options => {
+            services.AddDbContext<ADbContext>(options =>
+            {
                 options.UseSqlServer(configuration.GetConnectionString("ADb"));
                 options.EnableSensitiveDataLogging();
             })
-                    .AddScoped<IDbContext>(provider => provider.GetRequiredService<ADbContext>())
-                    .AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+                    .AddScoped<IDbContext>(provider => provider.GetRequiredService<ADbContext>());
             return services;
         }
     }

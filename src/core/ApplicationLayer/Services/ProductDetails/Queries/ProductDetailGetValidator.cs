@@ -2,7 +2,6 @@
 {
     using ApplicationLayer.Services.ProductDetails.Queries.Requests;
     using FluentValidation;
-    using Requests;
 
     /// <summary>
     /// Shared validator for Get based requests

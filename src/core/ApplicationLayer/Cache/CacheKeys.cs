@@ -5,6 +5,8 @@
     /// </summary>
     internal class CacheKeys
     {
-        public const string Products = "Products";
+        public const string ProductDetails = "ProductDetails";
+        public const string ProductDetailInfos = "ProductDetailInfos";
+        public const string ProductCetegories = "ProductCetegories";
     }
 }

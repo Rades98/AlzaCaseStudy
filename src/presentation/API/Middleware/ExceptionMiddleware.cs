@@ -1,6 +1,11 @@
 ﻿namespace API.Middleware
 {
     using ApplicationLayer.Exceptions;
+    using ApplicationLayer.Exceptions.Order;
+    using ApplicationLayer.Exceptions.OrderItem;
+    using ApplicationLayer.Services.OrderItems.Commands.Delete;
+    using ApplicationLayer.Services.OrderItems.Commands.Put;
+    using ApplicationLayer.Services.Orders.Commands.Storno;
     using Models;
     using System.Net;
 
@@ -48,6 +53,52 @@
                 case UserLoginException uex:
                     message = uex.Message;
                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                    break;
+               
+                case OrderItemPutException oip:
+                    message = oip.Message;
+
+                    switch(oip.Message)
+                    {
+                        case OrderItemPutRequestMessages.OrderNotFound:
+                        case OrderItemPutRequestMessages.ProductNotFound:
+                            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+
+                        case OrderItemPutRequestMessages.AdditionFailed:
+                        case OrderItemPutRequestMessages.OrderUneditable:
+                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                            break;
+                    }
+                    break;
+
+                case OrderItemDeleteException oid:
+                    switch (oid.Message)
+                    {
+                        case OrderItemDeleteRequestMessages.NotFound:
+                            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                            break;
+
+                        case OrderItemDeleteRequestMessages.Error:
+                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                            break;
+                    }
+                    break;
+
+                case OrderDeleteException od:
+                    message = od.Message;
+                    switch (od.Message)
+                    {
+                        case OrderStornoRequestMessages.Error:
+                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                            break;
+                        case OrderStornoRequestMessages.NotFound:
+                            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                            break;
+                        case OrderStornoRequestMessages.CannotBeCanceled:
+                            context.Response.StatusCode = (int)HttpStatusCode.Conflict;
+                            break;
+                    }
                     break;
                     //and so on...
             }

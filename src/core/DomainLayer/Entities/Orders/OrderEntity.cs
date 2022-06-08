@@ -6,7 +6,7 @@
         public decimal Total { get; set; } = decimal.Zero;
         public Guid UserId { get; set; }
         public Guid OrderStatusId { get; set; }
-        public IEnumerable<OrderItemEntity>? Items {get; set;}
+        public ICollection<OrderItemEntity>? Items {get; set;}
         public OrderStatusEntity Status { get; set; } = new();
     }
 }
