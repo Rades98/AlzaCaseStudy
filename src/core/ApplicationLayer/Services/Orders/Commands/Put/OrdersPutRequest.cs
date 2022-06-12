@@ -1,11 +1,12 @@
 ﻿namespace ApplicationLayer.Services.Orders.Commands.Put
 {
-    using Interfaces;
-    using DomainLayer.Entities.Orders;
-    using MediatR;
-    using ApplicationLayer.Utils.Orders;
-    using Microsoft.EntityFrameworkCore;
+    using Exceptions;
     using CodeLists.OrderStatuses;
+    using DomainLayer.Entities.Orders;
+    using Interfaces;
+    using MediatR;
+    using Microsoft.EntityFrameworkCore;
+    using Utils.Orders;
 
     public class OrdersPutRequest : IRequest<OrdersPutResponse>
     {
@@ -26,7 +27,7 @@
 
                 if (actual.Count > 0)
                 {
-                    return new() { Message = "There already is running order", OrderCode = actual.First().OrderCode };
+                    throw new CRUDException(Exceptions.ExceptionTypeEnum.Error, $"There aleready is unfinished order: {actual.First().OrderCode}");
                 }
 
                 var lastOrderCode = (await _dbContext.Orders.OrderBy(x => x.OrderCode).LastAsync(cancellationToken)).OrderCode;
@@ -55,9 +56,9 @@
 
                     return new OrdersPutResponse { OrderCode = code, Message = "Order created", OrderId = id };
                 }
-                catch (Exception _)
+                catch (Exception e)
                 {
-                    return new() { Message = "Order creation failed" };
+                    throw new CRUDException(Exceptions.ExceptionTypeEnum.Error, "Error while creating order", e);
                 }
             }
         }

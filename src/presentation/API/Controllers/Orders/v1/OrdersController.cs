@@ -36,12 +36,7 @@
         {
             var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken() }, cancellationToken);
 
-            if (result is not null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound();
+            return Ok(result);
         }
 
         /// <summary>
@@ -65,12 +60,7 @@
         {
             var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken(), WhereFilter = x => x.OrderStatusId == statusId }, cancellationToken);
 
-            if (result is not null)
-            {
-                return Ok(result);
-            }
-
-            return NotFound();
+            return Ok(result);
         }
 
         /// <summary>
@@ -116,16 +106,6 @@
         {
             var result = await Mediator.Send(new OrderChangeStatusRequest() { OrderCode = orderCode, UserId = GetUserIdFromToken(), StatusId = statusId }, cancellationToken);
 
-            if (result.Message == OrderChangeStatusCommandMessages.NotFound)
-            {
-                return NotFound(result);
-            }
-
-            if(result.Message == OrderChangeStatusCommandMessages.WrongUser)
-            {
-                return Unauthorized(result);
-            }
-
             return Ok(result);
         }
 
@@ -148,7 +128,7 @@
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<OrderStornoResponse>> DeleteOrderAsync(string orderCode, CancellationToken cancellationToken = default)
         {
-            var result = await Mediator.Send(new OrderStornoRequest() { UserId = GetUserIdFromToken(), OrderCode =  orderCode}, cancellationToken);
+            var result = await Mediator.Send(new OrderStornoRequest() { UserId = GetUserIdFromToken(), OrderCode = orderCode }, cancellationToken);
 
             return Ok(result);
         }

@@ -1,13 +1,13 @@
 ﻿namespace ApplicationLayer.Services.ProductCategories.Queries
 {
-    using DomainLayer.Entities.Product;
     using Dtos;
+    using Exceptions;
     using Interfaces;
     using Interfaces.Cache;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
 
-    public class ProductCategoriesGetRequest : IRequest<ProductCategoriesGetResponse?>, ICacheableQuery
+    public class ProductCategoriesGetRequest : IRequest<ProductCategoriesGetResponse>, ICacheableQuery
     {
         public string CacheKey => Cache.CacheKeys.ProductCetegories;
 
@@ -22,6 +22,11 @@
                 var productCategories = await _dbContext.ProductCategories
                     .AsNoTracking()
                     .ToListAsync(cancellationToken);
+
+                if (!productCategories.Any())
+                {
+                    throw new CRUDException(Exceptions.ExceptionTypeEnum.NotFound, "Product categories not found");
+                }
 
                 productCategories.ToList().ForEach(cat =>
                 {

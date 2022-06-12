@@ -35,6 +35,6 @@
             return condition()
                 ? thenPath(elements)
                 : elsePath(elements);
-        }        
+        }
     }
 }

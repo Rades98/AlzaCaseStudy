@@ -1,28 +1,33 @@
 ﻿namespace ApplicationLayer.Services.ProductCategories.Queries
 {
-    using DomainLayer.Entities.Product;
+    using Exceptions;
     using Dtos;
     using Interfaces;
     using Interfaces.Cache;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
 
-    public class ProductCategoriesGetByIdRequest : IRequest<ProductCategoriesGetResponse?>, ICacheableQuery
+    public class ProductCategoriesGetByIdRequest : IRequest<ProductCategoriesGetResponse>, ICacheableQuery
     {
         public Guid Id { get; set; }
         public string CacheKey => Cache.CacheKeys.ProductCetegories;
 
-        public class Handler : IRequestHandler<ProductCategoriesGetByIdRequest, ProductCategoriesGetResponse?>
+        public class Handler : IRequestHandler<ProductCategoriesGetByIdRequest, ProductCategoriesGetResponse>
         {
             private readonly IDbContext _dbContext;
 
             public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
-            public async Task<ProductCategoriesGetResponse?> Handle(ProductCategoriesGetByIdRequest request, CancellationToken cancellationToken)
+            public async Task<ProductCategoriesGetResponse> Handle(ProductCategoriesGetByIdRequest request, CancellationToken cancellationToken)
             {
                 var productCategories = await _dbContext.ProductCategories
                     .AsNoTracking()
                     .ToListAsync(cancellationToken);
+
+                if (!productCategories.Any())
+                {
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Product category not found");
+                }
 
                 productCategories.ForEach(cat =>
                 {

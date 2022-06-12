@@ -1,24 +1,23 @@
 ﻿namespace ApplicationLayer.Services.ProductDetailInfos.Queries
 {
-    using DomainLayer.Entities.Product;
-    using DomainLayer.Entities.Orders;
+    using Exceptions;
     using Interfaces;
     using Interfaces.Cache;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
 
-    public class ProductDetailInfoGetRequest : IRequest<ProductDetailInfoGetResponse?>, ICacheableWithIdQuery
+    public class ProductDetailInfoGetRequest : IRequest<ProductDetailInfoGetResponse>, ICacheableWithIdQuery
     {
         public Guid Id { get; set; }
         public string CacheKey => Cache.CacheKeys.ProductDetailInfos;
 
-        public class Handler : IRequestHandler<ProductDetailInfoGetRequest, ProductDetailInfoGetResponse?>
+        public class Handler : IRequestHandler<ProductDetailInfoGetRequest, ProductDetailInfoGetResponse>
         {
             private readonly IDbContext _dbContext;
 
             public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
-            public async Task<ProductDetailInfoGetResponse?> Handle(ProductDetailInfoGetRequest request, CancellationToken cancellationToken)
+            public async Task<ProductDetailInfoGetResponse> Handle(ProductDetailInfoGetRequest request, CancellationToken cancellationToken)
             {
                 var productDetail = await _dbContext.ProductDetailInfos
                     .AsNoTracking()
@@ -26,7 +25,7 @@
 
                 if (productDetail is null)
                 {
-                    return null;
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Product detail info not found");
                 }
 
                 var productCount = await _dbContext.Products.CountAsync(p => p.Id == request.Id, cancellationToken);

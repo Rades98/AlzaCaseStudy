@@ -1,13 +1,14 @@
 ﻿namespace ApplicationLayer.Services.Orders.Commands.ChangeStatus
 {
-    using ApplicationLayer.Interfaces;
+    using Exceptions;
+    using Interfaces;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
 
     public class OrderChangeStatusRequest : IRequest<OrderChangeStatusResponse>
     {
         public Guid UserId { get; set; }
-        public string OrderCode { get; set; }
+        public string OrderCode { get; set; } = string.Empty;
         public Guid StatusId { get; set; }
 
         public class Handler : IRequestHandler<OrderChangeStatusRequest, OrderChangeStatusResponse>
@@ -22,12 +23,12 @@
 
                 if (actual is null)
                 {
-                    return new() { Message = OrderChangeStatusCommandMessages.NotFound };
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Order not found");
                 }
 
                 if (actual.UserId != request.UserId)
                 {
-                    return new() { Message = OrderChangeStatusCommandMessages.WrongUser };
+                    throw new CRUDException(ExceptionTypeEnum.Unauthorized, "Wrong user");
                 }
 
                 actual.OrderStatusId = request.StatusId;
@@ -37,11 +38,11 @@
                     _dbContext.Orders.Update(actual);
                     await _dbContext.SaveChangesAsync(cancellationToken);
 
-                    return new OrderChangeStatusResponse { Message = OrderChangeStatusCommandMessages.StatusChanged };
+                    return new OrderChangeStatusResponse { Message = "Status changed" };
                 }
-                catch (Exception _)
+                catch (Exception ex)
                 {
-                    return new() { Message = OrderChangeStatusCommandMessages.Error };
+                    throw new CRUDException(ExceptionTypeEnum.Error, "Error while changing status", ex);
                 }
             }
         }
