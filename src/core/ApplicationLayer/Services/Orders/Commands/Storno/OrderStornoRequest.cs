@@ -1,8 +1,7 @@
 ﻿namespace ApplicationLayer.Services.Orders.Commands.Storno
 {
-    using ApplicationLayer.Exceptions.Order;
-    using ApplicationLayer.Interfaces;
-    using DomainLayer.Entities.Orders;
+    using Exceptions;
+    using Interfaces;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
     using System.Threading;
@@ -27,21 +26,21 @@
                         .ThenInclude(i => i.Product)
                             .ThenInclude(i => i.ProductDetail)
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(x => 
-                    x.UserId == request.UserId && 
+                    .FirstOrDefaultAsync(x =>
+                    x.UserId == request.UserId &&
                     x.OrderCode == request.OrderCode
                 , cancellationToken);
 
-                if(order is null)
+                if (order is null)
                 {
-                    throw new OrderDeleteException(OrderStornoRequestMessages.NotFound);
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Order not found");
                 }
 
-                if(order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Canceled ||
+                if (order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Canceled ||
                     order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Delivered ||
                     order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.InExpedition)
                 {
-                    throw new OrderDeleteException(OrderStornoRequestMessages.CannotBeCanceled);
+                    throw new CRUDException(ExceptionTypeEnum.Error, "Order cannot be cancelled");
                 }
 
                 using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -67,11 +66,11 @@
 
                     return new() { Message = "Order canceled" };
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     transaction.Rollback();
 
-                    throw new OrderDeleteException(OrderStornoRequestMessages.Error, e);
+                    throw new CRUDException(ExceptionTypeEnum.Error, "Error while canceling order", e);
                 }
             }
         }

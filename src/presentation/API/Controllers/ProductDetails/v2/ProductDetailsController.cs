@@ -38,12 +38,7 @@
         public async Task<ActionResult<IEnumerable<ProductDetailGetResponse>>> GetProductsAsync(int pageSize, int pageNum, CancellationToken cancellationToken = default)
         {
             var results = await Mediator.Send(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = pageNum, PageSize = pageSize }, cancellationToken);
-            if (results.Any())
-            {
-                return Ok(results.Select(product => RestfullProductGetResponse(product)));
-            }
-
-            return NotFound();
+            return Ok(results.Select(product => RestfullProductGetResponse(product)));
         }
 
         private ProductDetailGetResponse RestfullProductGetResponse(ProductDetailGetResponse response)

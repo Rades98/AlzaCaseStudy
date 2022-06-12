@@ -1,12 +1,13 @@
 ﻿namespace ApplicationLayer.Services.ProductDetails.Queries.Requests
 {
-    using Interfaces.Cache;
     using DomainLayer.Entities.Product;
-    using Interfaces;
+    using Exceptions;
     using Extensions;
+    using Interfaces;
+    using Interfaces.Cache;
     using MediatR;
-    using Queries;
     using Microsoft.EntityFrameworkCore;
+    using Queries;
 
     /// <summary>
     /// Query to obtain all products
@@ -20,13 +21,13 @@
         public bool OrderByDesc { get; set; } = false;
         public string CacheKey => Cache.CacheKeys.ProductDetails;
 
-        public class Handler : IRequestHandler<ProductDetailsGetRequest, IEnumerable<ProductDetailGetResponse>?>
+        public class Handler : IRequestHandler<ProductDetailsGetRequest, IEnumerable<ProductDetailGetResponse>>
         {
             private readonly IDbContext _dbContext;
 
             public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
-            public async Task<IEnumerable<ProductDetailGetResponse>?> Handle(ProductDetailsGetRequest request, CancellationToken cancellationToken)
+            public async Task<IEnumerable<ProductDetailGetResponse>> Handle(ProductDetailsGetRequest request, CancellationToken cancellationToken)
             {
                 var products = await _dbContext.ProductDetails
                     .AsNoTracking()
@@ -37,13 +38,13 @@
                         e => e.OrderByDescending(request.OrderBy),
                         e => e.OrderBy(request.OrderBy))
                     .ToList();
-                    
+
                 if (products.Count > 0)
                 {
                     return products.Select(x => (ProductDetailGetResponse)x);
                 }
 
-                return null;
+                throw new CRUDException(ExceptionTypeEnum.NotFound, "Product details not found");
             }
         }
     }

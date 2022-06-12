@@ -40,12 +40,7 @@
         {
             var results = await Mediator.Send(new ProductDetailsGetRequest() { OrderBy = p => p.Name }, cancellationToken);
 
-            if (results.Any())
-            {
-                return Ok(results.Select(product => RestfullProductGetResponse(product)));
-            }
-
-            return NotFound();
+            return Ok(results.Select(product => RestfullProductGetResponse(product)));
         }
 
         /// <summary>
@@ -67,12 +62,7 @@
         public async Task<ActionResult<ProductDetailGetResponse?>> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var result = await Mediator.Send(new ProductDetailGetRequest() { Id = id }, cancellationToken);
-            if (result is not null)
-            {
-                return Ok(RestfullProductGetResponse(result));
-            }
-
-            return NotFound();
+            return Ok(RestfullProductGetResponse(result));
         }
 
         /// <summary>
@@ -98,12 +88,7 @@
         {
             var result = await Mediator.Send(new ProductDetailUpdateRequest { Id = id, Description = description }, cancellationToken);
 
-            if (result is not null && (result.Updated || result.UpToDate))
-            {
-                return Ok(result);
-            }
-
-            return NotFound(result);
+            return Ok(result);
         }
 
         private ProductDetailGetResponse RestfullProductGetResponse(ProductDetailGetResponse response)

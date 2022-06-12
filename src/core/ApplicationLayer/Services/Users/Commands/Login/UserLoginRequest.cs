@@ -1,11 +1,9 @@
 ﻿namespace ApplicationLayer.Services.Users.Commands.Login
 {
-    using DomainLayer.Entities.Users;
     using Exceptions;
     using Interfaces;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
-    using System.Linq.Expressions;
     using Utils.PasswordHashing;
 
     public class UserLoginRequest : IRequest<UserLoginResponse>
@@ -29,12 +27,12 @@
 
                 if (user == null)
                 {
-                    throw new UserLoginException(UserLoginException.UsrNotFound);
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "USer not found");
                 }
 
                 if (!PasswordHashing.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
                 {
-                    throw new UserLoginException(UserLoginException.WrongPw);
+                    throw new CRUDException(ExceptionTypeEnum.Unauthorized, "Wrong password");
                 }
 
                 var roles = user.Roles?.Select(role => role.Name).ToList();
@@ -43,7 +41,7 @@
                 {
                     UserName = user.UserName,
                     Token = PasswordHashing.CreateToken(user.Id, request.Token, roles!),
-                    Roles = roles
+                    Roles = roles ?? new()
                 };
             }
         }

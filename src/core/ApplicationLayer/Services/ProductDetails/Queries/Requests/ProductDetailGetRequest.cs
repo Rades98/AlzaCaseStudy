@@ -1,7 +1,7 @@
 ﻿namespace ApplicationLayer.Services.ProductDetails.Queries.Requests
 {
-    using ApplicationLayer.Services.ProductDetails.Queries;
-    using DomainLayer.Entities.Product;
+    using Exceptions;
+    using Services.ProductDetails.Queries;
     using Interfaces;
     using Interfaces.Cache;
     using MediatR;
@@ -15,26 +15,26 @@
     /// <returns>
     /// product with specified id if there is none returns null
     /// </returns>
-    public class ProductDetailGetRequest : IRequest<ProductDetailGetResponse?>, ICacheableWithIdQuery
+    public class ProductDetailGetRequest : IRequest<ProductDetailGetResponse>, ICacheableWithIdQuery
     {
         public Guid Id { get; set; }
         public string CacheKey => Cache.CacheKeys.ProductDetails;
 
-        public class Handler : IRequestHandler<ProductDetailGetRequest, ProductDetailGetResponse?>
+        public class Handler : IRequestHandler<ProductDetailGetRequest, ProductDetailGetResponse>
         {
             private readonly IDbContext _dbContext;
 
             public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
-            public async Task<ProductDetailGetResponse?> Handle(ProductDetailGetRequest request, CancellationToken cancellationToken)
+            public async Task<ProductDetailGetResponse> Handle(ProductDetailGetRequest request, CancellationToken cancellationToken)
             {
                 var product = await _dbContext.ProductDetails
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(x=> x.Id == request.Id, cancellationToken);
+                    .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
                 if (product is null)
                 {
-                    return null;
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Product detail not found");
                 }
 
                 return (ProductDetailGetResponse)product;

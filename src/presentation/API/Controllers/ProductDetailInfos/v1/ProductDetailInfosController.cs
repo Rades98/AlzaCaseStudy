@@ -37,12 +37,8 @@
         {
             var result = await Mediator.Send(new ProductDetailInfoGetRequest() { Id = id }, cancellationToken);
 
-            if (result is not null)
-            {
-                return Ok(RestfullProductDetailInfoGetResponse(result));
-            }
+            return Ok(RestfullProductDetailInfoGetResponse(result));
 
-            return NotFound();
         }
 
         private ProductDetailInfoGetResponse RestfullProductDetailInfoGetResponse(ProductDetailInfoGetResponse response)

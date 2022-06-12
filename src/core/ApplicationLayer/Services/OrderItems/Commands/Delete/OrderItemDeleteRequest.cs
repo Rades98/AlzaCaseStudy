@@ -1,7 +1,7 @@
 ﻿namespace ApplicationLayer.Services.OrderItems.Commands.Delete
 {
-    using ApplicationLayer.Exceptions.OrderItem;
-    using ApplicationLayer.Interfaces;
+    using Exceptions;
+    using Interfaces;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
     using System.Threading;
@@ -35,7 +35,7 @@
 
                 if (orderItem is null)
                 {
-                    throw new OrderItemDeleteException(OrderItemDeleteRequestMessages.NotFound);
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Order item not found");
                 }
 
                 using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -53,12 +53,12 @@
 
                     await transaction.CommitAsync(cancellationToken);
 
-                    return new OrderItemDeleteResponse() { Message = OrderItemDeleteRequestMessages.Ok };
+                    return new OrderItemDeleteResponse() { Message = "Deleted" };
                 }
                 catch (Exception e)
                 {
                     await transaction.RollbackAsync(cancellationToken);
-                    throw new OrderItemDeleteException(OrderItemDeleteRequestMessages.Error, e);
+                    throw new CRUDException(ExceptionTypeEnum.Error, "Error while deleting", e);
                 }
 
 

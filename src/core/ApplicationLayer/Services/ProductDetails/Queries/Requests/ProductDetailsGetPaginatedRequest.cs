@@ -1,12 +1,13 @@
 ﻿namespace ApplicationLayer.Services.ProductDetails.Queries.Requests
 {
-    using ApplicationLayer.Services.ProductDetails.Queries;
     using DomainLayer.Entities.Product;
+    using Exceptions;
+    using Extensions;
     using Interfaces;
     using MediatR;
-    using Extensions;
-    using X.PagedList;
     using Microsoft.EntityFrameworkCore;
+    using Services.ProductDetails.Queries;
+    using X.PagedList;
 
     /// <summary>
     /// Query to obtain all products wit pagination settings
@@ -23,12 +24,12 @@
 
         public int PageSize { get; set; } = 10;
 
-        public class Handler : IRequestHandler<ProductDetailsGetPaginatedRequest, IEnumerable<ProductDetailGetResponse>?>
+        public class Handler : IRequestHandler<ProductDetailsGetPaginatedRequest, IEnumerable<ProductDetailGetResponse>>
         {
             private readonly IDbContext _dbContext;
             public Handler(IDbContext dbContext) => _dbContext = dbContext;
 
-            public async Task<IEnumerable<ProductDetailGetResponse>?> Handle(ProductDetailsGetPaginatedRequest request, CancellationToken cancellationToken)
+            public async Task<IEnumerable<ProductDetailGetResponse>> Handle(ProductDetailsGetPaginatedRequest request, CancellationToken cancellationToken)
             {
                 var products = await _dbContext.ProductDetails
                     .AsNoTracking()
@@ -43,7 +44,7 @@
                     return products.Select(x => (ProductDetailGetResponse)x);
                 }
 
-                return null;
+                throw new CRUDException(ExceptionTypeEnum.NotFound, "Product details not found");
             }
         }
     }

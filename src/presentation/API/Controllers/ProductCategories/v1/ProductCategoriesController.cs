@@ -31,12 +31,7 @@
         {
             var result = await Mediator.Send(new ProductCategoriesGetRequest() { }, cancellationToken);
 
-            if (result is not null)
-            {
-                return Ok(RestfullProductCategoriesGetResponse(result));
-            }
-
-            return NotFound();
+            return Ok(RestfullProductCategoriesGetResponse(result));
         }
 
         /// <summary>
@@ -59,12 +54,7 @@
         {
             var result = await Mediator.Send(new ProductCategoriesGetByIdRequest() { Id = id }, cancellationToken);
 
-            if (result is not null)
-            {
-                return Ok(RestfullProductCategoriesGetResponse(result));
-            }
-
-            return NotFound();
+            return Ok(RestfullProductCategoriesGetResponse(result));
         }
 
         private ProductCategoriesGetResponse RestfullProductCategoriesGetResponse(ProductCategoriesGetResponse response)

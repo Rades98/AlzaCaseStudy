@@ -1,7 +1,6 @@
 ﻿namespace ApplicationLayer.Services.Orders.Queries
 {
     using DomainLayer.Entities.Orders;
-    using DomainLayer.Entities.Product;
     using Interfaces;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
@@ -10,7 +9,7 @@
     public class OrdersGetByUserRequest : IRequest<List<OrdersGetResponse>>
     {
         public Guid UserId { get; set; }
-        public Expression<Func<OrderEntity, bool>> WhereFilter { get; set; } = x => x == x;
+        public Expression<Func<OrderEntity, bool>> WhereFilter { get; set; } = x => true;
 
         public class Handler : IRequestHandler<OrdersGetByUserRequest, List<OrdersGetResponse>>
         {
@@ -49,7 +48,7 @@
 
                         var opt = response.OrderItems.FirstOrDefault(x => x.ProductCode == detail.ProductCode);
 
-                        if(opt is not null)
+                        if (opt is not null)
                         {
                             opt.Count++;
                         }
@@ -62,7 +61,7 @@
                                 ProductCode = detail.ProductCode,
                                 Count = 1
                             });
-                        }              
+                        }
                     });
 
                     result.Add(response);

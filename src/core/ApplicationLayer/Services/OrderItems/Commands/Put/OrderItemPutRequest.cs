@@ -1,8 +1,8 @@
 ﻿namespace ApplicationLayer.Services.OrderItems.Commands.Put
 {
-    using ApplicationLayer.Exceptions.OrderItem;
     using CodeLists.OrderStatuses;
     using DomainLayer.Entities.Orders;
+    using Exceptions;
     using Interfaces;
     using MediatR;
     using Microsoft.EntityFrameworkCore;
@@ -30,15 +30,19 @@
 
                 if (order is null)
                 {
-                    throw new OrderItemPutException(OrderItemPutRequestMessages.OrderNotFound);
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Order not found");
+                }
+
+                if (order.UserId != request.UserId)
+                {
+                    throw new CRUDException(ExceptionTypeEnum.Unauthorized, "Wrong user");
                 }
 
                 if (
                     order.OrderStatusId != OrderStatuses.New &&
-                    order.OrderStatusId != OrderStatuses.Created ||
-                    order.UserId != request.UserId)
+                    order.OrderStatusId != OrderStatuses.Created)
                 {
-                    throw new OrderItemPutException(OrderItemPutRequestMessages.OrderUneditable);
+                    throw new CRUDException(ExceptionTypeEnum.Error, "Order is not editable");
                 }
 
 
@@ -60,7 +64,7 @@
 
                     if (unusedProduct is null)
                     {
-                        throw new OrderItemPutException(OrderItemPutRequestMessages.ProductNotFound);
+                        throw new CRUDException(ExceptionTypeEnum.NotFound, "ProductNotFound");
                     }
 
                     _dbContext.OrderItems.Update(new OrderItemEntity
@@ -77,12 +81,12 @@
 
                     transaction.Commit();
 
-                    return new OrderItemPutResponse() { Message = OrderItemPutRequestMessages.ProductAdded };
+                    return new OrderItemPutResponse() { Message = "OK" };
                 }
                 catch (Exception e)
                 {
                     transaction.Rollback();
-                    throw new OrderItemPutException(OrderItemPutRequestMessages.AdditionFailed, e);
+                    throw new CRUDException(ExceptionTypeEnum.Error, "Product addition to order failed", e);
                 }
 
             }

@@ -1,6 +1,6 @@
 ﻿namespace UnitTests.Tests.Mediator.Users
 {
-    using ApplicationLayer.Exceptions;
+    using ApplicationLayer.Exceptions.User;
     using ApplicationLayer.Services.Users.Commands.Login;
     using Mocks;
     using Mocks.GenericRepo.Users;

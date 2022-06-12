@@ -1,6 +1,6 @@
 ﻿namespace ApplicationLayer.Services.ProductDetails.Commands
 {
-    using DomainLayer.Entities.Product;
+    using Exceptions;
     using Interfaces;
     using Interfaces.Cache;
     using MediatR;
@@ -35,14 +35,12 @@
 
                 if (entity is null)
                 {
-                    return response;
+                    throw new CRUDException(ExceptionTypeEnum.NotFound, "Product detail not found");
                 }
 
                 if (entity.Description == request.Description)
                 {
-                    response.UpdateMessage = ProductDetailCommandMessages.UpToDate;
-                    response.UpToDate = true;
-                    return response;
+                    throw new CRUDException(ExceptionTypeEnum.NotModified, "Product detail is already up to date");
                 }
 
                 try
@@ -56,8 +54,7 @@
                 }
                 catch (Exception ex)
                 {
-                    response.Updated = false;
-                    response.UpdateMessage = ex.Message;
+                    throw new CRUDException(ExceptionTypeEnum.Error, "Error while updating product detail", ex);
                 }
 
                 return response;
