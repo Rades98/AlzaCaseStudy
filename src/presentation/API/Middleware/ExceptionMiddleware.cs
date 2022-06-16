@@ -41,11 +41,11 @@
                     message = "Request time out";
                     context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
                     break;
+
                 case BadHttpRequestException _:
                     message = "Bad request";
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
-
 
                 case CRUDException ex:
                     message = ex.Message;
