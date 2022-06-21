@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
 
+    [ApiVersion("1")]
     public class ProductCategoriesController : BaseController<ProductCategoryEntity>
     {
         public ProductCategoriesController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductCategoryEntity> logger) : base(mediator, adcp, logger)
@@ -20,8 +21,6 @@
         /// Returns product categories
         /// </remarks>
         [HttpGet(Name = nameof(GetProductCategopriesAsync))]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,8 +42,6 @@
         /// Returns subcategories for defined category
         /// </remarks>
         [HttpGet("{id}", Name = nameof(GetProductCategoriesByIdAsync))]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

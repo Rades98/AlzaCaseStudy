@@ -10,6 +10,7 @@
     /// Product detail info  endpoints v1
     /// </summary>
     /// <seealso cref="BaseController{ProductDetailInfoEntity}"/>
+    [ApiVersion("1")]
     public class ProductDetailInfosController : BaseController<ProductDetailInfoEntity>
     {
         public ProductDetailInfosController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductDetailInfoEntity> logger) : base(mediator, adcp, logger)
@@ -26,8 +27,6 @@
         /// Returns product detail info, if found
         /// </remarks>
         [HttpGet(Name = nameof(GetProductDetailInfoAsync))]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -46,12 +46,12 @@
 
             var orderStatuse = new List<OrderStatusEntity>()
             {
-                new() {Name = "New", Id = OrderStatuses.New },
-                new() {Name = "Created", Id = OrderStatuses.Created },
-                new() {Name = "WaitingForPayment", Id = OrderStatuses.WaitingForPayment },
-                new() {Name = "InExpedition", Id = OrderStatuses.InExpedition },
-                new() {Name = "Delivered", Id = OrderStatuses.Delivered },
-                new() {Name = "Canceled", Id = OrderStatuses.Canceled },
+                new() {Name = "New", Id = OrderStatuses.New, IsOrderEditable = true },
+                new() {Name = "Created", Id = OrderStatuses.Created, IsOrderEditable = true },
+                new() {Name = "WaitingForPayment", Id = OrderStatuses.WaitingForPayment, IsOrderEditable = false },
+                new() {Name = "InExpedition", Id = OrderStatuses.InExpedition, IsOrderEditable = false },
+                new() {Name = "Delivered", Id = OrderStatuses.Delivered, IsOrderEditable = false },
+                new() {Name = "Canceled", Id = OrderStatuses.Canceled, IsOrderEditable = false },
             };
 
 

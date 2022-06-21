@@ -5,7 +5,8 @@
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using PersistenceLayer;
+	using PersistanceLayerDapper;
+	using PersistenceLayer;
     using ResponseCompression;
     using Swagger;
     using Swashbuckle.AspNetCore.Filters;
@@ -30,6 +31,7 @@
             services.ConfigureResponseCompression();
             services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.RegisterDatabase(configuration);
+            services.RegisterDapper();
             services.AddApplicationServices();
             services.AddCustomApiVersioning();
             services.ConfigureOptions<ConfigureSwaggerOptions>();
