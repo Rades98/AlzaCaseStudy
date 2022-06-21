@@ -33,7 +33,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "others", "others", "{5B7FA7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeLists", "others\CodeLists\CodeLists.csproj", "{F7151D26-7EE4-4356-BD68-D6688B435C1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "others\Extensions\Extensions.csproj", "{D2E6B82A-7DF6-4895-AFE2-5FD3D8024B6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensions", "others\Extensions\Extensions.csproj", "{D2E6B82A-7DF6-4895-AFE2-5FD3D8024B6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersistanceLayerDapper", "src\infrastructure\PersistanceLayerDapper\PersistanceLayerDapper.csproj", "{38315E10-A01D-48AA-900B-617E4B952E95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{D2E6B82A-7DF6-4895-AFE2-5FD3D8024B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2E6B82A-7DF6-4895-AFE2-5FD3D8024B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2E6B82A-7DF6-4895-AFE2-5FD3D8024B6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38315E10-A01D-48AA-900B-617E4B952E95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38315E10-A01D-48AA-900B-617E4B952E95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38315E10-A01D-48AA-900B-617E4B952E95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38315E10-A01D-48AA-900B-617E4B952E95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{5DB30E82-C937-4C67-85E0-0944300060BC} = {15D062EB-8518-46A0-B49F-8C6788004C33}
 		{F7151D26-7EE4-4356-BD68-D6688B435C1D} = {5B7FA7A0-CA97-4A67-A7E3-B3B09B26EF89}
 		{D2E6B82A-7DF6-4895-AFE2-5FD3D8024B6E} = {5B7FA7A0-CA97-4A67-A7E3-B3B09B26EF89}
+		{38315E10-A01D-48AA-900B-617E4B952E95} = {5CB034E1-9654-46AA-8A4A-8D0EB5400ABF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FDCF347-19C6-444D-A204-23312B9858FB}

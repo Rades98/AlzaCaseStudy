@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
 
+    [ApiVersion("1")]
     public class OrdersController : BaseController<OrderEntity>
     {
         public OrdersController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<OrderEntity> logger) : base(mediator, adcp, logger)
@@ -24,8 +25,6 @@
         /// Returns all user orders - for test purpose use Admin aJc48262_1Kjkz>X!
         /// </remarks>
         [HttpGet(Name = nameof(GetOrdersAsync)), Authorize()]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -48,8 +47,6 @@
         /// Returns all user orders where status id is as defined - for test purpose use Admin aJc48262_1Kjkz>X!
         /// </remarks>
         [HttpGet("statusId", Name = nameof(GetOrdersFilteredAsync)), Authorize()]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -71,8 +68,6 @@
         /// Returns true if order was created
         /// </remarks>
         [HttpPut(Name = nameof(CreateOrderAsync)), Authorize()]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -95,8 +90,6 @@
         /// Changes order status
         /// </remarks>
         [HttpPatch("orderCode", Name = nameof(ChangeOrderStatusAsync)), Authorize()]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -118,8 +111,6 @@
         /// Storno order
         /// </remarks>
         [HttpDelete("OrderCode", Name = nameof(DeleteOrderAsync)), Authorize()]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

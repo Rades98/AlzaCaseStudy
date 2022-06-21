@@ -29,7 +29,6 @@
         /// Returns paged products as specified, otherwise null
         /// </remarks>
         [HttpGet(Name = nameof(GetProductsAsync))]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -6,6 +6,6 @@
         Error = 2,
         Unauthorized = 3,
         NotModified = 4,
-        OK = 5
+        OK = 5,
     }
 }

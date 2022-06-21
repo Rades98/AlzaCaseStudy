@@ -30,7 +30,6 @@
         /// Returns all products, if there is none, returns null
         /// </remarks>
         [HttpGet(Name = nameof(GetProductsAsync))]
-        [MapToApiVersion("1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,8 +51,6 @@
         /// Returns product found by id, if there is none, returns null
         /// </remarks>
         [HttpGet("{id}", Name = nameof(GetByIdAsync))]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -75,8 +72,6 @@
         /// Returns updated product if operation was succesfull, otherwise returns status
         /// </remarks>
         [HttpPatch(Name = nameof(UpdateAsync)), Authorize(Roles = UserRoles.Admin)]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

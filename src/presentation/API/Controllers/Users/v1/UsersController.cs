@@ -29,8 +29,6 @@
         /// Returns token if credentials were correct
         /// </remarks>
         [HttpPost(Name = nameof(LoginUserAsync))]
-        [MapToApiVersion("1")]
-        [MapToApiVersion("2")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Services.OrderItems.Commands.Put
+﻿namespace ApplicationLayer.ServicesDapper.OrderItems.Commands.Put
 {
     using CodeLists.OrderStatuses;
     using DomainLayer.Entities.Orders;
