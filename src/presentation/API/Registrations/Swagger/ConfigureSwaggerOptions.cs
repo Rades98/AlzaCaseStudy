@@ -14,6 +14,7 @@
         {
             options.SwaggerDoc("v1", CreateInfoForApiVersion("v1"));
             options.SwaggerDoc("v2", CreateInfoForApiVersion("v2"));
+            options.SwaggerDoc("v3", CreateInfoForApiVersion("v3"));
         }
 
         private static OpenApiInfo CreateInfoForApiVersion(string version)

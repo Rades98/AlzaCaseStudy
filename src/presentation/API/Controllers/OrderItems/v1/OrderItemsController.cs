@@ -1,14 +1,14 @@
 ﻿namespace API.Controllers.OrderItems.v1
 {
-    using ApplicationLayer.Services.OrderItems.Commands.Delete;
-    using ApplicationLayer.Services.OrderItems.Commands.Put;
-    using DomainLayer.Entities.Orders;
-    using MediatR;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
+	using ApplicationLayer.Requests.OrderItems.Commands.Delete;
+	using ApplicationLayer.Requests.OrderItems.Commands.Put;
+	using DomainLayer.Entities.Orders;
+	using MediatR;
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-    [ApiVersion("1")]
+	[ApiVersion("1")]
     public class OrderItemsController : BaseController<OrderItemEntity>
     {
         public OrderItemsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<OrderItemEntity> logger) : base(mediator, adcp, logger)
