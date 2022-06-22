@@ -12,29 +12,30 @@
     {
         public void Configure(SwaggerGenOptions options)
         {
-            options.SwaggerDoc("v1", CreateInfoForApiVersion("v1"));
-            options.SwaggerDoc("v2", CreateInfoForApiVersion("v2"));
-            options.SwaggerDoc("v3", CreateInfoForApiVersion("v3"));
+            options.SwaggerDoc("v1", CreateInfoForApiVersion("v1", "Endpoints are using EF Core"));
+            options.SwaggerDoc("v2", CreateInfoForApiVersion("v2", "Endpoints are using Dapper and stored procedures"));
+            options.SwaggerDoc("v3", CreateInfoForApiVersion("v3", "Requests with pagination"));
         }
 
-        private static OpenApiInfo CreateInfoForApiVersion(string version)
+        private static OpenApiInfo CreateInfoForApiVersion(string version, string description = "")
         {
             var info = new OpenApiInfo()
             {
-                Title = "Alza api",
+                Title = "API Case study",
                 Version = version,
-                TermsOfService = new Uri("https://alza.cz/terms"),
+                TermsOfService = new Uri("https://github.com/Rades98/AlzaCaseStudy/wiki"),
                 Contact = new OpenApiContact
                 {
-                    Name = "Api Guy",
-                    Url = new Uri("https://alza.cz/contact"),
-                    Email = "apiguy@alza.cz"
+                    Name = "Radek Řezníček",
+                    Url = new Uri(@"https://www.linkedin.com/in/radek-řezníček-545638163/"),
+                    Email = "rades9898@gmail.com"
                 },
                 License = new OpenApiLicense
                 {
                     Name = "License",
                     Url = new Uri("https://opensource.org/licenses")
-                }
+                },
+                Description = description,
             };
 
             return info;
