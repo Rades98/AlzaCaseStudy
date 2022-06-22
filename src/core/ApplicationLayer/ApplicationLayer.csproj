@@ -29,12 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ServicesDapper\Users\" />
-    <Folder Include="ServicesDapper\ProductDetails\" />
-    <Folder Include="ServicesDapper\ProductDetailInfos\" />
-    <Folder Include="ServicesDapper\ProductCategories\" />
-    <Folder Include="ServicesDapper\Orders\" />
-    <Folder Include="Services\OrderItems\Commands\Delete\" />
+    <Folder Include="RequestsDapper\Users\" />
+    <Folder Include="RequestsDapper\ProductDetails\" />
+    <Folder Include="RequestsDapper\ProductDetailInfos\" />
+    <Folder Include="RequestsDapper\ProductCategories\" />
+    <Folder Include="RequestsDapper\Orders\" />
   </ItemGroup>
 
 </Project>
