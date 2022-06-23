@@ -22,12 +22,13 @@ GO
 DELETE FROM [dbo].[Messages]
 DBCC CHECKIDENT ('[Messages]', RESEED, 0)
 GO
+DELETE FROM [dbo].[OrderStatusesLocalized]
+DBCC CHECKIDENT ('[OrderStatusesLocalized]', RESEED, 0)
+GO
 
 INSERT INTO [dbo].[ProductDetails] (Created, [Description], ImgUri, [Name], Price, ProductCategoryId, ProductCode)
 VALUES(GETDATE(), 'Mobile phone FUKUME dah dah dah', 'http://www.alza.cdn.cz/product', 'FUKUME 8 - BLACK', 8000.00, 1001, 'AAAA0000')
 
-INSERT INTO [dbo].[ProductDetailsLocalized]([Name], [Description], [LanguageId], [Created], [ProductDetailId], ImgUri)
-VALUES('Mobilní telefon FUKUME dá dá dá', 'FUKUME 8 - ČERNÝ', 1, GETDATE(), (SELECT IDENT_CURRENT('[dbo].[ProductDetails]')), 'http://www.alza.cdn.cz/product')
 
 INSERT INTO [dbo].[ProductDetailInfos]([ProductDetailId], [DetailedDescription], [Parameters], [Created])
 VALUES((SELECT IDENT_CURRENT('[dbo].[ProductDetails]')), 'FUKUME mobile phone lol. Its cool, we all like it, you need it!', '{"Creator": "Fukume","Construction": "Touchscreen","OperatingSystem": "Android","OSversion": 42,"Weight": 174,"Display": {"DisplaySize": 6.1,"Resolution": "2532 x 1170","DisplayType": "Super Trooper Rootin Pootin OLED","PPI": 460},"Dimensions":{"Height": 146.7,"Width": 71.5,"Depth": 7.7},"Camera":{"Resolution": 15,"AutoFocus": true,"Flash": true,"HDVid": true,"Stabilization": true}}',GETDATE())
@@ -150,4 +151,21 @@ INSERT INTO [dbo].[Orders] (OrderCode, Total, UserId, OrderStatusId, Created)
 VALUES ('AAAAA00003', 0, 1, 1, GETDATE())
 
 
+INSERT INTO [dbo].[OrderStatusesLocalized](LanguageId, [Name], OrderStatusId, Created)
+VALUES(1, 'Nová', 1, GETDATE())
+
+INSERT INTO [dbo].[OrderStatusesLocalized](LanguageId, [Name], OrderStatusId, Created)
+VALUES(1, 'Vztvořená', 2, GETDATE())
+
+INSERT INTO [dbo].[OrderStatusesLocalized](LanguageId, [Name], OrderStatusId, Created)
+VALUES(1, 'Čeká se na platbu', 3, GETDATE())
+
+INSERT INTO [dbo].[OrderStatusesLocalized](LanguageId, [Name], OrderStatusId, Created)
+VALUES(1, 'Vzexpedováno', 4, GETDATE())
+
+INSERT INTO [dbo].[OrderStatusesLocalized](LanguageId, [Name], OrderStatusId, Created)
+VALUES(1, 'Doručeno', 5, GETDATE())
+
+INSERT INTO [dbo].[OrderStatusesLocalized](LanguageId, [Name], OrderStatusId, Created)
+VALUES(1, 'Stornováno', 6, GETDATE())
 
