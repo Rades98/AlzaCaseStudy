@@ -1,12 +1,16 @@
 ﻿namespace PersistenceLayer.Database.Extensions
 {
     using ApplicationLayer.Utils.PasswordHashing;
-    using CodeLists.OrderStatuses;
+	using CodeLists.Languages;
+	using CodeLists.MessageTypes;
+	using CodeLists.OrderStatuses;
     using CodeLists.ProductCategories;
     using CodeLists.UserRoles;
-    using DomainLayer.Entities.Orders;
+	using DomainLayer.Entities.LanguageMutations;
+	using DomainLayer.Entities.Orders;
     using DomainLayer.Entities.Product;
-    using DomainLayer.Entities.Users;
+	using DomainLayer.Entities.Texts;
+	using DomainLayer.Entities.Users;
     using Microsoft.EntityFrameworkCore;
 
     internal static class ModelBuilderExtensions
@@ -17,7 +21,7 @@
         {
             var userRoles = new List<UserRoleEntity>()
             {
-                new() { Id = new Guid("7CFD3E28-C6ED-48B9-8D08-424751E77EAF"), Name = UserRoles.Admin, Created = _created }
+                new() { Id = UserRoles.AdminId, Name = UserRoles.Admin, Created = _created }
             };
 
             // Admin
@@ -26,7 +30,7 @@
 
             var users = new List<UserEntity>()
             {
-                new(){ Id = new Guid("1D984227-1A68-4AA2-98FE-8C398E02FF85"), Name = "Admin", UserName = "Admin", Surname = "Admin", PasswordHash = pwHash, PasswordSalt = pwSalt, Email = "some@email.com", Created = _created }
+                new(){ Id = 1, Name = "Admin", UserName = "Admin", Surname = "Admin", PasswordHash = pwHash, PasswordSalt = pwSalt, Email = "some@email.com", Created = _created }
             };
 
             var productCategories = new List<ProductCategoryEntity>()
@@ -37,23 +41,47 @@
                 new() { Name = "Cases", Id = MobileAndAccesories.CasesId, Created = _created, ParentProductCategoryId = ProductCategories.MobAndAccId },
                 new() { Name = "Adapters", Id = MobileAndAccesories.AdaptersId, Created = _created, ParentProductCategoryId = ProductCategories.MobAndAccId },
 
-                new() { Name = "PC and accessories", Id = ProductCategories.PcAndAccId, Created = _created, ParentProductCategoryId = ProductCategories.EshopId},
-                new() { Name = "Graphic cards", Id = PCAndAccesories.GraphicCarsId, Created = _created, ParentProductCategoryId = ProductCategories.PcAndAccId},
-                new() { Name = "Disks", Id = PCAndAccesories.DisksId, Created = _created, ParentProductCategoryId = ProductCategories.PcAndAccId},
-                new() { Name = "SSD", Id = PCAndAccesories.SsdId, Created = _created, ParentProductCategoryId = PCAndAccesories.DisksId},
-                new() { Name = "HDD", Id = PCAndAccesories.HddId, Created = _created, ParentProductCategoryId = PCAndAccesories.DisksId},
+                new() { Name = "PC and accessories", Id = ProductCategories.PcAndAccId, Created = _created, ParentProductCategoryId = ProductCategories.EshopId },
+                new() { Name = "Graphic cards", Id = PCAndAccesories.GraphicCarsId, Created = _created, ParentProductCategoryId = ProductCategories.PcAndAccId },
+                new() { Name = "Disks", Id = PCAndAccesories.DisksId, Created = _created, ParentProductCategoryId = ProductCategories.PcAndAccId },
+                new() { Name = "SSD", Id = PCAndAccesories.SsdId, Created = _created, ParentProductCategoryId = PCAndAccesories.DisksId },
+                new() { Name = "HDD", Id = PCAndAccesories.HddId, Created = _created, ParentProductCategoryId = PCAndAccesories.DisksId },
             };
 
             var orderStatuse = new List<OrderStatusEntity>()
             {
-                new() {Name = "New", Id = OrderStatuses.New, IsOrderEditable = true },
-                new() {Name = "Created", Id = OrderStatuses.Created, IsOrderEditable = true },
-                new() {Name = "WaitingForPayment", Id = OrderStatuses.WaitingForPayment, IsOrderEditable = false },
-                new() {Name = "InExpedition", Id = OrderStatuses.InExpedition, IsOrderEditable = false },
-                new() {Name = "Delivered", Id = OrderStatuses.Delivered, IsOrderEditable = false },
-                new() {Name = "Canceled", Id = OrderStatuses.Canceled, IsOrderEditable = false },
+                new() {Name = "New", Id = OrderStatuses.New, IsOrderEditable = true, Created = _created },
+                new() {Name = "Created", Id = OrderStatuses.Created, IsOrderEditable = true, Created = _created },
+                new() {Name = "WaitingForPayment", Id = OrderStatuses.WaitingForPayment, IsOrderEditable = false, Created = _created },
+                new() {Name = "InExpedition", Id = OrderStatuses.InExpedition, IsOrderEditable = false, Created = _created },
+                new() {Name = "Delivered", Id = OrderStatuses.Delivered, IsOrderEditable = false, Created = _created },
+                new() {Name = "Canceled", Id = OrderStatuses.Canceled, IsOrderEditable = false, Created = _created },
             };
 
+            var languages = new List<LanguageEntity>()
+            {
+                new() {Name="Čeština", Code="cs", Id = Languages.CZLanguage, Created = _created },
+                new() {Name="English", Code="en", Id = Languages.ENLanguage, Created = _created },
+                new() {Name="Slovenčina", Code="sk", Id = Languages.SKLanguage, Created = _created },
+                new() {Name="Polski", Code="pl", Id = Languages.PLLanguage, Created = _created },
+                new() {Name="Deutsch", Code="de", Id = Languages.DELanguage, Created = _created },
+                new() {Name="Français", Code="fe", Id = Languages.FELanguage, Created = _created },
+            };
+
+            var messageTypes = new List<MessageTypeEntity>()
+            {
+                new() { Name = "Info", Id = MessagTypes.Info, Created = _created },
+                new() { Name = "Hint", Id = MessagTypes.Hint, Created = _created },
+                new() { Name = "Error", Id = MessagTypes.Error, Created = _created },
+            };
+
+            //Add Languages
+            modelBuilder.Entity<LanguageEntity>()
+                .HasData(languages);
+
+			//Add messageTypes
+            modelBuilder.Entity<MessageTypeEntity>()
+                .HasData(messageTypes);
 
             //Add user roles
             modelBuilder.Entity<UserRoleEntity>()

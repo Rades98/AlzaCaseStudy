@@ -5,21 +5,21 @@
     public static class OrderStatuses
     {
         //When order is created, but still pending
-        public static readonly Guid New = new("27F83608-434A-4F4B-8315-FF711A97BFF4");
+        public const int New = 1;
 
         //Order is created and went to payment
-        public static readonly Guid Created = new("93623D0A-914E-4252-9C1F-89563B4F9EE2");
+        public const int Created = 2;
 
         //Order waits for payment
-        public static readonly Guid WaitingForPayment = new("C958DDEC-C8C3-410D-8FB3-7BBA41B9CDD8");
+        public const int WaitingForPayment = 3;
 
         //Order is in expedition
-        public static readonly Guid InExpedition = new("91BA34E8-3BF7-4168-9E59-BB68642F602E");
+        public const int InExpedition = 4;
 
         //Order is delivered
-        public static readonly Guid Delivered = new("953FF38D-BA59-41FE-9246-594D6AF35B1F");
+        public const int Delivered = 5;
 
         //Cancelled order
-        public static readonly Guid Canceled = new("B0B29346-D5C0-401A-8466-F0780686F072");
+        public const int Canceled = 6;
     }
 }

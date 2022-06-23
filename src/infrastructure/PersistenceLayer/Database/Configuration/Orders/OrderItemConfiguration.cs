@@ -20,6 +20,9 @@
 
             builder.Property(orderItem => orderItem.ProductId)
                 .IsRequired();
+
+            builder.Property(orderItem => orderItem.Created)
+                .IsRequired();
         }
     }
 }

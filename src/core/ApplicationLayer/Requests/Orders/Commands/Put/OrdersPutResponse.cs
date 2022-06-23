@@ -4,6 +4,6 @@
 	{
 		public string Message { get; set; } = string.Empty;
 		public string OrderCode { get; set; } = string.Empty;
-		public Guid OrderId { get; set; }
+		public int OrderId { get; set; }
 	}
 }

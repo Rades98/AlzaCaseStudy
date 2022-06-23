@@ -44,6 +44,11 @@
                 .HasOne(o => o.Status)
                 .WithMany(o => o.Orders)
                 .HasForeignKey(o => o.OrderStatusId);
+
+            builder
+                .HasOne(o => o.User)
+                .WithMany(o => o.Orders)
+                .HasForeignKey(o => o.UserId);
         }
     }
 }

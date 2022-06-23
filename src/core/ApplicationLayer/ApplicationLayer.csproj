@@ -7,6 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RequestsDapper\ProductCategories\**" />
+    <Compile Remove="RequestsDapper\ProductDetailInfos\**" />
+    <Compile Remove="RequestsDapper\ProductDetails\**" />
+    <Compile Remove="RequestsDapper\Users\**" />
+    <EmbeddedResource Remove="RequestsDapper\ProductCategories\**" />
+    <EmbeddedResource Remove="RequestsDapper\ProductDetailInfos\**" />
+    <EmbeddedResource Remove="RequestsDapper\ProductDetails\**" />
+    <EmbeddedResource Remove="RequestsDapper\Users\**" />
+    <None Remove="RequestsDapper\ProductCategories\**" />
+    <None Remove="RequestsDapper\ProductDetailInfos\**" />
+    <None Remove="RequestsDapper\ProductDetails\**" />
+    <None Remove="RequestsDapper\Users\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.4.0" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
@@ -29,11 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="RequestsDapper\Users\" />
-    <Folder Include="RequestsDapper\ProductDetails\" />
-    <Folder Include="RequestsDapper\ProductDetailInfos\" />
-    <Folder Include="RequestsDapper\ProductCategories\" />
-    <Folder Include="RequestsDapper\Orders\" />
+    <Folder Include="RequestsDapper\Orders\Commands\" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@
 
 	public class ProductDetailInfoGetResponse : RestDtoBase, IRecord
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string DetailedDescription { get; set; } = string.Empty;
 		public string Parameters { get; set; } = string.Empty;
 

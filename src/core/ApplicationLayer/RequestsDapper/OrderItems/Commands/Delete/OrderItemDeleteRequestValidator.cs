@@ -16,7 +16,7 @@
 
 			RuleFor(req => req.UserId)
 			   .NotNull()
-				.WithMessage("USer Id cannot be empty or default value");
+				.WithMessage("User Id cannot be empty or default value");
 		}
 	}
 }

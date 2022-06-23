@@ -4,7 +4,7 @@
 
     public class ProductCategoryDto
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string CategoryName { get; set; } = string.Empty;
         public List<ProductCategoryDto>? Children { get; set; } = new List<ProductCategoryDto>();
 

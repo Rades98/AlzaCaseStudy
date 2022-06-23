@@ -2,6 +2,6 @@
 {
     public interface IRecord
     {
-        Guid Id { get; }
+        int Id { get; }
     }
 }

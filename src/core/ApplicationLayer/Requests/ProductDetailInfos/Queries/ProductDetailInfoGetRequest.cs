@@ -8,7 +8,7 @@
 
 	public class ProductDetailInfoGetRequest : IRequest<ProductDetailInfoGetResponse>, ICacheableWithIdQuery
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string CacheKey => Cache.CacheKeys.ProductDetailInfos;
 
 		public class Handler : IRequestHandler<ProductDetailInfoGetRequest, ProductDetailInfoGetResponse>

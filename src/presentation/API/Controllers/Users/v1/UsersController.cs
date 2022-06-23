@@ -26,9 +26,12 @@
 		/// <param name="user">user to log in</param>
 		/// <param name="cancellationToken">cancelation token</param>
 		/// <remarks>
-		/// Returns token if credentials were correct
+		/// Returns token if credentials were correct 
+		/// for test purpose use Admin aJc48262_1Kjkz>X!
 		/// </remarks>
 		[HttpPost(Name = nameof(LoginUserAsync))]
+		[MapToApiVersion("2")]
+		[MapToApiVersion("4")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]

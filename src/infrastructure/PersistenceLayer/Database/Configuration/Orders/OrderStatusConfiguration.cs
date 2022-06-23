@@ -9,13 +9,16 @@
         public void Configure(EntityTypeBuilder<OrderStatusEntity> builder)
         {
             builder.ToTable("OrderStatuses");
-            builder.HasKey(orderItem => orderItem.Id);
+            builder.HasKey(orderStatus => orderStatus.Id);
 
-            builder.Property(orderItem => orderItem.Id)
+            builder.Property(orderStatus => orderStatus.Id)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
 
-            builder.Property(orderItem => orderItem.Name)
+            builder.Property(orderStatus => orderStatus.Name)
+                .IsRequired();
+
+            builder.Property(orderStatus => orderStatus.Created)
                 .IsRequired();
         }
     }

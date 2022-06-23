@@ -8,7 +8,7 @@
 
 	public class OrdersGetByUserRequest : IRequest<List<OrdersGetResponse>>
 	{
-		public Guid UserId { get; set; }
+		public int UserId { get; set; }
 		public Expression<Func<OrderEntity, bool>> WhereFilter { get; set; } = x => true;
 
 		public class Handler : IRequestHandler<OrdersGetByUserRequest, List<OrdersGetResponse>>

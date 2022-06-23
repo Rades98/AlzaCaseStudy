@@ -41,8 +41,4 @@
     <ProjectReference Include="..\..\infrastructure\PersistenceLayer\PersistenceLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Logs\" />
-  </ItemGroup>
-
 </Project>

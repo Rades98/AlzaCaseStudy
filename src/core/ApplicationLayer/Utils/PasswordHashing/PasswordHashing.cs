@@ -21,7 +21,7 @@
             return computedHash.SequenceEqual(pwHash);
         }
 
-        public static string CreateToken(Guid id, byte[] appToken, List<string> roles)
+        public static string CreateToken(int id, byte[] appToken, List<string> roles)
         {
             List<Claim> claims = new()
                 {

@@ -12,9 +12,10 @@
     {
         public void Configure(SwaggerGenOptions options)
         {
-            options.SwaggerDoc("v1", CreateInfoForApiVersion("v1", "Endpoints are using EF Core"));
-            options.SwaggerDoc("v2", CreateInfoForApiVersion("v2", "Endpoints are using Dapper and stored procedures"));
+            options.SwaggerDoc("v1", CreateInfoForApiVersion("v1", "Endpoints using EF Core"));
+            options.SwaggerDoc("v2", CreateInfoForApiVersion("v2", "Endpoints using Dapper and stored procedures"));
             options.SwaggerDoc("v3", CreateInfoForApiVersion("v3", "Requests with pagination"));
+            options.SwaggerDoc("v4", CreateInfoForApiVersion("v4", "Localized Dapper requests"));
         }
 
         private static OpenApiInfo CreateInfoForApiVersion(string version, string description = "")

@@ -2,7 +2,7 @@
 {
     public class ProductEntity : AuditableEntity
     {
-        public Guid ProductDetailId { get; set; }
+        public int ProductDetailId { get; set; }
         public ProductDetailEntity ProductDetail { get; set; } = new();
     }
 }

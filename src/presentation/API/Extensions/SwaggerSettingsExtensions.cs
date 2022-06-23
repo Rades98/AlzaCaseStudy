@@ -12,6 +12,7 @@
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
                     options.SwaggerEndpoint("/swagger/v2/swagger.json", "v2");
                     options.SwaggerEndpoint("/swagger/v3/swagger.json", "v3");
+                    options.SwaggerEndpoint("/swagger/v4/swagger.json", "v4");
                 });
             }
         }
