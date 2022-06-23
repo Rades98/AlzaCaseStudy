@@ -135,4 +135,5 @@ To build and run this project there will be need of installation
 - Open Test Explorer
 - Run optional or all at once
 
-  
+ # Sonar Cloud 
+ https://sonarcloud.io/summary/overall?id=Rades98_AlzaCaseStudy
