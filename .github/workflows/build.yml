@@ -44,6 +44,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"Rades98_AlzaCaseStudy" /o:"rades98" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet clean ./src/presentation/API/API.csproj
-          dotnet restore ./AlzaCaseStudy.sln
-          dotnet build ./src/presentation/API/API.csproj --no-restore   
+          dotnet build ./src/presentation/API/API.csproj  
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
