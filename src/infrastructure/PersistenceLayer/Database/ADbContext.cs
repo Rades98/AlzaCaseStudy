@@ -1,9 +1,13 @@
 ﻿namespace PersistenceLayer.Database
 {
     using ApplicationLayer.Interfaces;
-    using DomainLayer.Entities.Orders;
-    using DomainLayer.Entities.Product;
-    using DomainLayer.Entities.Users;
+	using DomainLayer.Entities.LanguageMutations;
+	using DomainLayer.Entities.Orders;
+	using DomainLayer.Entities.Orders.Localization;
+	using DomainLayer.Entities.Product;
+	using DomainLayer.Entities.Product.Localization;
+	using DomainLayer.Entities.Texts;
+	using DomainLayer.Entities.Users;
     using Extensions;
     using Microsoft.EntityFrameworkCore;
 
@@ -37,10 +41,18 @@
 
         #region Tables
 
+        public DbSet<LanguageEntity> Languages => Set<LanguageEntity>();
+
+        public DbSet<MessageEntity> Messages => Set<MessageEntity>();
+        public DbSet<MessageTypeEntity> MessageTypes => Set<MessageTypeEntity>();
+
         public DbSet<ProductEntity> Products => Set<ProductEntity>();
         public DbSet<ProductDetailEntity> ProductDetails => Set<ProductDetailEntity>();
+        public DbSet<ProductDetailLocalizedEntity> ProductDetailsLocalized => Set<ProductDetailLocalizedEntity>();
         public DbSet<ProductDetailInfoEntity> ProductDetailInfos => Set<ProductDetailInfoEntity>();
+        public DbSet<ProductDetailInfoLocalizedEntity> ProductDetailInfosLocalized => Set<ProductDetailInfoLocalizedEntity>();
         public DbSet<ProductCategoryEntity> ProductCategories => Set<ProductCategoryEntity>();
+        public DbSet<ProductCategoryLocalizedEntity> ProductCategoriesLocalized => Set<ProductCategoryLocalizedEntity>();
 
         public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();
         public DbSet<UserEntity> Users => Set<UserEntity>();
@@ -49,6 +61,7 @@
         public DbSet<OrderEntity> Orders => Set<OrderEntity>();
         public DbSet<OrderItemEntity> OrderItems => Set<OrderItemEntity>();
         public DbSet<OrderStatusEntity> OrderStatuses => Set<OrderStatusEntity>();
+        public DbSet<OrderStatusLocalizedEntity> OrderStatusesLocalized => Set<OrderStatusLocalizedEntity>();
 
         #endregion
 

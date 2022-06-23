@@ -5,7 +5,7 @@
     /// </summary>
     public interface ICacheableWithIdQuery
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         string CacheKey { get; }
     }
 }

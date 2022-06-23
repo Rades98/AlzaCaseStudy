@@ -47,7 +47,7 @@
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<ProductCategoriesGetResponse>>> GetProductCategoriesByIdAsync(Guid id, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<IEnumerable<ProductCategoriesGetResponse>>> GetProductCategoriesByIdAsync(int id, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new ProductCategoriesGetByIdRequest() { Id = id }, cancellationToken);
 

@@ -27,7 +27,7 @@
 
 				if (user == null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "USer not found");
+					throw new CRUDException(ExceptionTypeEnum.NotFound, "User not found");
 				}
 
 				if (!PasswordHashing.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))

@@ -10,7 +10,7 @@
 	public class OrderStornoRequest : IRequest<OrderStornoResponse>
 	{
 		public string OrderCode { get; set; } = string.Empty;
-		public Guid UserId { get; set; }
+		public int UserId { get; set; }
 
 		public class Handler : IRequestHandler<OrderStornoRequest, OrderStornoResponse>
 		{

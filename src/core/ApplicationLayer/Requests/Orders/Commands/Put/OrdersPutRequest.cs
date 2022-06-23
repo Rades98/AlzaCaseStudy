@@ -10,7 +10,7 @@
 
 	public class OrdersPutRequest : IRequest<OrdersPutResponse>
 	{
-		public Guid UserId { get; set; }
+		public int UserId { get; set; }
 
 		public class Handler : IRequestHandler<OrdersPutRequest, OrdersPutResponse>
 		{
@@ -30,7 +30,7 @@
 					throw new CRUDException(ExceptionTypeEnum.Error, $"There aleready is unfinished order: {actual.First().OrderCode}");
 				}
 
-				var lastOrderCode = (await _dbContext.Orders.OrderBy(x => x.OrderCode).LastAsync(cancellationToken)).OrderCode;
+				var lastOrderCode = (await _dbContext.Orders.OrderBy(x => x.OrderCode).LastOrDefaultAsync(cancellationToken))?.OrderCode;
 
 				string code = "AAAAA00000";
 
@@ -42,10 +42,8 @@
 				try
 				{
 					var status = await _dbContext.OrderStatuses.FirstAsync(x => x.Id == OrderStatuses.New, cancellationToken);
-					var id = Guid.NewGuid();
 					_dbContext.Orders.Add(new OrderEntity()
 					{
-						Id = id,
 						OrderCode = code,
 						UserId = request.UserId,
 						Total = 0,
@@ -53,6 +51,12 @@
 					});
 
 					await _dbContext.SaveChangesAsync(cancellationToken);
+
+					var id = await _dbContext.Orders.Where(x => x.UserId == request.UserId &&
+					(x.OrderStatusId == OrderStatuses.New ||
+					x.OrderStatusId == OrderStatuses.Created))
+					.Select(x => x.Id)
+					.FirstOrDefaultAsync(cancellationToken);
 
 					return new OrdersPutResponse { OrderCode = code, Message = "Order created", OrderId = id };
 				}

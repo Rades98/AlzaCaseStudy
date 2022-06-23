@@ -11,7 +11,7 @@
 	{
 		public string OrderCode { get; set; } = string.Empty;
 		public string ProductCode { get; set; } = string.Empty;
-		public Guid UserId { get; set; }
+		public int UserId { get; set; }
 
 		public class Handler : IRequestHandler<OrderItemDeleteRequest, OrderItemDeleteResponse>
 		{

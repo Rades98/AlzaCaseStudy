@@ -53,11 +53,11 @@
             return new LinkDto(url, relation, method);
         }
 
-        internal Guid GetUserIdFromToken()
+        internal int GetUserIdFromToken()
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
             var token = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.ToString().Replace("Bearer ", ""));
-            return new Guid(token.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            return Int32.Parse(token.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
     }
 }

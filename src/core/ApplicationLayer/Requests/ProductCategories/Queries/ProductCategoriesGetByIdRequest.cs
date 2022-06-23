@@ -9,7 +9,7 @@
 
 	public class ProductCategoriesGetByIdRequest : IRequest<ProductCategoriesGetResponse>, ICacheableQuery
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string CacheKey => Cache.CacheKeys.ProductCetegories;
 
 		public class Handler : IRequestHandler<ProductCategoriesGetByIdRequest, ProductCategoriesGetResponse>

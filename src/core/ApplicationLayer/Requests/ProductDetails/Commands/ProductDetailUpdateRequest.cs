@@ -16,7 +16,7 @@
 	/// </returns>
 	public class ProductDetailUpdateRequest : IRequest<ProductDetailUpdateResponse>, IInvalidableCommand
 	{
-		public Guid Id { get; set; }
+		public int Id { get; set; }
 		public string Description { get; set; } = "";
 		public string CacheKey => Cache.CacheKeys.ProductDetails;
 

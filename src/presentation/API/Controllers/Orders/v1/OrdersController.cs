@@ -53,7 +53,7 @@
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<OrdersGetResponse>>> GetOrdersFilteredAsync(Guid statusId, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<IEnumerable<OrdersGetResponse>>> GetOrdersFilteredAsync(int statusId, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken(), WhereFilter = x => x.OrderStatusId == statusId }, cancellationToken);
 
@@ -95,7 +95,7 @@
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<OrderChangeStatusResponse>> ChangeOrderStatusAsync(string orderCode, [FromQuery] Guid statusId, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<OrderChangeStatusResponse>> ChangeOrderStatusAsync(string orderCode, [FromQuery] int statusId, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new OrderChangeStatusRequest() { OrderCode = orderCode, UserId = GetUserIdFromToken(), StatusId = statusId }, cancellationToken);
 

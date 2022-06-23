@@ -22,11 +22,135 @@ namespace PersistenceLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("DomainLayer.Entities.LanguageMutations.MessageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MessageCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MessageTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("MessageTypeId");
+
+                    b.ToTable("Messages", (string)null);
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.LanguageMutations.MessageTypeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MessageTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Info"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Hint"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Error"
+                        });
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Orders.Localization.OrderStatusLocalizedEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderStatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("OrderStatusId");
+
+                    b.ToTable("OrderStatusesLocalized", (string)null);
+                });
+
             modelBuilder.Entity("DomainLayer.Entities.Orders.OrderEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -42,14 +166,14 @@ namespace PersistenceLayer.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<Guid>("OrderStatusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("OrderStatusId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -58,14 +182,18 @@ namespace PersistenceLayer.Migrations
 
                     b.HasIndex("OrderStatusId");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Orders.OrderItemEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -76,11 +204,11 @@ namespace PersistenceLayer.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -93,9 +221,11 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Orders.OrderStatusEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -120,53 +250,179 @@ namespace PersistenceLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("27f83608-434a-4f4b-8315-ff711a97bff4"),
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 1,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             IsOrderEditable = true,
                             Name = "New"
                         },
                         new
                         {
-                            Id = new Guid("93623d0a-914e-4252-9c1f-89563b4f9ee2"),
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 2,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             IsOrderEditable = true,
                             Name = "Created"
                         },
                         new
                         {
-                            Id = new Guid("c958ddec-c8c3-410d-8fb3-7bba41b9cdd8"),
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 3,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             IsOrderEditable = false,
                             Name = "WaitingForPayment"
                         },
                         new
                         {
-                            Id = new Guid("91ba34e8-3bf7-4168-9e59-bb68642f602e"),
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 4,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             IsOrderEditable = false,
                             Name = "InExpedition"
                         },
                         new
                         {
-                            Id = new Guid("953ff38d-ba59-41fe-9246-594d6af35b1f"),
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 5,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             IsOrderEditable = false,
                             Name = "Delivered"
                         },
                         new
                         {
-                            Id = new Guid("b0b29346-d5c0-401a-8466-f0780686f072"),
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = 6,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             IsOrderEditable = false,
                             Name = "Canceled"
                         });
                 });
 
+            modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductCategoryLocalizedEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ProductCategoryId");
+
+                    b.ToTable("ProductCategoriesLocalized", (string)null);
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductDetailInfoLocalizedEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DetailedDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Parameters")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductDetailInfoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ProductDetailInfoId");
+
+                    b.ToTable("ProductDetailInfosLocalized", (string)null);
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductDetailLocalizedEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgUri")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductDetailId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("ProductDetailId");
+
+                    b.ToTable("ProductDetailsLocalized", (string)null);
+                });
+
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductCategoryEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -187,8 +443,8 @@ namespace PersistenceLayer.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("ParentProductCategoryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("ParentProductCategoryId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -199,90 +455,92 @@ namespace PersistenceLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("689beec2-0592-46fe-8fbe-12ebce0a458b"),
+                            Id = 1,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Eshop"
                         },
                         new
                         {
-                            Id = new Guid("064a231d-26ab-4b3e-881b-f8898fccdf62"),
+                            Id = 2,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Mobile Devices and accessories",
-                            ParentProductCategoryId = new Guid("689beec2-0592-46fe-8fbe-12ebce0a458b")
+                            ParentProductCategoryId = 1
                         },
                         new
                         {
-                            Id = new Guid("ce94ae71-1dd0-40f4-a89b-cf70ba3d9e3b"),
+                            Id = 1001,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Mobile Phones",
-                            ParentProductCategoryId = new Guid("064a231d-26ab-4b3e-881b-f8898fccdf62")
+                            ParentProductCategoryId = 2
                         },
                         new
                         {
-                            Id = new Guid("a6312a0b-30c2-40b5-a55a-39c2203f301a"),
+                            Id = 1002,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Cases",
-                            ParentProductCategoryId = new Guid("064a231d-26ab-4b3e-881b-f8898fccdf62")
+                            ParentProductCategoryId = 2
                         },
                         new
                         {
-                            Id = new Guid("8b1db412-7d98-4cd0-bad6-4a7c70b235b1"),
+                            Id = 1003,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Adapters",
-                            ParentProductCategoryId = new Guid("064a231d-26ab-4b3e-881b-f8898fccdf62")
+                            ParentProductCategoryId = 2
                         },
                         new
                         {
-                            Id = new Guid("2f3a0726-b1d8-49fc-bd31-79ad33f3bfde"),
+                            Id = 3,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "PC and accessories",
-                            ParentProductCategoryId = new Guid("689beec2-0592-46fe-8fbe-12ebce0a458b")
+                            ParentProductCategoryId = 1
                         },
                         new
                         {
-                            Id = new Guid("3f91a56d-57e5-4079-9e23-e6064502e447"),
+                            Id = 2001,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Graphic cards",
-                            ParentProductCategoryId = new Guid("2f3a0726-b1d8-49fc-bd31-79ad33f3bfde")
+                            ParentProductCategoryId = 3
                         },
                         new
                         {
-                            Id = new Guid("3f2ef91a-0c2f-4436-8b45-9fa9e3aa1254"),
+                            Id = 2002,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Disks",
-                            ParentProductCategoryId = new Guid("2f3a0726-b1d8-49fc-bd31-79ad33f3bfde")
+                            ParentProductCategoryId = 3
                         },
                         new
                         {
-                            Id = new Guid("cc99e4b0-af43-4e5e-8bf6-ec3c0a6af943"),
+                            Id = 2003,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "SSD",
-                            ParentProductCategoryId = new Guid("3f2ef91a-0c2f-4436-8b45-9fa9e3aa1254")
+                            ParentProductCategoryId = 2002
                         },
                         new
                         {
-                            Id = new Guid("fea68386-0816-492f-9d1a-15aedc8c38ce"),
+                            Id = 2004,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "HDD",
-                            ParentProductCategoryId = new Guid("3f2ef91a-0c2f-4436-8b45-9fa9e3aa1254")
+                            ParentProductCategoryId = 2002
                         });
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -310,16 +568,16 @@ namespace PersistenceLayer.Migrations
                         .HasPrecision(12, 2)
                         .HasColumnType("decimal(12,2)");
 
-                    b.Property<Guid>("ProductCategoryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductCategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ProductCode")
                         .IsRequired()
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
-                    b.Property<Guid?>("ProductDetailInfoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("ProductDetailInfoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -333,9 +591,11 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -356,8 +616,8 @@ namespace PersistenceLayer.Migrations
                         .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProductDetailId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductDetailId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -369,9 +629,11 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -382,8 +644,8 @@ namespace PersistenceLayer.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProductDetailId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("ProductDetailId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -392,11 +654,89 @@ namespace PersistenceLayer.Migrations
                     b.ToTable("Products", (string)null);
                 });
 
+            modelBuilder.Entity("DomainLayer.Entities.Texts.LanguageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nchar(2)")
+                        .IsFixedLength();
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languages", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "cs",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Čeština"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "en",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "English"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "sk",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Slovenčina"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "pl",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Polski"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "de",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Deutsch"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "fe",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Français"
+                        });
+                });
+
             modelBuilder.Entity("DomainLayer.Entities.Users.UserEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -444,12 +784,12 @@ namespace PersistenceLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1d984227-1a68-4aa2-98fe-8c398e02ff85"),
+                            Id = 1,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Email = "some@email.com",
                             Name = "Admin",
-                            PasswordHash = new byte[] { 156, 191, 140, 215, 114, 183, 145, 68, 142, 23, 107, 22, 0, 116, 12, 34, 39, 182, 45, 232, 141, 245, 161, 85, 181, 182, 211, 196, 209, 187, 38, 240, 212, 199, 114, 198, 15, 19, 174, 118, 81, 34, 193, 114, 23, 37, 64, 75, 244, 199, 39, 243, 147, 143, 255, 26, 247, 239, 164, 224, 17, 45, 202, 102 },
-                            PasswordSalt = new byte[] { 148, 182, 205, 72, 39, 24, 252, 241, 96, 228, 9, 52, 211, 41, 110, 224, 76, 38, 240, 80, 148, 229, 228, 230, 145, 90, 60, 76, 233, 13, 124, 208, 127, 12, 10, 117, 38, 41, 103, 22, 242, 137, 6, 27, 96, 56, 137, 244, 3, 147, 130, 178, 238, 196, 216, 77, 203, 83, 208, 86, 221, 5, 191, 5, 188, 147, 247, 227, 38, 142, 5, 173, 59, 93, 112, 61, 195, 221, 132, 46, 159, 117, 53, 147, 42, 140, 187, 143, 29, 132, 92, 48, 150, 59, 47, 64, 63, 80, 192, 123, 248, 151, 214, 92, 29, 64, 163, 125, 87, 186, 151, 31, 57, 149, 164, 130, 75, 95, 2, 218, 29, 138, 152, 65, 66, 204, 12, 181 },
+                            PasswordHash = new byte[] { 167, 79, 24, 120, 211, 60, 241, 108, 239, 251, 200, 174, 19, 98, 97, 27, 18, 117, 161, 149, 5, 107, 148, 111, 222, 172, 216, 245, 160, 94, 254, 100, 47, 224, 225, 11, 10, 160, 11, 50, 247, 39, 255, 222, 203, 164, 67, 200, 19, 135, 18, 212, 206, 144, 234, 156, 124, 157, 15, 238, 84, 54, 189, 180 },
+                            PasswordSalt = new byte[] { 16, 136, 234, 228, 134, 172, 23, 250, 136, 65, 106, 186, 132, 47, 225, 29, 48, 215, 176, 71, 45, 71, 248, 99, 195, 82, 68, 157, 160, 117, 200, 51, 221, 169, 231, 35, 123, 124, 90, 241, 141, 12, 153, 173, 160, 51, 242, 249, 31, 133, 98, 151, 82, 195, 93, 75, 160, 85, 202, 20, 205, 202, 130, 178, 232, 139, 190, 152, 96, 6, 53, 145, 85, 112, 11, 191, 47, 217, 49, 37, 9, 185, 1, 244, 144, 60, 207, 230, 72, 35, 128, 140, 154, 50, 34, 130, 234, 211, 174, 97, 246, 248, 149, 77, 235, 91, 187, 149, 250, 136, 134, 79, 197, 12, 194, 96, 26, 129, 80, 195, 98, 105, 15, 235, 143, 50, 51, 3 },
                             Surname = "Admin",
                             UserName = "Admin"
                         });
@@ -457,9 +797,11 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Users.UserRoleEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -482,7 +824,7 @@ namespace PersistenceLayer.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7cfd3e28-c6ed-48b9-8d08-424751e77eaf"),
+                            Id = 1,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Name = "Admin"
                         });
@@ -490,11 +832,11 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Users.UserRoleRelationEntity", b =>
                 {
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -507,14 +849,52 @@ namespace PersistenceLayer.Migrations
                     b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.HasKey("RoleId", "UserId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoleRelation");
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.LanguageMutations.MessageEntity", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Entities.LanguageMutations.MessageTypeEntity", "MessageTypeEntity")
+                        .WithMany("Messages")
+                        .HasForeignKey("MessageTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("MessageTypeEntity");
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Orders.Localization.OrderStatusLocalizedEntity", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Entities.Orders.OrderStatusEntity", "OrderStatus")
+                        .WithMany("Localizations")
+                        .HasForeignKey("OrderStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("OrderStatus");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Orders.OrderEntity", b =>
@@ -525,7 +905,15 @@ namespace PersistenceLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DomainLayer.Entities.Users.UserEntity", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Status");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Orders.OrderItemEntity", b =>
@@ -545,6 +933,63 @@ namespace PersistenceLayer.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductCategoryLocalizedEntity", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Entities.Product.ProductCategoryEntity", "ProductCategory")
+                        .WithMany("Localizations")
+                        .HasForeignKey("ProductCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("ProductCategory");
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductDetailInfoLocalizedEntity", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Entities.Product.ProductDetailInfoEntity", "ProductDetailInfo")
+                        .WithMany("Localizations")
+                        .HasForeignKey("ProductDetailInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("ProductDetailInfo");
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductDetailLocalizedEntity", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DomainLayer.Entities.Product.ProductDetailEntity", "ProductDetail")
+                        .WithMany("Localizations")
+                        .HasForeignKey("ProductDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Language");
+
+                    b.Navigation("ProductDetail");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductCategoryEntity", b =>
@@ -608,6 +1053,11 @@ namespace PersistenceLayer.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DomainLayer.Entities.LanguageMutations.MessageTypeEntity", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("DomainLayer.Entities.Orders.OrderEntity", b =>
                 {
                     b.Navigation("Items");
@@ -615,6 +1065,8 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Orders.OrderStatusEntity", b =>
                 {
+                    b.Navigation("Localizations");
+
                     b.Navigation("Orders");
                 });
 
@@ -622,18 +1074,29 @@ namespace PersistenceLayer.Migrations
                 {
                     b.Navigation("ChildrenCategories");
 
+                    b.Navigation("Localizations");
+
                     b.Navigation("ProductDetails");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailEntity", b =>
                 {
+                    b.Navigation("Localizations");
+
                     b.Navigation("ProductDetailInfo");
 
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
+                {
+                    b.Navigation("Localizations");
+                });
+
             modelBuilder.Entity("DomainLayer.Entities.Users.UserEntity", b =>
                 {
+                    b.Navigation("Orders");
+
                     b.Navigation("RoleRelations");
                 });
 
