@@ -1,8 +1,8 @@
 ﻿CREATE OR ALTER FUNCTION [dbo].[GetProductParentTree](@CatID int)  
-RETURNS nvarchar(500)   
-AS     
+RETURNS nvarchar(500)
+AS
 BEGIN 
-	DECLARE @Result nvarchar(500);
+	DECLARE @Result nvarchar(500)
 	WITH RECUR AS 
 	(
 		SELECT Id, ParentProductCategoryId, [Name]
