@@ -35,7 +35,7 @@
 
 				if (orderItem is null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Order item not found");
+					throw new MediatorException(ExceptionType.NotFound, "Order item not found");
 				}
 
 				using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -58,7 +58,7 @@
 				catch (Exception e)
 				{
 					await transaction.RollbackAsync(cancellationToken);
-					throw new CRUDException(ExceptionTypeEnum.Error, "Error while deleting", e);
+					throw new MediatorException(ExceptionType.Error, "Error while deleting", e);
 				}
 
 

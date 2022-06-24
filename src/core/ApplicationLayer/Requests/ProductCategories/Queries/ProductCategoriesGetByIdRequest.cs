@@ -26,7 +26,7 @@
 
 				if (!productCategories.Any())
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Product category not found");
+					throw new MediatorException(ExceptionType.NotFound, "Product category not found");
 				}
 
 				productCategories.ForEach(cat =>

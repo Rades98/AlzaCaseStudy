@@ -8,7 +8,6 @@
 	using Interfaces.Cache;
 	using MediatR;
 	using Microsoft.EntityFrameworkCore;
-	using Queries;
 
 	/// <summary>
 	/// Query to obtain all products
@@ -45,7 +44,7 @@
 					return products.Select(x => (ProductDetailGetResponse)x);
 				}
 
-				throw new CRUDException(ExceptionTypeEnum.NotFound, "Product details not found");
+				throw new MediatorException(ExceptionType.NotFound, "Product details not found");
 			}
 		}
 	}

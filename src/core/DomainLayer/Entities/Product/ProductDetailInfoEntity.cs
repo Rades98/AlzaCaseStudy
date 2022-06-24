@@ -8,6 +8,6 @@
         public ProductDetailEntity ProductDetail { get; set; } = new();
         public string DetailedDescription { get; set; } = string.Empty;
         public string Parameters { get; set; } = string.Empty;
-        public IEnumerable<ProductDetailInfoLocalizedEntity>? Localizations { get; set; }
+        public List<ProductDetailInfoLocalizedEntity> Localizations { get; set; } = new();
     }
 }

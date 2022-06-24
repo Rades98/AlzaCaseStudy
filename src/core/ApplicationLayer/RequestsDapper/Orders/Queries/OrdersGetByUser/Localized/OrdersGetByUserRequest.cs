@@ -12,7 +12,7 @@
 	public class OrdersGetByUserRequest : IRequest<List<OrdersGetResponse>>
 	{
 		public int UserId { get; set; }
-		public string LanguageCode { get; set; }
+		public string LanguageCode { get; set; } = string.Empty;
 		public Expression<Func<OrderEntity, bool>> WhereFilter { get; set; } = x => true;
 
 		public class Handler : IRequestHandler<OrdersGetByUserRequest, List<OrdersGetResponse>>

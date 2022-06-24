@@ -25,7 +25,7 @@
 
 				if (productDetail is null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Product detail info not found");
+					throw new MediatorException(ExceptionType.NotFound, "Product detail info not found");
 				}
 
 				var productCount = await _dbContext.Products.CountAsync(p => p.Id == request.Id, cancellationToken);

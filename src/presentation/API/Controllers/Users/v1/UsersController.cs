@@ -31,7 +31,7 @@
 		/// </remarks>
 		[HttpPost(Name = nameof(LoginUserAsync))]
 		[MapToApiVersion("2")]
-		[MapToApiVersion("4")]
+		[MapToApiVersion("3")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]

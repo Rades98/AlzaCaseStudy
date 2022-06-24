@@ -33,14 +33,14 @@
 
 				if (order is null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Order not found");
+					throw new MediatorException(ExceptionType.NotFound, "Order not found");
 				}
 
 				if (order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Canceled ||
 					order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Delivered ||
 					order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.InExpedition)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, "Order cannot be cancelled");
+					throw new MediatorException(ExceptionType.Error, "Order cannot be cancelled");
 				}
 
 				using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -70,7 +70,7 @@
 				{
 					transaction.Rollback();
 
-					throw new CRUDException(ExceptionTypeEnum.Error, "Error while canceling order", e);
+					throw new MediatorException(ExceptionType.Error, "Error while canceling order", e);
 				}
 			}
 		}

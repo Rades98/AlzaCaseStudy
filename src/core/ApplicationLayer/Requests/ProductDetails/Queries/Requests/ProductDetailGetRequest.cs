@@ -34,7 +34,7 @@
 
 				if (product is null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Product detail not found");
+					throw new MediatorException(ExceptionType.NotFound, "Product detail not found");
 				}
 
 				return (ProductDetailGetResponse)product;

@@ -27,12 +27,12 @@
 
 				if (user == null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "User not found");
+					throw new MediatorException(ExceptionType.NotFound, "User not found");
 				}
 
 				if (!PasswordHashing.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
 				{
-					throw new CRUDException(ExceptionTypeEnum.Unauthorized, "Wrong password");
+					throw new MediatorException(ExceptionType.Unauthorized, "Wrong password");
 				}
 
 				var roles = user.Roles?.Select(role => role.Name).ToList();

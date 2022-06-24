@@ -27,7 +27,7 @@
 
 				if (actual.Count > 0)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, $"There aleready is unfinished order: {actual.First().OrderCode}");
+					throw new MediatorException(ExceptionType.Error, $"There aleready is unfinished order: {actual.First().OrderCode}");
 				}
 
 				var lastOrderCode = (await _dbContext.Orders.OrderBy(x => x.OrderCode).LastOrDefaultAsync(cancellationToken))?.OrderCode;
@@ -62,7 +62,7 @@
 				}
 				catch (Exception e)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, "Error while creating order", e);
+					throw new MediatorException(ExceptionType.Error, "Error while creating order", e);
 				}
 			}
 		}

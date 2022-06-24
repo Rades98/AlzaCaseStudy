@@ -25,7 +25,6 @@
 		/// Adds article to order
 		/// </remarks>
 		[HttpPut("orderCode", Name = nameof(PutOrderItemAsync)), Authorize()]
-		[MapToApiVersion("2")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]

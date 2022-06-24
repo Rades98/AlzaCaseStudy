@@ -6,7 +6,7 @@
     {
         public string Name { get; set; } = string.Empty;
         public bool IsOrderEditable { get; set; }
-        public IEnumerable<OrderEntity>? Orders { get; set; }
-        public IEnumerable<OrderStatusLocalizedEntity>? Localizations { get; set; }
+        public List<OrderEntity> Orders { get; set; } = new();
+        public List<OrderStatusLocalizedEntity> Localizations { get; set; } = new();
     }
 }

@@ -30,19 +30,19 @@
 
 				if (order is null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Order not found");
+					throw new MediatorException(ExceptionType.NotFound, "Order not found");
 				}
 
 				if (order.UserId != request.UserId)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Unauthorized, "Wrong user");
+					throw new MediatorException(ExceptionType.Unauthorized, "Wrong user");
 				}
 
 				if (
 					order.OrderStatusId != OrderStatuses.New &&
 					order.OrderStatusId != OrderStatuses.Created)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, "Order is not editable");
+					throw new MediatorException(ExceptionType.Error, "Order is not editable");
 				}
 
 
@@ -65,7 +65,7 @@
 
 					if (unusedProduct is null)
 					{
-						throw new CRUDException(ExceptionTypeEnum.NotFound, "ProductNotFound");
+						throw new MediatorException(ExceptionType.NotFound, "ProductNotFound");
 					}
 
 					_dbContext.OrderItems.Update(new OrderItemEntity
@@ -87,7 +87,7 @@
 				catch (Exception e)
 				{
 					transaction.Rollback();
-					throw new CRUDException(ExceptionTypeEnum.Error, "Product addition to order failed", e);
+					throw new MediatorException(ExceptionType.Error, "Product addition to order failed", e);
 				}
 
 			}

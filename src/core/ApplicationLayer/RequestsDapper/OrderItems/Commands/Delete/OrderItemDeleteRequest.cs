@@ -24,7 +24,7 @@
 			{
 				try
 				{
-					var result = await _context.ExecuteProcedureAsync("[dbo].[DeleteOrderItem]", CreateDeleteOrderItemProcedureParameters(request));
+					await _context.ExecuteProcedureAsync("[dbo].[DeleteOrderItem]", CreateDeleteOrderItemProcedureParameters(request));
 
 					return new OrderItemDeleteResponse()
 					{
@@ -35,18 +35,18 @@
 				{
 					if (ex.Number == 51000)
 					{
-						throw new CRUDException(ExceptionTypeEnum.NotFound, ex.Message);
+						throw new MediatorException(ExceptionType.NotFound, ex.Message);
 					}
 
-					throw new CRUDException(ExceptionTypeEnum.Error, "Error while deleting", ex);
+					throw new MediatorException(ExceptionType.Error, "Error while deleting", ex);
 				}
 				catch (Exception e)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, "Error while deleting", e);
+					throw new MediatorException(ExceptionType.Error, "Error while deleting", e);
 				}
 			}
 
-			private object CreateDeleteOrderItemProcedureParameters(OrderItemDeleteRequest request)
+			private static object CreateDeleteOrderItemProcedureParameters(OrderItemDeleteRequest request)
 			{
 				return new { request.OrderCode, request.ProductCode, request.UserId };
 			}
