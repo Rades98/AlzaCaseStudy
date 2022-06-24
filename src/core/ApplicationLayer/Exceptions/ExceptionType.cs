@@ -1,6 +1,6 @@
 ﻿namespace ApplicationLayer.Exceptions
 {
-    public enum ExceptionTypeEnum
+    public enum ExceptionType
     {
         NotFound = 1,
         Error = 2,

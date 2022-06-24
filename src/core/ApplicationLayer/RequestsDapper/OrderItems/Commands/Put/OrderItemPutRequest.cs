@@ -24,7 +24,7 @@
 			{
 				try
 				{
-					var result = await _context.ExecuteProcedureAsync("[dbo].[PutOrderItemToOrder]", CreatePutOrderItemProcedureParameters(request));
+					await _context.ExecuteProcedureAsync("[dbo].[PutOrderItemToOrder]", CreatePutOrderItemProcedureParameters(request));
 
 					return new OrderItemPutResponse()
 					{
@@ -35,18 +35,18 @@
 				{
 					if (ex.Number == 51000)
 					{
-						throw new CRUDException(ExceptionTypeEnum.NotFound, ex.Message);
+						throw new MediatorException(ExceptionType.NotFound, ex.Message);
 					}
 
-					throw new CRUDException(ExceptionTypeEnum.Error, "Product addition to order failed", ex);
+					throw new MediatorException(ExceptionType.Error, "Product addition to order failed", ex);
 				}
 				catch (Exception e)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, "Product addition to order failed", e);
+					throw new MediatorException(ExceptionType.Error, "Product addition to order failed", e);
 				}
 			}
 
-			private object CreatePutOrderItemProcedureParameters(OrderItemPutRequest request)
+			private static object CreatePutOrderItemProcedureParameters(OrderItemPutRequest request)
 			{
 				return new { request.OrderCode, request.ProductCode, request.UserId };
 			}

@@ -23,12 +23,12 @@
 
 				if (actual is null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Order not found");
+					throw new MediatorException(ExceptionType.NotFound, "Order not found");
 				}
 
 				if (actual.UserId != request.UserId)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Unauthorized, "Wrong user");
+					throw new MediatorException(ExceptionType.Unauthorized, "Wrong user");
 				}
 
 				actual.OrderStatusId = request.StatusId;
@@ -42,7 +42,7 @@
 				}
 				catch (Exception ex)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, "Error while changing status", ex);
+					throw new MediatorException(ExceptionType.Error, "Error while changing status", ex);
 				}
 			}
 		}

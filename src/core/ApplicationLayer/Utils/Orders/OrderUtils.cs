@@ -6,8 +6,9 @@
         {
             char[] code = x.ToCharArray();
 
-            int numPart = int.Parse(code[5..10]);
-            char[] charPart = code[0..5];
+            char[] charPart = code.AsSpan(0, 5).ToArray();
+
+            int numPart = int.Parse(x[5..]);
 
             if (numPart < 99999)
             {
@@ -20,43 +21,7 @@
                 {
                     charPart[4] = 'A';
 
-                    if (charPart[3] == 'Z')
-                    {
-                        charPart[3] = 'A';
-                        if (charPart[2] == 'Z')
-                        {
-                            charPart[2] = 'A';
-                            if (charPart[1] == 'Z')
-                            {
-                                charPart[1] = 'A';
-                                if (charPart[0] == 'Z')
-                                {
-                                    charPart[0] = 'A';
-                                    throw new Exception("No more order codes can be created");
-                                }
-                                else
-                                {
-                                    charPart[0]++;
-                                    return new string(charPart) + numPart.ToString("00000");
-                                }
-                            }
-                            else
-                            {
-                                charPart[1]++;
-                                return new string(charPart) + numPart.ToString("00000");
-                            }
-                        }
-                        else
-                        {
-                            charPart[2]++;
-                            return new string(charPart) + numPart.ToString("00000");
-                        }
-                    }
-                    else
-                    {
-                        charPart[3]++;
-                        return new string(charPart) + numPart.ToString("00000");
-                    }
+                    return Recur(charPart, numPart, 3);
                 }
                 else
                 {
@@ -64,6 +29,37 @@
                     charPart[4]++;
                     return new string(charPart) + numPart.ToString("00000");
                 }
+            }
+        }
+
+        private static string Recur(char[] charPart, int numPart, int i)
+        {
+            if (charPart[i] == 'Z')
+            {
+                charPart[i] = 'A';
+                if (i > 0)
+                {
+                    return Recur(charPart, numPart, i - 1);
+                }
+                else
+                {
+                    if (charPart[0] == 'Z')
+                    {
+                        charPart[0] = 'A';
+                        throw new IndexOutOfRangeException("No more order codes can be created");
+                    }
+                    else
+                    {
+                        charPart[0]++;
+                        return new string(charPart) + numPart.ToString("00000");
+                    }
+                }
+
+            }
+            else
+            {
+                charPart[i]++;
+                return new string(charPart) + numPart.ToString("00000");
             }
         }
     }

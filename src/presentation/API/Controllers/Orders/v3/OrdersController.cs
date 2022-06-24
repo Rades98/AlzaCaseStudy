@@ -1,4 +1,4 @@
-﻿namespace API.Controllers.Orders.v4
+﻿namespace API.Controllers.Orders.v3
 {
 	using ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser;
 	using OrdersGetByUserRequest = ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized.OrdersGetByUserRequest;
@@ -8,7 +8,7 @@
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-	[ApiVersion("4")]
+	[ApiVersion("3")]
 	public class OrdersController : BaseController<OrderEntity>
 	{
 		public OrdersController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<OrderEntity> logger) : base(mediator, adcp, logger)

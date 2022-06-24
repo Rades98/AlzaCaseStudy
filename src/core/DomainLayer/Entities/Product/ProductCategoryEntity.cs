@@ -6,10 +6,10 @@
     {
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public IEnumerable<ProductDetailEntity>? ProductDetails { get; set; }
+        public List<ProductDetailEntity> ProductDetails { get; set; } = new();
         public ProductCategoryEntity? ParentProductCategory { get; set; }
         public int? ParentProductCategoryId { get; set; }
-        public ICollection<ProductCategoryEntity>? ChildrenCategories { get; set; }
-        public ICollection<ProductCategoryLocalizedEntity>? Localizations { get; set; } 
+        public List<ProductCategoryEntity> ChildrenCategories { get; set; } = new();
+        public List<ProductCategoryLocalizedEntity> Localizations { get; set; } = new();
     }
 }

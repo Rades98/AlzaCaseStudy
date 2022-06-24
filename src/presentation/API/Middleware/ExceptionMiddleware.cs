@@ -47,24 +47,24 @@
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
 
-                case CRUDException ex:
+                case MediatorException ex:
                     message = ex.Message;
 
                     switch (ex.Type)
                     {
-                        case ExceptionTypeEnum.NotFound:
+                        case ExceptionType.NotFound:
                             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                             break;
 
-                        case ExceptionTypeEnum.Error:
+                        case ExceptionType.Error:
                             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                             break;
 
-                        case ExceptionTypeEnum.Unauthorized:
+                        case ExceptionType.Unauthorized:
                             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                             break;
 
-                        case ExceptionTypeEnum.NotModified:
+                        case ExceptionType.NotModified:
                             context.Response.StatusCode = (int)HttpStatusCode.NotModified;
                             break;
                     }

@@ -35,12 +35,12 @@
 
 				if (entity is null)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotFound, "Product detail not found");
+					throw new MediatorException(ExceptionType.NotFound, "Product detail not found");
 				}
 
 				if (entity.Description == request.Description)
 				{
-					throw new CRUDException(ExceptionTypeEnum.NotModified, "Product detail is already up to date");
+					throw new MediatorException(ExceptionType.NotModified, "Product detail is already up to date");
 				}
 
 				try
@@ -54,7 +54,7 @@
 				}
 				catch (Exception ex)
 				{
-					throw new CRUDException(ExceptionTypeEnum.Error, "Error while updating product detail", ex);
+					throw new MediatorException(ExceptionType.Error, "Error while updating product detail", ex);
 				}
 
 				return response;
