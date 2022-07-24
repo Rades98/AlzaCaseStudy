@@ -22,23 +22,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="10.4.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
+    <PackageReference Include="FluentValidation" Version="11.1.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="6.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.4" />
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.18.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.21.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.18.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.21.0" />
     <PackageReference Include="X.PagedList" Version="8.4.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\others\CodeLists\CodeLists.csproj" />
     <ProjectReference Include="..\..\..\others\Extensions\Extensions.csproj" />
+    <ProjectReference Include="..\..\..\others\RadesSoft.HateoasMaker\RadesSoft.HateoasMaker.csproj" />
     <ProjectReference Include="..\..\infrastructure\PersistanceLayerDapper\PersistanceLayerDapper.csproj" />
     <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
   </ItemGroup>

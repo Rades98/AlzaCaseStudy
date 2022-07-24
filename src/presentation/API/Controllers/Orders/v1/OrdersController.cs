@@ -8,12 +8,13 @@
 	using MediatR;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
+	using RadesSoft.HateoasMaker;
+	using RadesSoft.HateoasMaker.Attributes;
 
 	[ApiVersion("1")]
 	public class OrdersController : BaseController<OrderEntity>
 	{
-		public OrdersController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<OrderEntity> logger) : base(mediator, adcp, logger)
+		public OrdersController(IMediator mediator, ILogger<OrderEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -25,6 +26,7 @@
 		/// Returns all user orders - for test purpose use Admin aJc48262_1Kjkz>X!
 		/// </remarks>
 		[HttpGet(Name = nameof(GetOrdersAsync)), Authorize()]
+		[HateoasResponse("orders_get", nameof(GetOrdersAsync), 1)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -46,7 +48,8 @@
 		/// <remarks>
 		/// Returns all user orders where status id is as defined - for test purpose use Admin aJc48262_1Kjkz>X!
 		/// </remarks>
-		[HttpGet("statusId", Name = nameof(GetOrdersFilteredAsync)), Authorize()]
+		[HttpGet("status", Name = nameof(GetOrdersFilteredAsync)), Authorize()]
+		[HateoasResponse("orders_getFiltered", nameof(GetOrdersFilteredAsync), 1)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -68,6 +71,7 @@
 		/// Returns true if order was created
 		/// </remarks>
 		[HttpPut(Name = nameof(CreateOrderAsync)), Authorize()]
+		[HateoasResponse("orders_create", nameof(CreateOrderAsync), 1)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -89,7 +93,8 @@
 		/// <remarks>
 		/// Changes order status
 		/// </remarks>
-		[HttpPatch("orderCode", Name = nameof(ChangeOrderStatusAsync)), Authorize()]
+		[HttpPatch(Name = nameof(ChangeOrderStatusAsync)), Authorize()]
+		[HateoasResponse("orders_changeStatus", nameof(ChangeOrderStatusAsync), 1, "?orderCode={orderCode}&statusId={statusId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -110,7 +115,8 @@
 		/// <remarks>
 		/// Storno order
 		/// </remarks>
-		[HttpDelete("OrderCode", Name = nameof(DeleteOrderAsync)), Authorize()]
+		[HttpDelete(Name = nameof(DeleteOrderAsync)), Authorize()]
+		[HateoasResponse("orders_delete", nameof(DeleteOrderAsync), 1, "?orderCode={orderCode}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]

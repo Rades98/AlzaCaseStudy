@@ -4,12 +4,13 @@
 	using DomainLayer.Entities.Product;
 	using MediatR;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
+	using RadesSoft.HateoasMaker;
+	using RadesSoft.HateoasMaker.Attributes;
 
 	[ApiVersion("1")]
 	public class ProductCategoriesController : BaseController<ProductCategoryEntity>
 	{
-		public ProductCategoriesController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductCategoryEntity> logger) : base(mediator, adcp, logger)
+		public ProductCategoriesController(IMediator mediator, ILogger<ProductCategoryEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -21,6 +22,7 @@
 		/// Returns product categories
 		/// </remarks>
 		[HttpGet(Name = nameof(GetProductCategopriesAsync))]
+		[HateoasResponse("productCategories_get", nameof(GetProductCategopriesAsync), 1)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -30,7 +32,7 @@
 		{
 			var result = await Mediator.Send(new ProductCategoriesGetRequest() { }, cancellationToken);
 
-			return Ok(RestfullProductCategoriesGetResponse(result));
+			return Ok(result);
 		}
 
 		/// <summary>
@@ -41,7 +43,8 @@
 		/// <remarks>
 		/// Returns subcategories for defined category
 		/// </remarks>
-		[HttpGet("{id}", Name = nameof(GetProductCategoriesByIdAsync))]
+		[HttpGet("id", Name = nameof(GetProductCategoriesByIdAsync))]
+		[HateoasResponse("productCategories_getById", nameof(GetProductCategoriesByIdAsync), 1, "?id={id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -51,25 +54,7 @@
 		{
 			var result = await Mediator.Send(new ProductCategoriesGetByIdRequest() { Id = id }, cancellationToken);
 
-			return Ok(RestfullProductCategoriesGetResponse(result));
-		}
-
-		private ProductCategoriesGetResponse RestfullProductCategoriesGetResponse(ProductCategoriesGetResponse response)
-		{
-			var all = UrlLink("all", nameof(GetProductCategopriesAsync));
-			var self = UrlLink("_self", nameof(GetProductCategoriesByIdAsync), new { id = "GUID_HERE" });
-
-			if (all is not null)
-			{
-				response.Links.Add(all);
-			}
-
-			if (self is not null)
-			{
-				response.Links.Add(self);
-			}
-
-			return response;
+			return Ok(result);
 		}
 	}
 }

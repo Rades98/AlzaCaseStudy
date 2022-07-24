@@ -1,10 +1,12 @@
 ﻿namespace API.Controllers.ProductDetailInfos.v1
 {
+	using API.Controllers.OrderItems.v1;
 	using ApplicationLayer.Requests.ProductDetailInfos.Queries;
 	using DomainLayer.Entities.Product;
 	using MediatR;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
+	using RadesSoft.HateoasMaker;
+	using RadesSoft.HateoasMaker.Attributes;
 
 	/// <summary>
 	/// Product detail info  endpoints v1
@@ -13,7 +15,7 @@
 	[ApiVersion("1")]
 	public class ProductDetailInfosController : BaseController<ProductDetailInfoEntity>
 	{
-		public ProductDetailInfosController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductDetailInfoEntity> logger) : base(mediator, adcp, logger)
+		public ProductDetailInfosController(IMediator mediator, ILogger<ProductDetailInfoEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -27,6 +29,7 @@
 		/// Returns product detail info, if found
 		/// </remarks>
 		[HttpGet(Name = nameof(GetProductDetailInfoAsync))]
+		[HateoasResponse("productDetailInfos_get", nameof(GetProductDetailInfoAsync), 1, "?id={id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -36,20 +39,15 @@
 		{
 			var result = await Mediator.Send(new ProductDetailInfoGetRequest() { Id = id }, cancellationToken);
 
-			return Ok(RestfullProductDetailInfoGetResponse(result));
+			var choices = new Dictionary<string, string?>
+				{
+					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
+					{ nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart" },
+				};
 
-		}
+			result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
 
-		private ProductDetailInfoGetResponse RestfullProductDetailInfoGetResponse(ProductDetailInfoGetResponse response)
-		{
-			var self = UrlLink("_self", nameof(GetProductDetailInfoAsync), new { id = response.Id });
-
-			if (self is not null)
-			{
-				response.Links.Add(self);
-			}
-
-			return response;
+			return Ok(result);
 		}
 	}
 }
