@@ -1,5 +1,6 @@
 ﻿namespace ApplicationLayer.Requests.Users.Commands.Login
 {
+	using System.Security.Claims;
 	using Exceptions;
 	using Interfaces;
 	using MediatR;
@@ -15,8 +16,9 @@
 		public class Handler : IRequestHandler<UserLoginRequest, UserLoginResponse>
 		{
 			private readonly IDbContext _dbContext;
+			private readonly ClaimsPrincipal _user;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IDbContext dbContext, ClaimsPrincipal user) => (_dbContext, _user) = (dbContext, user);
 
 			public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
 			{
@@ -35,13 +37,17 @@
 					throw new MediatorException(ExceptionType.Unauthorized, "Wrong password");
 				}
 
-				var roles = user.Roles?.Select(role => role.Name).ToList();
+				var roles = user.Roles?.Select(role => role.Name).ToList() ?? new List<string>();
+
+				var claims = new List<Claim>();
+
+				roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
+				_user.AddIdentity(new ClaimsIdentity(claims));
 
 				return new UserLoginResponse()
 				{
 					UserName = user.UserName,
-					Token = PasswordHashing.CreateToken(user.Id, request.Token, roles!),
-					Roles = roles ?? new()
+					Token = PasswordHashing.CreateToken(user.Id, request.Token, roles!)
 				};
 			}
 		}

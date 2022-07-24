@@ -6,12 +6,13 @@
 	using MediatR;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
+	using RadesSoft.HateoasMaker;
+	using RadesSoft.HateoasMaker.Attributes;
 
 	[ApiVersion("2")]
 	public class OrderItemsController : BaseController<OrderItemEntity>
 	{
-		public OrderItemsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<OrderItemEntity> logger) : base(mediator, adcp, logger)
+		public OrderItemsController(IMediator mediator, ILogger<OrderItemEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -24,7 +25,8 @@
 		/// <remarks>
 		/// Adds article to order
 		/// </remarks>
-		[HttpPut("orderCode", Name = nameof(PutOrderItemAsync)), Authorize()]
+		[HttpPut(Name = nameof(PutOrderItemAsync)), Authorize()]
+		[HateoasResponse("orderItem_Put", nameof(PutOrderItemAsync), 2, "?orderCode={orderCode}&productCode={productCode}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -46,7 +48,8 @@
 		/// <remarks>
 		/// Remove article from order
 		/// </remarks>
-		[HttpDelete("orderCode", Name = nameof(DeleteOrderItemAsync)), Authorize()]
+		[HttpDelete(Name = nameof(DeleteOrderItemAsync)), Authorize()]
+		[HateoasResponse("orderItem_Delete", nameof(DeleteOrderItemAsync), 2, "?orderCode={orderCode}&productCode={productCode}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PersistanceLayerDapper", "s
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DbScipts", "dbScripts\DbScipts\DbScipts.sqlproj", "{B3151119-800D-4FE7-A8EF-8F23E1EAB889}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RadesSoft.HateoasMaker", "others\RadesSoft.HateoasMaker\RadesSoft.HateoasMaker.csproj", "{B8E68884-1EE1-47E1-9BE6-E85C5E5B9932}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +87,10 @@ Global
 		{B3151119-800D-4FE7-A8EF-8F23E1EAB889}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3151119-800D-4FE7-A8EF-8F23E1EAB889}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B3151119-800D-4FE7-A8EF-8F23E1EAB889}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B8E68884-1EE1-47E1-9BE6-E85C5E5B9932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8E68884-1EE1-47E1-9BE6-E85C5E5B9932}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8E68884-1EE1-47E1-9BE6-E85C5E5B9932}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8E68884-1EE1-47E1-9BE6-E85C5E5B9932}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{D2E6B82A-7DF6-4895-AFE2-5FD3D8024B6E} = {5B7FA7A0-CA97-4A67-A7E3-B3B09B26EF89}
 		{38315E10-A01D-48AA-900B-617E4B952E95} = {5CB034E1-9654-46AA-8A4A-8D0EB5400ABF}
 		{B3151119-800D-4FE7-A8EF-8F23E1EAB889} = {15D062EB-8518-46A0-B49F-8C6788004C33}
+		{B8E68884-1EE1-47E1-9BE6-E85C5E5B9932} = {5B7FA7A0-CA97-4A67-A7E3-B3B09B26EF89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0FDCF347-19C6-444D-A204-23312B9858FB}

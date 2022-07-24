@@ -1,5 +1,7 @@
 ﻿namespace API.Controllers.ProductDetails.v1
 {
+	using API.Controllers.OrderItems.v1;
+	using API.Controllers.ProductDetailInfos.v1;
 	using ApplicationLayer.Requests.ProductDetails.Commands;
 	using ApplicationLayer.Requests.ProductDetails.Queries;
 	using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
@@ -8,8 +10,9 @@
 	using MediatR;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
 	using Microsoft.Extensions.Logging;
+	using RadesSoft.HateoasMaker;
+	using RadesSoft.HateoasMaker.Attributes;
 
 	/// <summary>
 	/// Products endpoints v1
@@ -18,7 +21,7 @@
 	[ApiVersion("1")]
 	public class ProductDetailsController : BaseController<ProductDetailEntity>
 	{
-		public ProductDetailsController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<ProductDetailEntity> logger) : base(mediator, adcp, logger)
+		public ProductDetailsController(IMediator mediator, ILogger<ProductDetailEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -29,17 +32,34 @@
 		/// <remarks>
 		/// Returns all products, if there is none, returns null
 		/// </remarks>
-		[HttpGet(Name = nameof(GetProductsAsync))]
+		[HttpGet(Name = nameof(GetProductDetailsAsync))]
+		[HateoasResponse("productDetais_get", nameof(GetProductDetailsAsync), 1)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<ProductDetailGetResponse>>> GetProductsAsync(CancellationToken cancellationToken = default)
+		public async Task<ActionResult<IEnumerable<ProductDetailGetResponse>>> GetProductDetailsAsync(CancellationToken cancellationToken = default)
 		{
 			var results = await Mediator.Send(new ProductDetailsGetRequest() { OrderBy = p => p.Name }, cancellationToken);
 
-			return Ok(results.Select(product => RestfullProductGetResponse(product)));
+			results.ToList().ForEach(result =>
+			{
+				var choices = new Dictionary<string, string?>
+				{
+					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
+					{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "productDetail" },
+				};
+
+				if (User.IsInRole(UserRoles.Admin))
+				{
+					choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
+				}
+
+				result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
+			});
+
+			return Ok(results);
 		}
 
 		/// <summary>
@@ -51,16 +71,33 @@
 		/// <remarks>
 		/// Returns paged products as specified, otherwise null
 		/// </remarks>
-		[HttpGet("size={pageSize}/num={pageNum}", Name = nameof(GetProductsPaginatedAsync))]
+		[HttpGet("pag", Name = nameof(GetProductDetailsPaginatedAsync))]
+		[HateoasResponse("productDetais_getPaged", nameof(GetProductDetailsPaginatedAsync), 1, "?pageSize={pageSize}&pageNum={pageNum}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<ProductDetailGetResponse>>> GetProductsPaginatedAsync(int pageSize, int pageNum, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<IEnumerable<ProductDetailGetResponse>>> GetProductDetailsPaginatedAsync(int pageSize, int pageNum, CancellationToken cancellationToken = default)
 		{
 			var results = await Mediator.Send(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = pageNum, PageSize = pageSize }, cancellationToken);
-			return Ok(results.Select(product => RestfullProductGetPaginatedResponse(product)));
+			results.ToList().ForEach(result =>
+			{
+				//Add amount check here
+				var choices = new Dictionary<string, string?>
+				{
+					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
+					{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "productDetail" },
+				};
+
+				if (User.IsInRole(UserRoles.Admin))
+				{
+					choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
+				}
+
+				result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
+			});
+			return Ok(results);
 		}
 
 		/// <summary>
@@ -71,16 +108,25 @@
 		/// <remarks>
 		/// Returns product found by id, if there is none, returns null
 		/// </remarks>
-		[HttpGet("{id}", Name = nameof(GetByIdAsync))]
+		[HttpGet("id", Name = nameof(GetProductDetailByIdAsync))]
+		[HateoasResponse("productDetais_getById", nameof(GetProductDetailByIdAsync), 1, "?id={id}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<ProductDetailGetResponse?>> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<ProductDetailGetResponse?>> GetProductDetailByIdAsync(int id, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new ProductDetailGetRequest() { Id = id }, cancellationToken);
-			return Ok(RestfullProductGetResponse(result));
+
+			var choices = new Dictionary<string, string?>
+			{
+				{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
+			};
+
+			result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
+
+			return Ok(result);
 		}
 
 		/// <summary>
@@ -92,7 +138,8 @@
 		/// <remarks>
 		/// Returns updated product if operation was succesfull, otherwise returns status
 		/// </remarks>
-		[HttpPatch(Name = nameof(UpdateAsync)), Authorize(Roles = UserRoles.Admin)]
+		[HttpPatch(Name = nameof(UpdateProductDetailAsync)), Authorize(Roles = UserRoles.Admin)]
+		[HateoasResponse("productDetais_update", nameof(UpdateProductDetailAsync), 1, "?id={id}&description={descrription}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -100,59 +147,11 @@
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<ProductDetailUpdateResponse>> UpdateAsync(int id, string description, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<ProductDetailUpdateResponse>> UpdateProductDetailAsync(int id, string description, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new ProductDetailUpdateRequest { Id = id, Description = description }, cancellationToken);
 
 			return Ok(result);
-		}
-
-		private ProductDetailGetResponse RestfullProductGetResponse(ProductDetailGetResponse response)
-		{
-			var all = UrlLink("all", nameof(GetProductsAsync));
-			var self = UrlLink("_self", nameof(GetByIdAsync), new { id = response.Id });
-			var update = UrlLink("update", nameof(UpdateAsync), new { id = response.Id, description = "new_description" });
-
-			if (all is not null)
-			{
-				response.Links.Add(all);
-			}
-
-			if (self is not null)
-			{
-				response.Links.Add(self);
-			}
-
-			if (update is not null)
-			{
-				response.Links.Add(update);
-			}
-
-			return response;
-		}
-
-		private ProductDetailGetResponse RestfullProductGetPaginatedResponse(ProductDetailGetResponse response)
-		{
-			var all = UrlLink("all", nameof(GetProductsPaginatedAsync));
-			var self = UrlLink("_self", nameof(GetByIdAsync), new { id = response.Id });
-			var update = UrlLink("update", nameof(UpdateAsync), new { id = response.Id, description = "new_description" });
-
-			if (all is not null)
-			{
-				response.Links.Add(all);
-			}
-
-			if (self is not null)
-			{
-				response.Links.Add(self);
-			}
-
-			if (update is not null)
-			{
-				response.Links.Add(update);
-			}
-
-			return response;
 		}
 	}
 }

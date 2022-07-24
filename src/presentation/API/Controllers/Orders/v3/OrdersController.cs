@@ -1,17 +1,18 @@
 ﻿namespace API.Controllers.Orders.v3
 {
 	using ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser;
-	using OrdersGetByUserRequest = ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized.OrdersGetByUserRequest;
 	using DomainLayer.Entities.Orders;
 	using MediatR;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
+	using RadesSoft.HateoasMaker;
+	using RadesSoft.HateoasMaker.Attributes;
+	using OrdersGetByUserRequest = ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized.OrdersGetByUserRequest;
 
 	[ApiVersion("3")]
 	public class OrdersController : BaseController<OrderEntity>
 	{
-		public OrdersController(IMediator mediator, IActionDescriptorCollectionProvider adcp, ILogger<OrderEntity> logger) : base(mediator, adcp, logger)
+		public OrdersController(IMediator mediator, ILogger<OrderEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -24,6 +25,7 @@
 		/// Returns all user orders - for test purpose use Admin aJc48262_1Kjkz>X!
 		/// </remarks>
 		[HttpGet(Name = nameof(GetOrdersAsync)), Authorize()]
+		[HateoasResponse("orders_get", nameof(GetOrdersAsync), 3, "?languageCode=cz")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
