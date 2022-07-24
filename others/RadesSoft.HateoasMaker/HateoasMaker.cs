@@ -23,8 +23,9 @@
 		{
 			var route = _routes.FirstOrDefault(f =>
 				f.AttributeRouteInfo?.Name == routeName && (
-					f.EndpointMetadata.OfType<ApiVersionAttribute>().FirstOrDefault()?.Versions.FirstOrDefault()?.MajorVersion == apiVersion ||
-					f.EndpointMetadata.OfType<MapToApiVersionAttribute>().ToList().Any(x => x.Versions.Where(ver => ver.MajorVersion == apiVersion).Count() > 0)
+					f.EndpointMetadata.OfType<ApiVersionAttribute>().Any() &&
+					f.EndpointMetadata.OfType<ApiVersionAttribute>().First().Versions[0].MajorVersion == apiVersion ||
+					f.EndpointMetadata.OfType<MapToApiVersionAttribute>().ToList().Any(x => x.Versions.Any(ver => ver.MajorVersion == apiVersion))
 				));
 
 			if (route is null || route?.ActionConstraints is null)
@@ -65,24 +66,22 @@
 
 			var all = GetAllEndpointLinks(version);
 			var self = all
-				.Where(x => x.Value is not null && x.Key == selfName)
-				.First()!;
+				.First(x => x.Value is not null && x.Key == selfName)!;
 
 			self.Value!.Rel = "_self";
 
 			response.Add(new() { ActionName = "self", Curl = self.Value });
 
 			var rest = all
-			.Where(x => x.Value is not null && endpoints.Keys.Contains(x.Key));
+			.Where(x => x.Value is not null && endpoints.ContainsKey(x.Key));
 
 			foreach (var endpoint in endpoints)
 			{
-				var toAdd = all
-				.Where(x => x.Value is not null && x.Key == endpoint.Key)
-				.FirstOrDefault();
+				var toAdd = rest
+				.FirstOrDefault(x => x.Value is not null && x.Key == endpoint.Key);
 
 				response.Add(new() { ActionName = endpoint.Value ?? toAdd.Key, Curl = toAdd.Value });
-			};
+			}
 
 			return response;
 		}

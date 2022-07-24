@@ -12,7 +12,16 @@
 		public static IServiceCollection RegisterHateoas(this IServiceCollection services)
 		{
 			services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-			services.TryAddTransient(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+			services.TryAddTransient(s => {
+				var contextAccessor = s.GetService<IHttpContextAccessor>()?.HttpContext?.User;
+				
+				if (contextAccessor is null)
+				{
+					throw new InvalidOperationException("cannot load UrlHelper");
+				}
+
+				return contextAccessor;
+			});
 			services.TryAddScoped<IActionContextAccessor, ActionContextAccessor>();
 			services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
 
@@ -20,6 +29,17 @@
 			{
 				var actionContext = sp.GetRequiredService<IActionContextAccessor>().ActionContext;
 				var urlHelperFactory = sp.GetRequiredService<IUrlHelperFactory>();
+
+				if(actionContext is null)
+				{
+					throw new InvalidOperationException("cannot load UrlHelper");
+				}
+
+				if (urlHelperFactory is null)
+				{
+					throw new InvalidOperationException("cannot load UrlHelperFactory");
+				}
+
 				return urlHelperFactory.GetUrlHelper(actionContext);
 			});
 
