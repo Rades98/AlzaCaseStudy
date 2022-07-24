@@ -25,7 +25,7 @@
 				f.AttributeRouteInfo?.Name == routeName && (
 					f.EndpointMetadata.OfType<ApiVersionAttribute>().Any() &&
 					f.EndpointMetadata.OfType<ApiVersionAttribute>().First().Versions[0].MajorVersion == apiVersion ||
-					f.EndpointMetadata.OfType<MapToApiVersionAttribute>().ToList().Any(x => x.Versions.Any(ver => ver.MajorVersion == apiVersion))
+					f.EndpointMetadata.OfType<MapToApiVersionAttribute>().Any(x => x.Versions.Any(ver => ver.MajorVersion == apiVersion))
 				));
 
 			if (route is null || route?.ActionConstraints is null)

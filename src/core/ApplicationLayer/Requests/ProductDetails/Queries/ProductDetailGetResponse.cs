@@ -17,6 +17,7 @@
 		public DateTime Created { get; set; }
 		public DateTime? Changed { get; set; }
 		public DateTime? Deleted { get; set; }
+		public string ProductCode { get; set; } = string.Empty;
 
 		public ProductDetailGetResponse() { }
 
@@ -33,6 +34,7 @@
 				Deleted = v.Deleted,
 				Description = v.Description,
 				Id = v.Id,
+				ProductCode = v.ProductCode,
 			};
 		}
 	}
