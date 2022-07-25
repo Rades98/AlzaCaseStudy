@@ -1,7 +1,6 @@
 ﻿namespace API.Controllers.ProductDetails.v1
 {
-	using API.Controllers.OrderItems.v1;
-	using API.Controllers.ProductDetailInfos.v1;
+	using API.Constants;
 	using ApplicationLayer.Requests.ProductDetails.Commands;
 	using ApplicationLayer.Requests.ProductDetails.Queries;
 	using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
@@ -11,8 +10,11 @@
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.Extensions.Logging;
+	using OrderItems.v1;
+	using ProductDetailInfos.v1;
 	using RadesSoft.HateoasMaker;
 	using RadesSoft.HateoasMaker.Attributes;
+	using RadesSoft.HateoasMaker.Extensions;
 
 	/// <summary>
 	/// Products endpoints v1
@@ -56,7 +58,18 @@
 					choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
 				}
 
-				result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
+				var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+
+				var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+
+				if (cookieOrderCode is not null)
+				{
+					links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
+				}
+
+				links.First(x => x.ActionName == "productDetail").ReplaceInLink("{id}", result.Id.ToString());
+
+				result.Links = links;
 			});
 
 			return Ok(results);
@@ -83,7 +96,6 @@
 			var results = await Mediator.Send(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = pageNum, PageSize = pageSize }, cancellationToken);
 			results.ToList().ForEach(result =>
 			{
-				//Add amount check here
 				var choices = new Dictionary<string, string?>
 				{
 					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
@@ -95,7 +107,18 @@
 					choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
 				}
 
-				result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
+				var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+
+				var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+
+				if (cookieOrderCode is not null)
+				{
+					links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
+				}
+
+				links.First(x => x.ActionName == "productDetail").ReplaceInLink("{id}", result.Id.ToString());
+
+				result.Links = links;
 			});
 			return Ok(results);
 		}
@@ -124,7 +147,17 @@
 				{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
 			};
 
-			result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
+			var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+			var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+
+			if (cookieOrderCode is not null)
+			{
+				links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
+			}
+
+			links.First(x => x.ActionName == "self").ReplaceInLink("{id}", result.Id.ToString());
+
+			result.Links = links;
 
 			return Ok(result);
 		}

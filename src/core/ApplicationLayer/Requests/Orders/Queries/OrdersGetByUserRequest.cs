@@ -38,7 +38,7 @@
 					var response = new OrdersGetResponse
 					{
 						OrderCode = order.OrderCode,
-						OrderStatus = order.Status.Name,
+						OrderStatus = order.Status.Id,
 						Total = order.Total,
 					};
 

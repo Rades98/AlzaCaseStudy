@@ -58,7 +58,6 @@
 					{ nameof(OrdersController.GetOrdersFilteredAsync), "onCartClick" },
 					{ nameof(ProductDetailsController.GetProductDetailsPaginatedAsync), "loadProductCards" },
 					{ nameof(ProductDetailsController.GetProductDetailByIdAsync), "onProductClick" },
-					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
 				}, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
 
 			return Ok(result);
