@@ -19,6 +19,7 @@
 
 		public IMediator Mediator => _mediator;
 		public HateoasMaker HateoasMaker => _hateoasMaker;
+		public ILogger<T> Logger => _logger;
 
 		protected BaseController(IMediator mediator, ILogger<T> logger, HateoasMaker hateoasMaker) => (_mediator, _logger, _hateoasMaker) = (mediator, logger, hateoasMaker);
 
@@ -27,6 +28,13 @@
 			var accessToken = Request.Headers[HeaderNames.Authorization];
 			var token = new JwtSecurityTokenHandler().ReadJwtToken(accessToken.ToString().Replace("Bearer ", ""));
 			return Int32.Parse(token.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+		}
+
+		protected string? GetCookieValue(string name)
+		{
+			string? value;
+			Request.Cookies.TryGetValue(name, out value);
+			return value;
 		}
 	}
 }

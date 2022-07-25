@@ -21,6 +21,7 @@
 			{
 				var productDetail = await _dbContext.ProductDetailInfos
 					.AsNoTracking()
+					.Include(i => i.ProductDetail)
 					.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
 				if (productDetail is null)

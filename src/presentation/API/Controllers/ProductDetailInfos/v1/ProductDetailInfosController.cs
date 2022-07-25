@@ -1,5 +1,6 @@
 ﻿namespace API.Controllers.ProductDetailInfos.v1
 {
+	using API.Constants;
 	using API.Controllers.OrderItems.v1;
 	using ApplicationLayer.Requests.ProductDetailInfos.Queries;
 	using DomainLayer.Entities.Product;
@@ -7,6 +8,7 @@
 	using Microsoft.AspNetCore.Mvc;
 	using RadesSoft.HateoasMaker;
 	using RadesSoft.HateoasMaker.Attributes;
+	using RadesSoft.HateoasMaker.Extensions;
 
 	/// <summary>
 	/// Product detail info  endpoints v1
@@ -45,7 +47,19 @@
 					{ nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart" },
 				};
 
-			result.Links.AddRange(HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1));
+			var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+
+			links.First(x => x.ActionName == "self").ReplaceInLink("{id}", result.Id.ToString());
+
+			var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+
+			if (cookieOrderCode is not null)
+			{
+				links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
+				links.First(x => x.ActionName == "onRemoveFromCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
+			}
+
+			result.Links = links;
 
 			return Ok(result);
 		}

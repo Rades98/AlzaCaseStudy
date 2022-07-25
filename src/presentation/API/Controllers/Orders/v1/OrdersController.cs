@@ -1,5 +1,6 @@
 ﻿namespace API.Controllers.Orders.v1
 {
+	using API.Constants;
 	using ApplicationLayer.Requests.Orders.Commands.ChangeStatus;
 	using ApplicationLayer.Requests.Orders.Commands.Put;
 	using ApplicationLayer.Requests.Orders.Commands.Storno;
@@ -37,6 +38,8 @@
 		{
 			var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken() }, cancellationToken);
 
+			AddCookieWithActualOrder(result);
+
 			return Ok(result);
 		}
 
@@ -60,6 +63,8 @@
 		{
 			var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken(), WhereFilter = x => x.OrderStatusId == statusId }, cancellationToken);
 
+			AddCookieWithActualOrder(result);
+
 			return Ok(result);
 		}
 
@@ -80,6 +85,8 @@
 		public async Task<ActionResult<OrdersPutResponse>> CreateOrderAsync(CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new OrdersPutRequest() { UserId = GetUserIdFromToken() }, cancellationToken);
+
+			AddCookieWithActualOrder(result);
 
 			return Ok(result);
 		}
@@ -104,6 +111,8 @@
 		{
 			var result = await Mediator.Send(new OrderChangeStatusRequest() { OrderCode = orderCode, UserId = GetUserIdFromToken(), StatusId = statusId }, cancellationToken);
 
+			RemoveActualOrderCookieIfNeeded(orderCode);
+
 			return Ok(result);
 		}
 
@@ -126,8 +135,55 @@
 		public async Task<ActionResult<OrderStornoResponse>> DeleteOrderAsync(string orderCode, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new OrderStornoRequest() { UserId = GetUserIdFromToken(), OrderCode = orderCode }, cancellationToken);
+			
+			RemoveActualOrderCookieIfNeeded(orderCode);
 
 			return Ok(result);
+		}
+
+		private void AddCookieWithActualOrder(List<OrdersGetResponse> result)
+		{
+			var actual = result.FirstOrDefault(x => x.OrderStatus == CodeLists.OrderStatuses.OrderStatuses.New);
+
+			if (actual is not null)
+			{
+				var cookieOptions = new CookieOptions()
+				{
+					Path = "/",
+					Expires = DateTimeOffset.UtcNow.AddDays(1),
+					IsEssential = true,
+					HttpOnly = false,
+					Secure = false,
+				};
+
+				Response.Cookies.Append(CookieNames.ActualOrder, actual.OrderCode, cookieOptions);
+			}
+		}
+
+		private void AddCookieWithActualOrder(OrdersPutResponse result)
+		{
+			var cookieOptions = new CookieOptions()
+			{
+				Path = "/",
+				Expires = DateTimeOffset.UtcNow.AddDays(1),
+				IsEssential = true,
+				HttpOnly = false,
+				Secure = false,
+			};
+
+			Response.Cookies.Append(CookieNames.ActualOrder, result.OrderCode, cookieOptions);
+		}
+
+		private void RemoveActualOrderCookieIfNeeded(string orderCode)
+		{
+			string? cookieOrderCode;
+			
+			Request.Cookies.TryGetValue(CookieNames.ActualOrder, out cookieOrderCode);
+			
+			if (cookieOrderCode == orderCode)
+			{
+				Response.Cookies.Delete(CookieNames.ActualOrder);
+			}			
 		}
 	}
 }

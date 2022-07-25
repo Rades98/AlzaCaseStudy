@@ -42,10 +42,12 @@
 				try
 				{
 					var status = await _dbContext.OrderStatuses.FirstAsync(x => x.Id == OrderStatuses.New, cancellationToken);
+					var user = await _dbContext.Users.FirstAsync(x => x.Id == request.UserId);
+
 					_dbContext.Orders.Add(new OrderEntity()
 					{
 						OrderCode = code,
-						UserId = request.UserId,
+						User = user,
 						Total = 0,
 						Status = status!
 					});

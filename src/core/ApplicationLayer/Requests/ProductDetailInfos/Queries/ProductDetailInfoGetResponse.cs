@@ -9,6 +9,7 @@
 		public int Id { get; set; }
 		public string DetailedDescription { get; set; } = string.Empty;
 		public string Parameters { get; set; } = string.Empty;
+		public string ProductCode { get; set; } = string.Empty;
 
 		public int Count { get; set; }
 
@@ -19,6 +20,7 @@
 				Id = v.Id,
 				DetailedDescription = v.DetailedDescription,
 				Parameters = v.Parameters,
+				ProductCode = v.ProductDetail.ProductCode
 			};
 		}
 	}
