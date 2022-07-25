@@ -152,7 +152,7 @@
 					Path = "/",
 					Expires = DateTimeOffset.UtcNow.AddDays(1),
 					IsEssential = true,
-					HttpOnly = false,
+					HttpOnly = true,
 					Secure = true,
 				};
 
@@ -167,7 +167,7 @@
 				Path = "/",
 				Expires = DateTimeOffset.UtcNow.AddDays(1),
 				IsEssential = true,
-				HttpOnly = false,
+				HttpOnly = true,
 				Secure = true,
 			};
 
