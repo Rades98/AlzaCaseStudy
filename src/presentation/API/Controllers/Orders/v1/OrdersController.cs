@@ -152,8 +152,7 @@
 					Path = "/",
 					Expires = DateTimeOffset.UtcNow.AddDays(1),
 					IsEssential = true,
-					HttpOnly = false,
-					Secure = false,
+					Secure = true,
 				};
 
 				Response.Cookies.Append(CookieNames.ActualOrder, actual.OrderCode, cookieOptions);
@@ -167,8 +166,7 @@
 				Path = "/",
 				Expires = DateTimeOffset.UtcNow.AddDays(1),
 				IsEssential = true,
-				HttpOnly = false,
-				Secure = false,
+				Secure = true,
 			};
 
 			Response.Cookies.Append(CookieNames.ActualOrder, result.OrderCode, cookieOptions);
