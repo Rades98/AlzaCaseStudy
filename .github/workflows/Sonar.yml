@@ -46,5 +46,5 @@ jobs:
           dotnet clean ./src/presentation/API/API.csproj
           dotnet build ./src/presentation/API/API.csproj  
           dotnet build ./tests/UnitTests/UnitTests.csproj
-          dotnet test  --collect "Code Coverage"
+          dotnet test ./tests/UnitTests/UnitTests.csproj --collect "Code Coverage"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
