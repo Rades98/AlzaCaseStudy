@@ -47,7 +47,7 @@
 						response.OrderStatus = order.Status.Id;
 					}
 
-					order.Items!.ToList().Where(p => p.Product != null && p.Product.ProductDetail != null).ToList().ForEach(p =>
+					order.Items!.AsEnumerable().Where(p => p.Product != null && p.Product.ProductDetail != null).ToList().ForEach(p =>
 					{
 						var detail = p.Product!.ProductDetail!;
 
