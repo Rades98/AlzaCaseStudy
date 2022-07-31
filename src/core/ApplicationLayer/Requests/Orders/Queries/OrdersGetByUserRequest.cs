@@ -24,9 +24,9 @@
 				Expression<Func<OrderEntity, bool>> exp = x => x.UserId == request.UserId;
 
 				var orders = await _dbContext.Orders
-					.Include(i => i.Status)
-					.Include(i => i.Items)
-						.ThenInclude(i => i.Product)
+					.Include(i => i.Status!)
+					.Include(i => i.Items!)
+						.ThenInclude(i => i.Product!)
 							.ThenInclude(i => i.ProductDetail)
 					.AsNoTracking()
 					.Where(exp)
@@ -47,32 +47,27 @@
 						response.OrderStatus = order.Status.Id;
 					}
 
-					order.Items!.ToList().ForEach(p =>
+					order.Items!.ToList().Where(p => p.Product != null && p.Product.ProductDetail != null).ToList().ForEach(p =>
 					{
-						if(p.Product is not null)
+						var detail = p.Product!.ProductDetail!;
+
+						var opt = response.OrderItems.FirstOrDefault(x => x.ProductCode == detail.ProductCode);
+
+						if (opt is not null)
 						{
-							var detail = p.Product.ProductDetail;
-
-							if(detail is not null)
-							{
-								var opt = response.OrderItems.FirstOrDefault(x => x.ProductCode == detail.ProductCode);
-
-								if (opt is not null)
-								{
-									opt.Count++;
-								}
-								else
-								{
-									response.OrderItems.Add(new Dtos.OrderItemDto
-									{
-										Name = detail.Name,
-										Price = detail.Price,
-										ProductCode = detail.ProductCode,
-										Count = 1
-									});
-								}
-							}
+							opt.Count++;
 						}
+						else
+						{
+							response.OrderItems.Add(new Dtos.OrderItemDto
+							{
+								Name = detail.Name,
+								Price = detail.Price,
+								ProductCode = detail.ProductCode,
+								Count = 1
+							});
+						}
+						
 					});
 
 					result.Add(response);

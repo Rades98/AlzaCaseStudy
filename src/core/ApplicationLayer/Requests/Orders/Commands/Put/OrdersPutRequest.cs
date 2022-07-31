@@ -50,7 +50,7 @@
 						UserId = user.Id,
 						Total = 0,
 						OrderStatusId = status.Id
-					}); ;
+					});
 
 					await _dbContext.SaveChangesAsync(cancellationToken);
 
