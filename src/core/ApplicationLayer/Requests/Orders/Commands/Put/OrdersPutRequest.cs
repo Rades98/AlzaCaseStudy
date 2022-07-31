@@ -1,8 +1,8 @@
 ﻿namespace ApplicationLayer.Requests.Orders.Commands.Put
 {
-	using Exceptions;
 	using CodeLists.OrderStatuses;
 	using DomainLayer.Entities.Orders;
+	using Exceptions;
 	using Interfaces;
 	using MediatR;
 	using Microsoft.EntityFrameworkCore;
@@ -25,16 +25,16 @@
 					x.OrderStatusId == OrderStatuses.Created))
 					.ToListAsync(cancellationToken);
 
-				if (actual.Count > 0)
+				if (actual is not null && actual.Count > 0)
 				{
 					throw new MediatorException(ExceptionType.Error, $"There aleready is unfinished order: {actual.First().OrderCode}");
 				}
 
-				var lastOrderCode = (await _dbContext.Orders.OrderBy(x => x.OrderCode).LastOrDefaultAsync(cancellationToken))?.OrderCode;
+				string lastOrderCode = (await _dbContext.Orders.OrderBy(x => x.OrderCode).LastOrDefaultAsync(cancellationToken))?.OrderCode ?? string.Empty;
 
 				string code = "AAAAA00000";
 
-				if (lastOrderCode is not null)
+				if (!string.IsNullOrEmpty(lastOrderCode))
 				{
 					code = OrderUtils.GetOrderCode(lastOrderCode);
 				}
@@ -47,14 +47,14 @@
 					_dbContext.Orders.Add(new OrderEntity()
 					{
 						OrderCode = code,
-						User = user,
+						UserId = user.Id,
 						Total = 0,
-						Status = status!
-					});
+						OrderStatusId = status.Id
+					}); ;
 
 					await _dbContext.SaveChangesAsync(cancellationToken);
 
-					var id = await _dbContext.Orders.Where(x => x.UserId == request.UserId &&
+					int id = await _dbContext.Orders.Where(x => x.UserId == request.UserId &&
 					(x.OrderStatusId == OrderStatuses.New ||
 					x.OrderStatusId == OrderStatuses.Created))
 					.Select(x => x.Id)

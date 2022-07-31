@@ -4,6 +4,6 @@
 	{
 		public string Name { get; set; } = string.Empty;
 		public int OrderStatusId { get; set; }
-		public OrderStatusEntity OrderStatus { get; set; } = new();
+		public virtual OrderStatusEntity? OrderStatus { get; set; }
 	}
 }

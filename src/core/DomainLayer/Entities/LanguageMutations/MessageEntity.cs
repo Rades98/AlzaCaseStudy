@@ -5,6 +5,6 @@
 		public string MessageCode { get; set; } = string.Empty;
 		public string Message { get; set; } = string.Empty;
 		public int MessageTypeId { get; set; }
-		public MessageTypeEntity MessageTypeEntity { get; set; } = new();
+		public virtual MessageTypeEntity MessageTypeEntity { get; set; } = new();
 	}
 }

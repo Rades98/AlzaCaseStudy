@@ -26,6 +26,9 @@
                 .HasMaxLength(5000)
                 .IsRequired();
 
+            builder.HasOne(p => p.ProductDetail)
+                .WithOne(p => p.ProductDetailInfo)
+                .HasForeignKey<ProductDetailEntity>(c => c.Id);
         }
     }
 }

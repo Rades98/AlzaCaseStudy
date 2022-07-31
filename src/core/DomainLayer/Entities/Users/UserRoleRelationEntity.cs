@@ -3,8 +3,8 @@
     public class UserRoleRelationEntity : AuditableEntity
     {
         public int UserId { get; set; }
-        public UserEntity User { get; set; } = new();
+        public virtual UserEntity? User { get; set; }
         public int RoleId { get; set; }
-        public UserRoleEntity Role { get; set; } = new();
+        public virtual UserRoleEntity? Role { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace ApplicationLayer.Exceptions
             Type = type;
         }
 
-        public MediatorException(ExceptionType type, string message, Exception inner)
+        public MediatorException(ExceptionType type, string message, Exception? inner)
             : base(message, inner)
         {
             Type = type;

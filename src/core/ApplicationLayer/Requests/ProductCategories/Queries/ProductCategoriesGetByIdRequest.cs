@@ -24,7 +24,7 @@
 					.AsNoTracking()
 					.ToListAsync(cancellationToken);
 
-				if (!productCategories.Any())
+				if (productCategories is null || !productCategories.Any() || productCategories.FirstOrDefault(x => x.Id == request.Id) is null)
 				{
 					throw new MediatorException(ExceptionType.NotFound, "Product category not found");
 				}

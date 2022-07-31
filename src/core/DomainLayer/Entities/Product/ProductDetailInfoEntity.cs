@@ -5,9 +5,9 @@
     public class ProductDetailInfoEntity : AuditableEntity
     {
         public int ProductDetailId { get; set; }
-        public ProductDetailEntity ProductDetail { get; set; } = new();
+        public virtual ProductDetailEntity? ProductDetail { get; set; }
         public string DetailedDescription { get; set; } = string.Empty;
         public string Parameters { get; set; } = string.Empty;
-        public List<ProductDetailInfoLocalizedEntity> Localizations { get; set; } = new();
+        public virtual List<ProductDetailInfoLocalizedEntity>? Localizations { get; set; }
     }
 }

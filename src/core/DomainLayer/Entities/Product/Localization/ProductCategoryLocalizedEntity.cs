@@ -6,6 +6,6 @@
 		public string Description { get; set; } = string.Empty;
 
 		public int ProductCategoryId { get; set; }
-		public ProductCategoryEntity ProductCategory { get; set; } = new();
+		public virtual ProductCategoryEntity? ProductCategory { get; set; }
 	}
 }

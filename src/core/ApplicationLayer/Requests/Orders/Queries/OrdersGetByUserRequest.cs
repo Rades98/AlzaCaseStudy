@@ -35,32 +35,43 @@
 
 				foreach (var order in orders)
 				{
+
 					var response = new OrdersGetResponse
 					{
 						OrderCode = order.OrderCode,
-						OrderStatus = order.Status.Id,
 						Total = order.Total,
 					};
 
+					if (order.Status is not null)
+					{
+						response.OrderStatus = order.Status.Id;
+					}
+
 					order.Items!.ToList().ForEach(p =>
 					{
-						var detail = p.Product.ProductDetail;
-
-						var opt = response.OrderItems.FirstOrDefault(x => x.ProductCode == detail.ProductCode);
-
-						if (opt is not null)
+						if(p.Product is not null)
 						{
-							opt.Count++;
-						}
-						else
-						{
-							response.OrderItems.Add(new Dtos.OrderItemDto
+							var detail = p.Product.ProductDetail;
+
+							if(detail is not null)
 							{
-								Name = detail.Name,
-								Price = detail.Price,
-								ProductCode = detail.ProductCode,
-								Count = 1
-							});
+								var opt = response.OrderItems.FirstOrDefault(x => x.ProductCode == detail.ProductCode);
+
+								if (opt is not null)
+								{
+									opt.Count++;
+								}
+								else
+								{
+									response.OrderItems.Add(new Dtos.OrderItemDto
+									{
+										Name = detail.Name,
+										Price = detail.Price,
+										ProductCode = detail.ProductCode,
+										Count = 1
+									});
+								}
+							}
 						}
 					});
 

@@ -21,19 +21,23 @@
 			public async Task<OrderStornoResponse> Handle(OrderStornoRequest request, CancellationToken cancellationToken)
 			{
 				var order = await _context.Orders
-					.Include(i => i.Status)
-					.Include(i => i.Items)
+					.Include(i => i.Status!)
+					.Include(i => i.Items!)
 						.ThenInclude(i => i.Product)
-							.ThenInclude(i => i.ProductDetail)
+							.ThenInclude(i => i!.ProductDetail)
 					.AsNoTracking()
 					.FirstOrDefaultAsync(x =>
-					x.UserId == request.UserId &&
 					x.OrderCode == request.OrderCode
 				, cancellationToken);
 
 				if (order is null)
 				{
 					throw new MediatorException(ExceptionType.NotFound, "Order not found");
+				}
+
+				if(order.UserId != request.UserId)
+				{
+					throw new MediatorException(ExceptionType.Unauthorized, "This user can not change shit order");
 				}
 
 				if (order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Canceled ||
@@ -50,7 +54,6 @@
 					order.Status = await _context.OrderStatuses
 						.AsNoTracking()
 						.FirstAsync(x => x.Id == CodeLists.OrderStatuses.OrderStatuses.Canceled, cancellationToken);
-					order.OrderStatusId = CodeLists.OrderStatuses.OrderStatuses.Canceled;
 
 					if (order.Items is not null)
 					{
