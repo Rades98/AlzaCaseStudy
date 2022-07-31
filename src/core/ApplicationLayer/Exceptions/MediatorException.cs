@@ -2,8 +2,13 @@
 
 namespace ApplicationLayer.Exceptions
 {
-    public class MediatorException : Exception, ISerializable
+    public class MediatorException : Exception
     {
+        protected MediatorException()
+		{
+
+		}
+
         public ExceptionType Type { get; set; }
 
         public MediatorException(ExceptionType type, string message)

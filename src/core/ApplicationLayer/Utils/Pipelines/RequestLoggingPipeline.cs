@@ -26,11 +26,11 @@
 
             if (duration > 2000)
             {
-                _logger.LogWarning($"Request {request.GetType().Name} is slow ({duration} ms) : {request}");
+                _logger.LogWarning("Request {Name} is slow ({duration} ms) : {request}", request.GetType().Name, duration, request);
             }
             else
             {
-                _logger.LogInformation($"Request {request.GetType().Name} ({duration} ms) : {request}");
+                _logger.LogInformation("Request {Name} ({duration} ms) : {request}", request.GetType().Name, duration, request);
             }
 
             return reqResponse;

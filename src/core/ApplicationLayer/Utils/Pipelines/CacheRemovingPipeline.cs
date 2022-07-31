@@ -20,7 +20,7 @@
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             _cache.Remove(request.CacheKey);
-            _logger.LogInformation($"Removed from Cache : '{request.CacheKey}'.");
+            _logger.LogInformation("Removed from Cache : '{cacheKey}'.", request.CacheKey);
             return await next();
         }
     }

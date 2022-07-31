@@ -34,13 +34,13 @@
 
             if (failures.Count != 0)
             {
-                failures.ForEach(f => _logger.LogError(f.ErrorMessage));
+                failures.ForEach(f => _logger.LogError("{Severity} : {ErrorMessage}", f.Severity, f.ErrorMessage));
                 throw new ValidationException(failures);
             }
 
             if (warnings.Count != 0)
             {
-                warnings.ForEach(f => _logger.LogWarning(f.ErrorMessage));
+                warnings.ForEach(f => _logger.LogWarning("{Severity} : {ErrorMessage}", f.Severity, f.ErrorMessage));
             }
 
             return next();

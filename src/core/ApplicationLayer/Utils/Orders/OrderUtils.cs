@@ -46,7 +46,7 @@
                     if (charPart[0] == 'Z')
                     {
                         charPart[0] = 'A';
-                        throw new IndexOutOfRangeException("No more order codes can be created");
+                        throw new ArgumentException("No more order codes can be created");
                     }
                     else
                     {

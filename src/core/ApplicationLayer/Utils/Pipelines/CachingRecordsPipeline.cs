@@ -24,7 +24,7 @@
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var cachedResponse = _cache.Get(request.CacheKey);
+            object cachedResponse = _cache.Get(request.CacheKey);
 
             if (cachedResponse != null)
             {
@@ -35,7 +35,7 @@
 
                     if (result is not null)
                     {
-                        _logger.LogInformation($"Fetched from Cache : '{request.CacheKey}'.");
+                        _logger.LogInformation("Fetched from Cache : '{cacheKey}'.", request.CacheKey);
                         return result;
                     }
                 }

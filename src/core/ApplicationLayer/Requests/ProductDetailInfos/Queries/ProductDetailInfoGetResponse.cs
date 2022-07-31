@@ -20,7 +20,7 @@
 				Id = v.Id,
 				DetailedDescription = v.DetailedDescription,
 				Parameters = v.Parameters,
-				ProductCode = v.ProductDetail.ProductCode
+				ProductCode = v.ProductDetail!.ProductCode
 			};
 		}
 	}

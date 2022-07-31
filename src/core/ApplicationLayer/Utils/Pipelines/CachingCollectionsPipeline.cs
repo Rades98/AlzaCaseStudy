@@ -22,23 +22,23 @@
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var cachedResponse = _cache.Get(request.CacheKey);
+            object cachedResponse = _cache.Get(request.CacheKey);
 
             if (cachedResponse != null)
             {
-                TResponse? res = JsonConvert.DeserializeObject<TResponse>(Encoding.Default.GetString((byte[])cachedResponse));
+                var res = JsonConvert.DeserializeObject<TResponse>(Encoding.Default.GetString((byte[])cachedResponse));
                 if (res is not null)
                 {
-                    _logger.LogInformation($"Fetched from Cache : '{request.CacheKey}'.");
+                    _logger.LogInformation("Fetched from Cache : '{cacheKey}'.", request.CacheKey);
                     return res;
                 }
             }
 
-            TResponse response = await next();
+            var response = await next();
 
-            var serializedData = Encoding.Default.GetBytes(JsonConvert.SerializeObject(response));
+            object serializedData = Encoding.Default.GetBytes(JsonConvert.SerializeObject(response));
             _cache.Set(request.CacheKey, serializedData, CacheEntryOptions.Default);
-            _logger.LogInformation($"Added to Cache : '{request.CacheKey}'.");
+            _logger.LogInformation("Added to Cache : '{cacheKey}'.", request.CacheKey);
 
             return response;
         }
