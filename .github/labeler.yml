@@ -1,7 +1,7 @@
 DB Changes:
   - any: ['dbScripts/DbScipts/*']
 BE:
-  - any: []
+  - any: ['*']
 Tests:
-  - any ['tests']
+  - any ['tests/*']
 
