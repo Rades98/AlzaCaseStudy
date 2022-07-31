@@ -12,6 +12,6 @@ namespace DomainLayer.Entities.Users
         public string Email { get; set; } = string.Empty;
         public IEnumerable<UserRoleEntity>? Roles { get; set; }
         public IEnumerable<UserRoleRelationEntity>? RoleRelations { get; set; }
-        public IEnumerable<OrderEntity> Orders { get; set; }
+        public IEnumerable<OrderEntity>? Orders { get; set; }
     }
 }

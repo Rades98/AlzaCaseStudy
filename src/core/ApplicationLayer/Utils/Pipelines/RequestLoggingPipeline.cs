@@ -22,7 +22,7 @@
             var reqResponse = await next();
             _stopwatch.Stop();
 
-            var duration = _stopwatch.ElapsedMilliseconds;
+            long duration = _stopwatch.ElapsedMilliseconds;
 
             if (duration > 2000)
             {

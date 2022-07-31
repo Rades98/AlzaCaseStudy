@@ -8,8 +8,8 @@ namespace DomainLayer.Entities.Orders
         public decimal Total { get; set; } = decimal.Zero;
         public int UserId { get; set; }
         public int OrderStatusId { get; set; }
-        public List<OrderItemEntity> Items { get; set; } = new();
-        public OrderStatusEntity Status { get; set; } = new();
-        public UserEntity User { get; set; } = new();
+        public List<OrderItemEntity>? Items { get; set; }
+        public OrderStatusEntity? Status { get; set; }
+        public UserEntity? User { get; set; }
     }
 }

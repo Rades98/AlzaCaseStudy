@@ -17,22 +17,23 @@
 				
 				if (contextAccessor is null)
 				{
-					throw new InvalidOperationException("cannot load UrlHelper");
+					throw new InvalidOperationException("cannot load IHttpContextAccessor");
 				}
 
 				return contextAccessor;
 			});
 			services.TryAddScoped<IActionContextAccessor, ActionContextAccessor>();
-			services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+			services.TryAddSingleton<IUrlHelperFactory, UrlHelperFactory>();
 
 			services.AddScoped(sp =>
 			{
-				var actionContext = sp.GetRequiredService<IActionContextAccessor>().ActionContext;
+				var acc = sp.GetRequiredService<IActionContextAccessor>();
+				var actionContext = acc.ActionContext;
 				var urlHelperFactory = sp.GetRequiredService<IUrlHelperFactory>();
 
 				if(actionContext is null)
 				{
-					throw new InvalidOperationException("cannot load UrlHelper");
+					throw new InvalidOperationException("cannot load ActionContext");
 				}
 
 				if (urlHelperFactory is null)

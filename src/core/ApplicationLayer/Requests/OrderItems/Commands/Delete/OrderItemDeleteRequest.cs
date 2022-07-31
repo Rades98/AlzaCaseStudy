@@ -23,19 +23,24 @@
 			{
 				var orderItem = await _context.OrderItems
 					.Include(i => i.Order)
-						.ThenInclude(i => i.Status)
+						.ThenInclude(i => i!.Status)
 					.Include(i => i.Product)
-						.ThenInclude(i => i.ProductDetail)
+						.ThenInclude(i => i!.ProductDetail)
 					.AsNoTracking()
 					.FirstOrDefaultAsync(x =>
+					x.Product != null && x.Product.ProductDetail != null && x.Order != null &&
 					x.Product.ProductDetail.ProductCode == request.ProductCode &&
-					x.Order.OrderCode == request.OrderCode &&
-					x.Order.UserId == request.UserId
+					x.Order.OrderCode == request.OrderCode
 					, cancellationToken);
 
 				if (orderItem is null)
 				{
 					throw new MediatorException(ExceptionType.NotFound, "Order item not found");
+				}
+
+				if (orderItem.Order is not null && orderItem.Order.UserId != request.UserId)
+				{
+					throw new MediatorException(ExceptionType.Unauthorized, "Order item cannot be deleted by this user");
 				}
 
 				using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
@@ -45,13 +50,20 @@
 					_context.OrderItems.Remove(orderItem);
 
 					var order = orderItem.Order;
-					order.Total -= orderItem.Product.ProductDetail.Price;
 
-					_context.Orders.Update(order);
+					if(order is not null)
+					{
+						if(orderItem.Product is not null && orderItem.Product.ProductDetail is not null)
+						{
+							order.Total -= orderItem.Product.ProductDetail.Price;
+						}
 
-					await _context.SaveChangesAsync(cancellationToken);
+						_context.Orders.Update(order);
 
-					await transaction.CommitAsync(cancellationToken);
+						await _context.SaveChangesAsync(cancellationToken);
+
+						await transaction.CommitAsync(cancellationToken);
+					}
 
 					return new OrderItemDeleteResponse() { Message = "Deleted" };
 				}

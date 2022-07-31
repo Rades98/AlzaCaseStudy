@@ -31,7 +31,19 @@
 					throw new MediatorException(ExceptionType.Unauthorized, "Wrong user");
 				}
 
-				actual.OrderStatusId = request.StatusId;
+				var status = await _dbContext.OrderStatuses.FirstOrDefaultAsync(x => x.Id == request.StatusId, cancellationToken);
+
+				if(status is null)
+				{
+					throw new MediatorException(ExceptionType.NotFound, "Status not found");
+				}
+
+				if (status.Id - 1 != actual.OrderStatusId )
+				{
+					throw new MediatorException(ExceptionType.NotModified, "Status cant be replaced by provided value");
+				}
+
+				actual.Status = status;
 
 				try
 				{

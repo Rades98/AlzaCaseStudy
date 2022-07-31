@@ -42,7 +42,7 @@
 					order.OrderStatusId != OrderStatuses.New &&
 					order.OrderStatusId != OrderStatuses.Created)
 				{
-					throw new MediatorException(ExceptionType.Error, "Order is not editable");
+					throw new MediatorException(ExceptionType.NotModified, "Order is not editable");
 				}
 
 
@@ -52,16 +52,16 @@
 					var usedProductsIds = await _dbContext
 						.OrderItems
 						.Include(x => x.Product)
-							.ThenInclude(x => x.ProductDetail)
-						.Where(w => w.Product.ProductDetail.ProductCode == request.ProductCode)
+							.ThenInclude(x => x!.ProductDetail)
+						.Where(w => w.Product != null && w.Product.ProductDetail != null && w.Product.ProductDetail.ProductCode == request.ProductCode)
 						.Select(x => x.ProductId)
 						.ToListAsync(cancellationToken);
 
 					var unusedProduct = await _dbContext.Products
 						.Include(i => i.ProductDetail)
-							.ThenInclude(i => i.ProductCategory)
+							.ThenInclude(i => i!.ProductCategory)
 						.AsNoTracking()
-						.FirstOrDefaultAsync(x => !usedProductsIds.Contains(x.Id) && x.ProductDetail.ProductCode == request.ProductCode, cancellationToken);
+						.FirstOrDefaultAsync(x => !usedProductsIds.Contains(x.Id) && x.ProductDetail!.ProductCode == request.ProductCode, cancellationToken);
 
 					if (unusedProduct is null)
 					{
@@ -74,7 +74,10 @@
 						Product = unusedProduct
 					});
 
-					order.Total += unusedProduct.ProductDetail.Price;
+					if(unusedProduct.ProductDetail is not null)
+					{
+						order.Total += unusedProduct.ProductDetail.Price;
+					}
 
 					_dbContext.Orders.Update(order);
 
@@ -86,6 +89,11 @@
 				}
 				catch (Exception e)
 				{
+					if (e is MediatorException)
+					{
+						throw;
+					}
+
 					transaction.Rollback();
 					throw new MediatorException(ExceptionType.Error, "Product addition to order failed", e);
 				}

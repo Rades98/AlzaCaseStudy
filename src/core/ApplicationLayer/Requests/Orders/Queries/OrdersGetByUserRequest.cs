@@ -24,9 +24,9 @@
 				Expression<Func<OrderEntity, bool>> exp = x => x.UserId == request.UserId;
 
 				var orders = await _dbContext.Orders
-					.Include(i => i.Status)
-					.Include(i => i.Items)
-						.ThenInclude(i => i.Product)
+					.Include(i => i.Status!)
+					.Include(i => i.Items!)
+						.ThenInclude(i => i.Product!)
 							.ThenInclude(i => i.ProductDetail)
 					.AsNoTracking()
 					.Where(exp)
@@ -35,16 +35,21 @@
 
 				foreach (var order in orders)
 				{
+
 					var response = new OrdersGetResponse
 					{
 						OrderCode = order.OrderCode,
-						OrderStatus = order.Status.Id,
 						Total = order.Total,
 					};
 
-					order.Items!.ToList().ForEach(p =>
+					if (order.Status is not null)
 					{
-						var detail = p.Product.ProductDetail;
+						response.OrderStatus = order.Status.Id;
+					}
+
+					order.Items!.AsEnumerable().Where(p => p.Product != null && p.Product.ProductDetail != null).ToList().ForEach(p =>
+					{
+						var detail = p.Product!.ProductDetail!;
 
 						var opt = response.OrderItems.FirstOrDefault(x => x.ProductCode == detail.ProductCode);
 
@@ -62,6 +67,7 @@
 								Count = 1
 							});
 						}
+						
 					});
 
 					result.Add(response);
