@@ -1,5 +1,7 @@
 DB Changes:
   - any: ['dbScripts/DbScipts/*']
+  - any: ['src/infrastructure/PersistanceLayer/*']
+  - any: ['src/infrastructure/PersistanceLayerDapper/*']
 BE:
   - any: ['*']
 Tests:
