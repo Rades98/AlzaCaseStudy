@@ -17,7 +17,7 @@ namespace PersistenceLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -540,8 +540,6 @@ namespace PersistenceLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
 
@@ -620,9 +618,6 @@ namespace PersistenceLayer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductDetailId")
-                        .IsUnique();
 
                     b.ToTable("ProductDetailInfos", (string)null);
                 });
@@ -752,6 +747,9 @@ namespace PersistenceLayer.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -767,6 +765,9 @@ namespace PersistenceLayer.Migrations
                         .HasMaxLength(128)
                         .HasColumnType("varbinary(128)");
 
+                    b.Property<int>("RegistrationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -779,6 +780,9 @@ namespace PersistenceLayer.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RegistrationId")
+                        .IsUnique();
+
                     b.ToTable("Users", (string)null);
 
                     b.HasData(
@@ -787,11 +791,52 @@ namespace PersistenceLayer.Migrations
                             Id = 1,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Email = "some@email.com",
+                            IsActive = true,
                             Name = "Admin",
-                            PasswordHash = new byte[] { 167, 79, 24, 120, 211, 60, 241, 108, 239, 251, 200, 174, 19, 98, 97, 27, 18, 117, 161, 149, 5, 107, 148, 111, 222, 172, 216, 245, 160, 94, 254, 100, 47, 224, 225, 11, 10, 160, 11, 50, 247, 39, 255, 222, 203, 164, 67, 200, 19, 135, 18, 212, 206, 144, 234, 156, 124, 157, 15, 238, 84, 54, 189, 180 },
-                            PasswordSalt = new byte[] { 16, 136, 234, 228, 134, 172, 23, 250, 136, 65, 106, 186, 132, 47, 225, 29, 48, 215, 176, 71, 45, 71, 248, 99, 195, 82, 68, 157, 160, 117, 200, 51, 221, 169, 231, 35, 123, 124, 90, 241, 141, 12, 153, 173, 160, 51, 242, 249, 31, 133, 98, 151, 82, 195, 93, 75, 160, 85, 202, 20, 205, 202, 130, 178, 232, 139, 190, 152, 96, 6, 53, 145, 85, 112, 11, 191, 47, 217, 49, 37, 9, 185, 1, 244, 144, 60, 207, 230, 72, 35, 128, 140, 154, 50, 34, 130, 234, 211, 174, 97, 246, 248, 149, 77, 235, 91, 187, 149, 250, 136, 134, 79, 197, 12, 194, 96, 26, 129, 80, 195, 98, 105, 15, 235, 143, 50, 51, 3 },
+                            PasswordHash = new byte[] { 210, 168, 188, 13, 195, 102, 139, 235, 41, 169, 112, 139, 59, 202, 185, 57, 65, 135, 39, 46, 8, 56, 18, 221, 193, 93, 4, 22, 114, 224, 147, 118, 170, 58, 160, 70, 251, 110, 169, 187, 69, 237, 115, 246, 220, 185, 149, 80, 101, 81, 28, 52, 82, 30, 100, 43, 101, 41, 49, 39, 61, 114, 8, 166 },
+                            PasswordSalt = new byte[] { 146, 110, 164, 107, 166, 145, 162, 131, 86, 251, 117, 147, 239, 38, 131, 141, 197, 210, 232, 106, 46, 197, 235, 77, 125, 129, 209, 51, 106, 83, 235, 119, 3, 174, 223, 248, 13, 105, 31, 28, 162, 7, 170, 94, 43, 209, 4, 162, 69, 136, 148, 98, 39, 149, 176, 125, 131, 107, 69, 194, 45, 171, 104, 113, 45, 20, 216, 198, 169, 30, 58, 167, 150, 213, 97, 16, 229, 143, 236, 133, 96, 229, 101, 144, 129, 59, 56, 92, 148, 46, 180, 101, 40, 77, 117, 70, 165, 125, 93, 44, 101, 45, 18, 34, 176, 74, 87, 143, 244, 208, 50, 251, 152, 10, 118, 18, 60, 242, 31, 124, 95, 195, 184, 149, 27, 156, 58, 233 },
+                            RegistrationId = 1,
                             Surname = "Admin",
                             UserName = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Users.UserRegistrationEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("LinkActiveTill")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRegistrations", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "some hash haha ha ha ha haaaaaaaaaa",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            LinkActiveTill = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local)
                         });
                 });
 
@@ -1003,6 +1048,12 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailEntity", b =>
                 {
+                    b.HasOne("DomainLayer.Entities.Product.ProductDetailInfoEntity", "ProductDetailInfo")
+                        .WithOne("ProductDetail")
+                        .HasForeignKey("DomainLayer.Entities.Product.ProductDetailEntity", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DomainLayer.Entities.Product.ProductCategoryEntity", "ProductCategory")
                         .WithMany("ProductDetails")
                         .HasForeignKey("ProductCategoryId")
@@ -1010,17 +1061,8 @@ namespace PersistenceLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
-                });
 
-            modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
-                {
-                    b.HasOne("DomainLayer.Entities.Product.ProductDetailEntity", "ProductDetail")
-                        .WithOne("ProductDetailInfo")
-                        .HasForeignKey("DomainLayer.Entities.Product.ProductDetailInfoEntity", "ProductDetailId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductDetail");
+                    b.Navigation("ProductDetailInfo");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductEntity", b =>
@@ -1032,6 +1074,17 @@ namespace PersistenceLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductDetail");
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Users.UserEntity", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Users.UserRegistrationEntity", "Registration")
+                        .WithOne("User")
+                        .HasForeignKey("DomainLayer.Entities.Users.UserEntity", "RegistrationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Registration");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Users.UserRoleRelationEntity", b =>
@@ -1083,14 +1136,14 @@ namespace PersistenceLayer.Migrations
                 {
                     b.Navigation("Localizations");
 
-                    b.Navigation("ProductDetailInfo");
-
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
                 {
                     b.Navigation("Localizations");
+
+                    b.Navigation("ProductDetail");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Users.UserEntity", b =>
@@ -1098,6 +1151,11 @@ namespace PersistenceLayer.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("RoleRelations");
+                });
+
+            modelBuilder.Entity("DomainLayer.Entities.Users.UserRegistrationEntity", b =>
+                {
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Users.UserRoleEntity", b =>

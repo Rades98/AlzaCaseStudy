@@ -37,8 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\others\ApplicationSetting\ApplicationSetting.csproj" />
     <ProjectReference Include="..\..\..\others\CodeLists\CodeLists.csproj" />
     <ProjectReference Include="..\..\..\others\Extensions\Extensions.csproj" />
+    <ProjectReference Include="..\..\..\others\MailSender\MailSender.csproj" />
     <ProjectReference Include="..\..\..\others\RadesSoft.HateoasMaker\RadesSoft.HateoasMaker.csproj" />
     <ProjectReference Include="..\..\infrastructure\PersistanceLayerDapper\PersistanceLayerDapper.csproj" />
     <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />

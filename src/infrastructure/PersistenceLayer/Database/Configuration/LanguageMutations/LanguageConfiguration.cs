@@ -1,6 +1,6 @@
 ﻿namespace PersistenceLayer.Database.Configuration.LanguageMutations
 {
-	using DomainLayer.Entities.Texts;
+	using DomainLayer.Entities.LanguageMutations;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,4 +1,4 @@
-﻿namespace DomainLayer.Entities.Texts
+﻿namespace DomainLayer.Entities.LanguageMutations
 {
 	public class LanguageEntity : AuditableEntity
 	{

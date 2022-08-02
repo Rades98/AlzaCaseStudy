@@ -34,6 +34,9 @@
                 .HasMaxLength(20)
                 .IsRequired();
 
+            builder.Property(user => user.IsActive)
+               .IsRequired();
+
             builder.Property(user => user.PasswordHash)
                 .HasColumnType("varbinary")
                 .HasMaxLength(64)
@@ -60,6 +63,9 @@
                     j.Property(pt => pt.Created).HasDefaultValueSql("CURRENT_TIMESTAMP");
                     j.HasKey(t => new { t.RoleId, t.UserId });
                 });
+
+            builder.HasOne(user => user.Registration)
+                .WithOne(userReg => userReg.User);
         }
     }
 }

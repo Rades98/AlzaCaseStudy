@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PersistenceLayer.Migrations
 {
-    public partial class InitV2 : Migration
+    public partial class Init_v3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -83,6 +83,41 @@ namespace PersistenceLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductDetailInfos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductDetailId = table.Column<int>(type: "int", nullable: false),
+                    DetailedDescription = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    Parameters = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductDetailInfos", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRegistrations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LinkActiveTill = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRegistrations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserRoles",
                 columns: table => new
                 {
@@ -96,27 +131,6 @@ namespace PersistenceLayer.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PasswordHash = table.Column<byte[]>(type: "varbinary(64)", maxLength: 64, nullable: false),
-                    PasswordSalt = table.Column<byte[]>(type: "varbinary(128)", maxLength: 128, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -212,11 +226,41 @@ namespace PersistenceLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductDetails",
+                name: "ProductDetailInfosLocalized",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    DetailedDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Parameters = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductDetailInfoId = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    LanguageId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductDetailInfosLocalized", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductDetailInfosLocalized_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductDetailInfosLocalized_ProductDetailInfos_ProductDetailInfoId",
+                        column: x => x.ProductDetailInfoId,
+                        principalTable: "ProductDetailInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
                     ImgUri = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(12,2)", precision: 12, scale: 2, nullable: false),
@@ -237,87 +281,39 @@ namespace PersistenceLayer.Migrations
                         principalTable: "ProductCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductDetails_ProductDetailInfos_Id",
+                        column: x => x.Id,
+                        principalTable: "ProductDetailInfos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(64)", maxLength: 64, nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(128)", maxLength: 128, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    RegistrationId = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_OrderStatuses_OrderStatusId",
-                        column: x => x.OrderStatusId,
-                        principalTable: "OrderStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRoleRelation",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRoleRelation", x => new { x.RoleId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_UserRoleRelation_UserRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "UserRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserRoleRelation_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductDetailInfos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductDetailId = table.Column<int>(type: "int", nullable: false),
-                    DetailedDescription = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    Parameters = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductDetailInfos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductDetailInfos_ProductDetails_ProductDetailId",
-                        column: x => x.ProductDetailId,
-                        principalTable: "ProductDetails",
+                        name: "FK_Users_UserRegistrations_RegistrationId",
+                        column: x => x.RegistrationId,
+                        principalTable: "UserRegistrations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -377,32 +373,60 @@ namespace PersistenceLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductDetailInfosLocalized",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DetailedDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Parameters = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductDetailInfoId = table.Column<int>(type: "int", nullable: false),
+                    OrderCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    OrderStatusId = table.Column<int>(type: "int", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    LanguageId = table.Column<int>(type: "int", nullable: false)
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductDetailInfosLocalized", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductDetailInfosLocalized_Languages_LanguageId",
-                        column: x => x.LanguageId,
-                        principalTable: "Languages",
+                        name: "FK_Orders_OrderStatuses_OrderStatusId",
+                        column: x => x.OrderStatusId,
+                        principalTable: "OrderStatuses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductDetailInfosLocalized_ProductDetailInfos_ProductDetailInfoId",
-                        column: x => x.ProductDetailInfoId,
-                        principalTable: "ProductDetailInfos",
+                        name: "FK_Orders_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRoleRelation",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Changed = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Deleted = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoleRelation", x => new { x.RoleId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_UserRoleRelation_UserRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "UserRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoleRelation_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -478,14 +502,14 @@ namespace PersistenceLayer.Migrations
                 values: new object[] { 1, null, new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local), null, "", "Eshop", null });
 
             migrationBuilder.InsertData(
+                table: "UserRegistrations",
+                columns: new[] { "Id", "Changed", "Code", "Created", "Deleted", "LinkActiveTill" },
+                values: new object[] { 1, null, "some hash haha ha ha ha haaaaaaaaaa", new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local), null, new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local) });
+
+            migrationBuilder.InsertData(
                 table: "UserRoles",
                 columns: new[] { "Id", "Changed", "Created", "Deleted", "Name" },
                 values: new object[] { 1, null, new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local), null, "Admin" });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Changed", "Created", "Deleted", "Email", "Name", "PasswordHash", "PasswordSalt", "Surname", "UserName" },
-                values: new object[] { 1, null, new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local), null, "some@email.com", "Admin", new byte[] { 167, 79, 24, 120, 211, 60, 241, 108, 239, 251, 200, 174, 19, 98, 97, 27, 18, 117, 161, 149, 5, 107, 148, 111, 222, 172, 216, 245, 160, 94, 254, 100, 47, 224, 225, 11, 10, 160, 11, 50, 247, 39, 255, 222, 203, 164, 67, 200, 19, 135, 18, 212, 206, 144, 234, 156, 124, 157, 15, 238, 84, 54, 189, 180 }, new byte[] { 16, 136, 234, 228, 134, 172, 23, 250, 136, 65, 106, 186, 132, 47, 225, 29, 48, 215, 176, 71, 45, 71, 248, 99, 195, 82, 68, 157, 160, 117, 200, 51, 221, 169, 231, 35, 123, 124, 90, 241, 141, 12, 153, 173, 160, 51, 242, 249, 31, 133, 98, 151, 82, 195, 93, 75, 160, 85, 202, 20, 205, 202, 130, 178, 232, 139, 190, 152, 96, 6, 53, 145, 85, 112, 11, 191, 47, 217, 49, 37, 9, 185, 1, 244, 144, 60, 207, 230, 72, 35, 128, 140, 154, 50, 34, 130, 234, 211, 174, 97, 246, 248, 149, 77, 235, 91, 187, 149, 250, 136, 134, 79, 197, 12, 194, 96, 26, 129, 80, 195, 98, 105, 15, 235, 143, 50, 51, 3 }, "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "ProductCategories",
@@ -496,6 +520,11 @@ namespace PersistenceLayer.Migrations
                 table: "ProductCategories",
                 columns: new[] { "Id", "Changed", "Created", "Deleted", "Description", "Name", "ParentProductCategoryId" },
                 values: new object[] { 3, null, new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local), null, "", "PC and accessories", 1 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Changed", "Created", "Deleted", "Email", "IsActive", "Name", "PasswordHash", "PasswordSalt", "RegistrationId", "Surname", "UserName" },
+                values: new object[] { 1, null, new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local), null, "some@email.com", true, "Admin", new byte[] { 210, 168, 188, 13, 195, 102, 139, 235, 41, 169, 112, 139, 59, 202, 185, 57, 65, 135, 39, 46, 8, 56, 18, 221, 193, 93, 4, 22, 114, 224, 147, 118, 170, 58, 160, 70, 251, 110, 169, 187, 69, 237, 115, 246, 220, 185, 149, 80, 101, 81, 28, 52, 82, 30, 100, 43, 101, 41, 49, 39, 61, 114, 8, 166 }, new byte[] { 146, 110, 164, 107, 166, 145, 162, 131, 86, 251, 117, 147, 239, 38, 131, 141, 197, 210, 232, 106, 46, 197, 235, 77, 125, 129, 209, 51, 106, 83, 235, 119, 3, 174, 223, 248, 13, 105, 31, 28, 162, 7, 170, 94, 43, 209, 4, 162, 69, 136, 148, 98, 39, 149, 176, 125, 131, 107, 69, 194, 45, 171, 104, 113, 45, 20, 216, 198, 169, 30, 58, 167, 150, 213, 97, 16, 229, 143, 236, 133, 96, 229, 101, 144, 129, 59, 56, 92, 148, 46, 180, 101, 40, 77, 117, 70, 165, 125, 93, 44, 101, 45, 18, 34, 176, 74, 87, 143, 244, 208, 50, 251, 152, 10, 118, 18, 60, 242, 31, 124, 95, 195, 184, 149, 27, 156, 58, 233 }, 1, "Admin", "Admin" });
 
             migrationBuilder.InsertData(
                 table: "ProductCategories",
@@ -581,12 +610,6 @@ namespace PersistenceLayer.Migrations
                 column: "ProductCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductDetailInfos_ProductDetailId",
-                table: "ProductDetailInfos",
-                column: "ProductDetailId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductDetailInfosLocalized_LanguageId",
                 table: "ProductDetailInfosLocalized",
                 column: "LanguageId");
@@ -626,6 +649,12 @@ namespace PersistenceLayer.Migrations
                 name: "IX_UserRoleRelation_UserId",
                 table: "UserRoleRelation",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RegistrationId",
+                table: "Users",
+                column: "RegistrationId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -661,9 +690,6 @@ namespace PersistenceLayer.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "ProductDetailInfos");
-
-            migrationBuilder.DropTable(
                 name: "Languages");
 
             migrationBuilder.DropTable(
@@ -679,7 +705,13 @@ namespace PersistenceLayer.Migrations
                 name: "ProductDetails");
 
             migrationBuilder.DropTable(
+                name: "UserRegistrations");
+
+            migrationBuilder.DropTable(
                 name: "ProductCategories");
+
+            migrationBuilder.DropTable(
+                name: "ProductDetailInfos");
         }
     }
 }

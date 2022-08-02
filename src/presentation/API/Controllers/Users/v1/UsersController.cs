@@ -4,7 +4,9 @@
 	using API.Controllers.Orders.v1;
 	using API.Controllers.ProductDetails.v1;
 	using API.Models;
-	using ApplicationLayer.Requests.Users.Commands.Login;
+	using ApplicationLayer.Requests.Users.Commands.ConfirmRegistration;
+	using ApplicationLayer.Requests.Users.Commands.Register;
+	using ApplicationLayer.Requests.Users.Queries.Login;
 	using DomainLayer.Entities.Users;
 	using MediatR;
 	using Microsoft.AspNetCore.Mvc;
@@ -34,7 +36,7 @@
 		/// Returns token if credentials were correct 
 		/// for test purpose use Admin aJc48262_1Kjkz>X!
 		/// </remarks>
-		[HttpPost(Name = nameof(LoginUserAsync))]
+		[HttpGet(Name = nameof(LoginUserAsync))]
 		[MapToApiVersion("1")]
 		[MapToApiVersion("2")]
 		[MapToApiVersion("3")]
@@ -59,6 +61,64 @@
 					{ nameof(ProductDetailsController.GetProductDetailsPaginatedAsync), "loadProductCards" },
 					{ nameof(ProductDetailsController.GetProductDetailByIdAsync), "onProductClick" },
 				}, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+
+			return Ok(result);
+		}
+
+		/// <summary>
+		/// Register in user
+		/// </summary>
+		/// <param name="user">user to register</param>
+		/// <param name="cancellationToken">cancelation token</param>
+		[HttpPut(Name = nameof(RegisterUserAsync))]
+		[MapToApiVersion("1")]
+		[MapToApiVersion("2")]
+		[MapToApiVersion("3")]
+		[HateoasResponse("user_register", nameof(RegisterUserAsync), 1)]
+		[HateoasResponse("user_register", nameof(RegisterUserAsync), 2)]
+		[HateoasResponse("user_register", nameof(RegisterUserAsync), 3)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<UserLoginResponse>> RegisterUserAsync(UserRegistration user, CancellationToken cancellationToken = default)
+		{
+			var result = await Mediator.Send(new UserRegisterRequest 
+			{
+				Email = user.Email,
+				FirstName = user.FirstName,
+				Password = user.Password,
+				Surname = user.Surname,
+				UserName = user.UserName,
+			}, cancellationToken);
+
+			return Ok(result);
+		}
+
+		/// <summary>
+		/// Verify registration in user
+		/// </summary>
+		/// <param name="code">user registration verification code</param>
+		/// <param name="cancellationToken">cancelation token</param>
+		[HttpPatch(Name = nameof(VerifyUserRegistrationAsync))]
+		[MapToApiVersion("1")]
+		[MapToApiVersion("2")]
+		[MapToApiVersion("3")]
+		[HateoasResponse("user_register", nameof(VerifyUserRegistrationAsync), 1)]
+		[HateoasResponse("user_register", nameof(VerifyUserRegistrationAsync), 2)]
+		[HateoasResponse("user_register", nameof(VerifyUserRegistrationAsync), 3)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<UserLoginResponse>> VerifyUserRegistrationAsync(string code, CancellationToken cancellationToken = default)
+		{
+			var result = await Mediator.Send(new UserConfirmRegistrationRequest
+			{
+				Code = code
+			}, cancellationToken);
 
 			return Ok(result);
 		}

@@ -1,6 +1,6 @@
 ﻿namespace PersistenceLayer.Mock.Configuration.LanguageMutations
 {
-	using DomainLayer.Entities.Texts;
+	using DomainLayer.Entities.LanguageMutations;
 	using Microsoft.EntityFrameworkCore;
 
 	internal static class LanguageConfiguration

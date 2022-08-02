@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Requests.Users.Commands.Login
+﻿namespace ApplicationLayer.Requests.Users.Queries.Login
 {
 	using System.Security.Claims;
 	using Exceptions;
@@ -27,7 +27,7 @@
 					.AsNoTracking()
 					.FirstOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken);
 
-				if (user == null)
+				if (user == null || !user.IsActive)
 				{
 					throw new MediatorException(ExceptionType.NotFound, "User not found");
 				}
