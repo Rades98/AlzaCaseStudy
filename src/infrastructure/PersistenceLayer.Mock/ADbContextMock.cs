@@ -6,7 +6,6 @@
 	using DomainLayer.Entities.Orders.Localization;
 	using DomainLayer.Entities.Product;
 	using DomainLayer.Entities.Product.Localization;
-	using DomainLayer.Entities.Texts;
 	using DomainLayer.Entities.Users;
 	using Microsoft.EntityFrameworkCore;
 	using PersistenceLayer.Mock.Configuration.LanguageMutations;
@@ -56,6 +55,7 @@
 		public DbSet<ProductCategoryEntity> ProductCategories => Set<ProductCategoryEntity>();
 		public DbSet<ProductCategoryLocalizedEntity> ProductCategoriesLocalized => Set<ProductCategoryLocalizedEntity>();
 
+		public DbSet<UserRegistrationEntity> UserRegistrations => Set<UserRegistrationEntity>();
 		public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();
 		public DbSet<UserEntity> Users => Set<UserEntity>();
 		public DbSet<UserRoleRelationEntity> UserRoleRelation => Set<UserRoleRelationEntity>();
@@ -105,6 +105,7 @@
 
 			modelBuilder.ConfigureUserEntity();
 			modelBuilder.ConfigureUserRoleEntity();
+			modelBuilder.ConfigureUserRegistrationEntity();
 
 			modelBuilder.Seed();
 		}

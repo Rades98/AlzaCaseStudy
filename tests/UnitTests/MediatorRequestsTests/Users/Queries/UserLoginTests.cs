@@ -1,7 +1,7 @@
-﻿namespace UnitTests.MediatorRequestsTests.Users.Commands
+﻿namespace UnitTests.MediatorRequestsTests.Users.Queries
 {
 	using ApplicationLayer.Exceptions;
-	using ApplicationLayer.Requests.Users.Commands.Login;
+	using ApplicationLayer.Requests.Users.Queries.Login;
 	using Shouldly;
 	using Xunit;
 
@@ -22,7 +22,7 @@
 			{
 				await new UserLoginRequest.Handler(DbContext, Claims).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "GuluGulu", Token = Token }, default);
 			}
-			catch(MediatorException e)
+			catch (MediatorException e)
 			{
 				e.Type.ShouldBe(ExceptionType.NotFound);
 			}

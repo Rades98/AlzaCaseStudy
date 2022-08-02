@@ -53,6 +53,10 @@
 				.IsRequired();
 
 			modelBuilder.Entity<UserEntity>()
+				.Property(user => user.IsActive)
+			   .IsRequired();
+
+			modelBuilder.Entity<UserEntity>()
 				.HasMany(r => r.Roles)
 				.WithMany(u => u.Users)
 				.UsingEntity<UserRoleRelationEntity>(
@@ -69,6 +73,10 @@
 					j.Property(pt => pt.Created).HasDefaultValueSql("CURRENT_TIMESTAMP");
 					j.HasKey(t => new { t.RoleId, t.UserId });
 				});
+
+			modelBuilder.Entity<UserEntity>()
+				.HasOne(user => user.Registration)
+				.WithOne(userReg => userReg.User);
 		}
 	}
 }

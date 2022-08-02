@@ -1,17 +1,16 @@
 ﻿namespace PersistenceLayer.Database
 {
-    using ApplicationLayer.Interfaces;
+	using ApplicationLayer.Interfaces;
 	using DomainLayer.Entities.LanguageMutations;
 	using DomainLayer.Entities.Orders;
 	using DomainLayer.Entities.Orders.Localization;
 	using DomainLayer.Entities.Product;
 	using DomainLayer.Entities.Product.Localization;
-	using DomainLayer.Entities.Texts;
 	using DomainLayer.Entities.Users;
-    using Extensions;
-    using Microsoft.EntityFrameworkCore;
+	using Extensions;
+	using Microsoft.EntityFrameworkCore;
 
-    public class ADbContext : DbContext, IDbContext
+	public class ADbContext : DbContext, IDbContext
     {
         public ADbContext(DbContextOptions<ADbContext> options) : base(options) { }
 
@@ -54,6 +53,7 @@
         public DbSet<ProductCategoryEntity> ProductCategories => Set<ProductCategoryEntity>();
         public DbSet<ProductCategoryLocalizedEntity> ProductCategoriesLocalized => Set<ProductCategoryLocalizedEntity>();
 
+        public DbSet<UserRegistrationEntity> UserRegistrations => Set<UserRegistrationEntity>();
         public DbSet<UserRoleEntity> UserRoles => Set<UserRoleEntity>();
         public DbSet<UserEntity> Users => Set<UserEntity>();
         public DbSet<UserRoleRelationEntity> UserRoleRelation => Set<UserRoleRelationEntity>();

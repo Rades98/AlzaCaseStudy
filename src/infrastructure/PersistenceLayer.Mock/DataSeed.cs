@@ -61,10 +61,10 @@
 
 			var users = new List<UserEntity>()
 			{
-				new(){ Id = 1, Name = "Admin", UserName = "Admin", Surname = "Admin", PasswordHash = pwHash, PasswordSalt = pwSalt, Email = "some@email.com", Created = DateTime.Now },
-				new(){ Id = 2, Name = "Libor", UserName = "LibikSojik", Surname = "Sojka", PasswordHash = pwHash2, PasswordSalt = pwSalt2, Email = "liborSojka@email.com", Created = DateTime.Now },
-				new(){ Id = 3, Name = "Onder", UserName = "WonderMan", Surname = "Vonder", PasswordHash = pwHash3, PasswordSalt = pwSalt3, Email = "onder@email.com", Created = DateTime.Now },
-				new(){ Id = 4, Name = "Ransad", UserName = "sdfsa", Surname = "sdfs", PasswordHash = pwHash4, PasswordSalt = pwSalt4, Email = "dfs@email.com", Created = DateTime.Now },
+				new(){ Id = 1, Name = "Admin", UserName = "Admin", Surname = "Admin", PasswordHash = pwHash, PasswordSalt = pwSalt, Email = "some@email.com", Created = DateTime.Now, IsActive = true },
+				new(){ Id = 2, Name = "Libor", UserName = "LibikSojik", Surname = "Sojka", PasswordHash = pwHash2, PasswordSalt = pwSalt2, Email = "liborSojka@email.com", Created = DateTime.Now, IsActive = true  },
+				new(){ Id = 3, Name = "Onder", UserName = "WonderMan", Surname = "Vonder", PasswordHash = pwHash3, PasswordSalt = pwSalt3, Email = "onder@email.com", Created = DateTime.Now, IsActive = true  },
+				new(){ Id = 4, Name = "Ransad", UserName = "sdfsa", Surname = "sdfs", PasswordHash = pwHash4, PasswordSalt = pwSalt4, Email = "dfs@email.com", Created = DateTime.Now, IsActive = true  },
 			};
 
 			//Add order statuses

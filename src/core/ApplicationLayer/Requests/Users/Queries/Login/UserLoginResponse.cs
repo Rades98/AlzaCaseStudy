@@ -1,4 +1,4 @@
-﻿namespace ApplicationLayer.Requests.Users.Commands.Login
+﻿namespace ApplicationLayer.Requests.Users.Queries.Login
 {
 	using Dtos;
 

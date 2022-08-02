@@ -1,19 +1,18 @@
 ﻿namespace PersistenceLayer.Database.Extensions
 {
-    using ApplicationLayer.Utils.PasswordHashing;
+	using ApplicationLayer.Utils.PasswordHashing;
 	using CodeLists.Languages;
 	using CodeLists.MessageTypes;
 	using CodeLists.OrderStatuses;
-    using CodeLists.ProductCategories;
-    using CodeLists.UserRoles;
+	using CodeLists.ProductCategories;
+	using CodeLists.UserRoles;
 	using DomainLayer.Entities.LanguageMutations;
 	using DomainLayer.Entities.Orders;
-    using DomainLayer.Entities.Product;
-	using DomainLayer.Entities.Texts;
+	using DomainLayer.Entities.Product;
 	using DomainLayer.Entities.Users;
-    using Microsoft.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore;
 
-    internal static class ModelBuilderExtensions
+	internal static class ModelBuilderExtensions
     {
         private static readonly DateTime _created = new(2022, 4, 12, 17, 00, 00, 222, DateTimeKind.Local);
 
@@ -28,9 +27,14 @@
             // aJc48262_1Kjkz>X!
             PasswordHashing.CreatePasswordHash("aJc48262_1Kjkz>X!", out byte[] pwHash, out byte[] pwSalt);
 
+            var userRegistrations = new List<UserRegistrationEntity>()
+            {
+				new(){ Id = 1, Created = _created, Code="some hash haha ha ha ha haaaaaaaaaa", LinkActiveTill = _created}
+            };
+
             var users = new List<UserEntity>()
             {
-                new(){ Id = 1, Name = "Admin", UserName = "Admin", Surname = "Admin", PasswordHash = pwHash, PasswordSalt = pwSalt, Email = "some@email.com", Created = _created }
+                new(){ Id = 1, Name = "Admin", UserName = "Admin", Surname = "Admin", PasswordHash = pwHash, PasswordSalt = pwSalt, Email = "some@email.com", Created = _created, IsActive = true, RegistrationId = 1 }
             };
 
             var productCategories = new List<ProductCategoryEntity>()
@@ -86,6 +90,10 @@
             //Add user roles
             modelBuilder.Entity<UserRoleEntity>()
                     .HasData(userRoles);
+
+            //Add user registration
+            modelBuilder.Entity<UserRegistrationEntity>()
+                .HasData(userRegistrations);
 
             //Add user
             modelBuilder.Entity<UserEntity>()

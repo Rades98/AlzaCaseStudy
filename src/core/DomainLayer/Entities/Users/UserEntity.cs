@@ -10,8 +10,11 @@ namespace DomainLayer.Entities.Users
         public byte[] PasswordHash { get; set; } = new byte[64];
         public byte[] PasswordSalt { get; set; } = new byte[64];
         public string Email { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
         public IEnumerable<UserRoleEntity>? Roles { get; set; }
         public IEnumerable<UserRoleRelationEntity>? RoleRelations { get; set; }
         public IEnumerable<OrderEntity>? Orders { get; set; }
+        public int RegistrationId { get; set; }
+        public UserRegistrationEntity? Registration { get; set; }
     }
 }

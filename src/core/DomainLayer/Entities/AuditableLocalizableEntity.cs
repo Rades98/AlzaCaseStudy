@@ -1,6 +1,6 @@
 ﻿namespace DomainLayer.Entities
 {
-	using DomainLayer.Entities.Texts;
+	using DomainLayer.Entities.LanguageMutations;
 
 	public class AuditableLocalizableEntity : AuditableEntity
 	{
