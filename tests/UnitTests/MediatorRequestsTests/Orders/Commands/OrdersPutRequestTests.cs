@@ -1,7 +1,9 @@
 ﻿namespace UnitTests.MediatorRequestsTests.Orders.Commands
 {
-	using ApplicationLayer.Exceptions;
+	using System;
 	using ApplicationLayer.Requests.Orders.Commands.Put;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -10,7 +12,7 @@
 		[Fact]
 		public async void OrdersPutTests_Should_Pass()
 		{
-			var result = await new OrdersPutRequest.Handler(DbContext).Handle(new OrdersPutRequest() { UserId = 3 }, default);
+			var result = await new OrdersPutRequest.Handler(OrdersRepo).Handle(new OrdersPutRequest() { UserId = 3 }, default);
 
 			result.Message.ShouldNotBeNull();
 		}
@@ -20,11 +22,11 @@
 		{
 			try
 			{
-				var result = await new OrdersPutRequest.Handler(DbContext).Handle(new OrdersPutRequest() { UserId = 2 }, default);
+				var result = await new OrdersPutRequest.Handler(OrdersRepo).Handle(new OrdersPutRequest() { UserId = 2 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.Error);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.Error);
 			}
 		}
 	}

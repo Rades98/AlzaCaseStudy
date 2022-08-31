@@ -1,9 +1,9 @@
 ﻿namespace PersistenceLayer.Mock
 {
-	using ApplicationLayer.Interfaces;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore.Diagnostics;
 	using Microsoft.Extensions.DependencyInjection;
+	using PersistanceLayer.Contracts;
 
 	public static class DependencyRegistrations
 	{

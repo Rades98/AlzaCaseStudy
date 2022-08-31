@@ -1,15 +1,9 @@
 ﻿namespace ApplicationLayer.Requests.Users.Commands.Register
 {
-	using System.Security.Cryptography;
-	using System.Text;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using ApplicationLayer.Exceptions;
-	using ApplicationLayer.Interfaces;
-	using ApplicationLayer.Utils.PasswordHashing;
-	using DomainLayer.Entities.Users;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
+	using PersistanceLayer.Contracts.Repositories;
 
 	public class UserRegisterRequest : IRequest<UserRegisterResponse>
 	{
@@ -21,81 +15,21 @@
 
 		public class Handler : IRequestHandler<UserRegisterRequest, UserRegisterResponse>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IUsersRepository _repo;
 
-			public Handler(IDbContext dbContext) => (_dbContext) = (dbContext);
+			public Handler(IUsersRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<UserRegisterResponse> Handle(UserRegisterRequest request, CancellationToken cancellationToken)
 			{
-				var potencialSameName = await _dbContext.Users
-					.AsNoTracking()
-					.FirstOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken);
+				var user = await _repo.RegisterUserAsync(request.UserName, request.Email, request.FirstName, request.Surname, request.Password, cancellationToken);
 
-				var potencialSameEmail = await _dbContext.Users
-					.AsNoTracking()
-					.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
+				MailSender.MailSender.SendRegistrationEmail(request.Email, user.Registration!.Code, request.UserName);
 
-				if (potencialSameName is not null)
+				return new()
 				{
-					throw new MediatorException(ExceptionType.Error, "User with same name already exists");
-				}
-
-				if (potencialSameEmail is not null)
-				{
-					throw new MediatorException(ExceptionType.Error, "There is running registration for provided email");
-				}
-
-				MD5 md5 = MD5.Create();
-				byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(request.FirstName + request.Surname + request.UserName + request.Email);
-				byte[] hash = md5.ComputeHash(inputBytes);
-				StringBuilder sb = new StringBuilder();
-				for (int i = 0; i < hash.Length; i++)
-				{
-					sb.Append(hash[i].ToString("x2"));
-				}
-
-				string code = sb.ToString();
-
-				PasswordHashing.CreatePasswordHash(request.Password, out byte[] pwHash, out byte[] pwSalt);
-
-				using var transaction = _dbContext.Database.BeginTransaction();
-				try
-				{
-					var newUser = new UserEntity()
-					{
-						Registration = new UserRegistrationEntity()
-						{
-							LinkActiveTill = DateTime.Now.AddDays(ApplicationSetting.ApplicationSetting.RegistrationActivationDelay),
-							Code = code
-						},
-						Email = request.Email,
-						UserName = request.UserName,
-						Surname = request.Surname,
-						Name = request.FirstName,
-						IsActive = false,
-						Created = DateTime.Now,
-						PasswordHash = pwHash,
-						PasswordSalt = pwSalt
-					};
-
-					_dbContext.Users.Add(newUser);
-					await _dbContext.SaveChangesAsync(cancellationToken);
-
-					MailSender.MailSender.SendRegistrationEmail(request.Email, code, request.UserName);
-
-					transaction.Commit();
-
-					return new()
-					{
-						Code = code,
-						UserName = request.UserName,
-					};
-				}
-				catch (Exception e)
-				{
-					transaction.Rollback();
-					throw new MediatorException(ExceptionType.Error, "User registration failed", e);
-				}
+					Code = user.Registration.Code,
+					UserName = request.UserName,
+				};
 			}
 		}
 	}

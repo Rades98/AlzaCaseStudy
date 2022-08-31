@@ -132,15 +132,15 @@
 		/// Returns product found by id, if there is none, returns null
 		/// </remarks>
 		[HttpGet("id", Name = nameof(GetProductDetailByIdAsync))]
-		[HateoasResponse("productDetais_getById", nameof(GetProductDetailByIdAsync), 1, "?id={id}")]
+		[HateoasResponse("productDetais_getById", nameof(GetProductDetailByIdAsync), 1, "?code={code}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<ProductDetailGetResponse?>> GetProductDetailByIdAsync(int id, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<ProductDetailGetResponse?>> GetProductDetailByIdAsync(string code, CancellationToken cancellationToken = default)
 		{
-			var result = await Mediator.Send(new ProductDetailGetRequest() { Id = id }, cancellationToken);
+			var result = await Mediator.Send(new ProductDetailGetRequest() { ProductCode = code }, cancellationToken);
 
 			var choices = new Dictionary<string, string?>
 			{

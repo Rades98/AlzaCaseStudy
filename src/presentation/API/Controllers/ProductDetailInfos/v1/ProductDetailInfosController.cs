@@ -31,15 +31,15 @@
 		/// Returns product detail info, if found
 		/// </remarks>
 		[HttpGet(Name = nameof(GetProductDetailInfoAsync))]
-		[HateoasResponse("productDetailInfos_get", nameof(GetProductDetailInfoAsync), 1, "?id={id}")]
+		[HateoasResponse("productDetailInfos_get", nameof(GetProductDetailInfoAsync), 1, "?code={code}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<ProductDetailInfoGetResponse>>> GetProductDetailInfoAsync(int id, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<IEnumerable<ProductDetailInfoGetResponse>>> GetProductDetailInfoAsync(string code, CancellationToken cancellationToken = default)
 		{
-			var result = await Mediator.Send(new ProductDetailInfoGetRequest() { Id = id }, cancellationToken);
+			var result = await Mediator.Send(new ProductDetailInfoGetRequest() { Code = code }, cancellationToken);
 
 			var choices = new Dictionary<string, string?>
 				{
@@ -51,7 +51,7 @@
 
 			links.First(x => x.ActionName == "self").ReplaceInLink("{id}", result.Id.ToString());
 
-			var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+			string cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
 
 			if (cookieOrderCode is not null)
 			{

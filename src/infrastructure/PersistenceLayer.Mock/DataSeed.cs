@@ -1,6 +1,6 @@
 ﻿namespace PersistenceLayer.Mock
 {
-	using ApplicationLayer.Utils.PasswordHashing;
+	using AppUtils.PasswordHashing;
 	using CodeLists.OrderStatuses;
 	using CodeLists.ProductCategories;
 	using CodeLists.UserRoles;

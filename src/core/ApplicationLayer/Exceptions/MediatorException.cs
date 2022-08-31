@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using CodeLists.Exceptions;
 
 namespace ApplicationLayer.Exceptions
 {

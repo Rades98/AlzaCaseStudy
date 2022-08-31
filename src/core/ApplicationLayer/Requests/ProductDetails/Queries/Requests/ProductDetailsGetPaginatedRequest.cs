@@ -1,13 +1,9 @@
 ﻿namespace ApplicationLayer.Requests.ProductDetails.Queries.Requests
 {
-	using ApplicationLayer.Exceptions;
 	using ApplicationLayer.Requests.ProductDetails.Queries;
 	using DomainLayer.Entities.Product;
-	using Extensions;
-	using Interfaces;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
-	using X.PagedList;
+	using PersistanceLayer.Contracts.Repositories;
 
 	/// <summary>
 	/// Query to obtain all products wit pagination settings
@@ -26,25 +22,15 @@
 
 		public class Handler : IRequestHandler<ProductDetailsGetPaginatedRequest, IEnumerable<ProductDetailGetResponse>>
 		{
-			private readonly IDbContext _dbContext;
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			private readonly IProductDetailsRepository _repo;
+
+			public Handler(IProductDetailsRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<IEnumerable<ProductDetailGetResponse>> Handle(ProductDetailsGetPaginatedRequest request, CancellationToken cancellationToken)
 			{
-				var products = await _dbContext.ProductDetails
-					.AsNoTracking()
-					.IfThenElse(
-						() => request.OrderByDesc,
-						e => e.OrderByDescending(request.OrderBy),
-						e => e.OrderBy(request.OrderBy))
-					.ToPagedListAsync(request.PageNumber, request.PageSize, cancellationToken);
+				var products = await _repo.GetProductDetailsPaginatedAsync(request.PageNumber, request.PageSize, request.OrderBy, request.OrderByDesc, cancellationToken);
 
-				if (products.Count > 0)
-				{
-					return products.Select(x => (ProductDetailGetResponse)x);
-				}
-
-				throw new MediatorException(ExceptionType.NotFound, "Product details not found");
+				return products.Select(x => (ProductDetailGetResponse)x);
 			}
 		}
 	}

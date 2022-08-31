@@ -1,12 +1,10 @@
 ﻿namespace ApplicationLayer.Requests.ProductDetails.Commands
 {
-	using Exceptions;
-	using Interfaces;
-	using Interfaces.Cache;
-	using MediatR;
-	using Microsoft.EntityFrameworkCore;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using Interfaces.Cache;
+	using MediatR;
+	using PersistanceLayer.Contracts.Repositories;
 
 	/// <summary>
 	/// Request handling request for updating description of product choosen by Id
@@ -22,40 +20,18 @@
 
 		public class Handler : IRequestHandler<ProductDetailUpdateRequest, ProductDetailUpdateResponse>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IProductDetailsRepository _repo;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IProductDetailsRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<ProductDetailUpdateResponse> Handle(ProductDetailUpdateRequest request, CancellationToken cancellationToken)
 			{
 				var response = new ProductDetailUpdateResponse();
-				var entity = await _dbContext.ProductDetails
-					.AsNoTracking()
-					.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
-				if (entity is null)
-				{
-					throw new MediatorException(ExceptionType.NotFound, "Product detail not found");
-				}
+				var updatedEntity = await _repo.UpdateProductDetailDescriptionAsync(request.Id, request.Description, cancellationToken);
 
-				if (entity.Description == request.Description)
-				{
-					throw new MediatorException(ExceptionType.NotModified, "Product detail is already up to date");
-				}
-
-				try
-				{
-					entity.Description = request.Description;
-					response.UpdateMessage = $"Product ({entity.Id} : {entity.Name}) has been updated with description \"{entity.Description}\"";
-					response.Updated = response.UpToDate = true;
-
-					_dbContext.ProductDetails.Update(entity);
-					await _dbContext.SaveChangesAsync(cancellationToken);
-				}
-				catch (Exception ex)
-				{
-					throw new MediatorException(ExceptionType.Error, "Error while updating product detail", ex);
-				}
+				response.UpdateMessage = $"Product ({updatedEntity.Id} : {updatedEntity.Name}) has been updated with description \"{updatedEntity.Description}\"";
+				response.Updated = response.UpToDate = true;
 
 				return response;
 			}

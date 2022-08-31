@@ -1,5 +1,6 @@
 ﻿namespace ApplicationSetting
 {
+	//This is for dev purposes.. it should be all stored in app settings (json)
 	public static class ApplicationSetting
 	{
 		public const int RegistrationActivationDelay = 14;
@@ -15,5 +16,8 @@
 
 		public const int MAX_SURNAME_LENGHT = 20;
 		public const int MIN_SURNAME_LENGHT = 2;
+
+		public const int CACHE_EXPIRATION_TIME_MINS = 15;
+		public const int CACHE_SLIDING_EXPIRATION_TIME_MINS = 2;
 	}
 }

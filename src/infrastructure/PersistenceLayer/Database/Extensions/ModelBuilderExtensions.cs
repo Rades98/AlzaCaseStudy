@@ -1,6 +1,6 @@
 ﻿namespace PersistenceLayer.Database.Extensions
 {
-	using ApplicationLayer.Utils.PasswordHashing;
+	using AppUtils.PasswordHashing;
 	using CodeLists.Languages;
 	using CodeLists.MessageTypes;
 	using CodeLists.OrderStatuses;

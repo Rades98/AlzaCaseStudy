@@ -1,16 +1,18 @@
 ﻿namespace API.Middleware
 {
-    using ApplicationLayer.Exceptions;
-    using Models;
-    using System.Net;
+	using ApplicationLayer.Exceptions;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
+	using Models;
+	using System.Net;
 
-    /// <summary>
-    /// Exception middleware 
-    /// Handles exception message in case of production environment
-    /// Logging is not necessary here due the fact that serilog
-    /// has its own http request logging middleware
-    /// </summary>
-    public class ExceptionMiddleware
+	/// <summary>
+	/// Exception middleware 
+	/// Handles exception message in case of production environment
+	/// Logging is not necessary here due the fact that serilog
+	/// has its own http request logging middleware
+	/// </summary>
+	public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
 
@@ -47,7 +49,7 @@
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     break;
 
-                case MediatorException ex:
+                case IApplicationException ex:
                     message = ex.Message;
 
                     switch (ex.Type)

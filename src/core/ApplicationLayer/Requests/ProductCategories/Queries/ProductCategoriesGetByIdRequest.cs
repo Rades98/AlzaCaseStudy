@@ -1,11 +1,9 @@
 ﻿namespace ApplicationLayer.Requests.ProductCategories.Queries
 {
-	using Exceptions;
 	using Dtos;
-	using Interfaces;
 	using Interfaces.Cache;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
+	using PersistanceLayer.Contracts.Repositories;
 
 	public class ProductCategoriesGetByIdRequest : IRequest<ProductCategoriesGetResponse>, ICacheableQuery
 	{
@@ -14,20 +12,13 @@
 
 		public class Handler : IRequestHandler<ProductCategoriesGetByIdRequest, ProductCategoriesGetResponse>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IProductCategoriesRepository _repo;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IProductCategoriesRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<ProductCategoriesGetResponse> Handle(ProductCategoriesGetByIdRequest request, CancellationToken cancellationToken)
 			{
-				var productCategories = await _dbContext.ProductCategories
-					.AsNoTracking()
-					.ToListAsync(cancellationToken);
-
-				if (productCategories is null || !productCategories.Any() || productCategories.FirstOrDefault(x => x.Id == request.Id) is null)
-				{
-					throw new MediatorException(ExceptionType.NotFound, "Product category not found");
-				}
+				var productCategories = await _repo.GetProductCategoriesByIdAsync(request.Id, cancellationToken);
 
 				productCategories.ForEach(cat =>
 				{

@@ -1,36 +1,33 @@
 ﻿namespace ApplicationLayer.Requests.ProductDetailInfos.Queries
 {
+	using CodeLists.Exceptions;
 	using Exceptions;
-	using Interfaces;
-	using Interfaces.Cache;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
+	using PersistanceLayer.Contracts.Repositories;
 
-	public class ProductDetailInfoGetRequest : IRequest<ProductDetailInfoGetResponse>, ICacheableWithIdQuery
+	public class ProductDetailInfoGetRequest : IRequest<ProductDetailInfoGetResponse>
 	{
-		public int Id { get; set; }
-		public string CacheKey => Cache.CacheKeys.ProductDetailInfos;
+		public string Code { get; set; } = string.Empty;
 
 		public class Handler : IRequestHandler<ProductDetailInfoGetRequest, ProductDetailInfoGetResponse>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IProductDetailInfosRepository _repository;
+			private readonly IOrderItemsRepository _orderItemsRepo;
+			private readonly IProductsRepository _productRepo;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IOrderItemsRepository orderItemsRepository, IProductDetailInfosRepository repository, IProductsRepository productRepo)
+			{
+				_orderItemsRepo = orderItemsRepository ?? throw new ArgumentNullException(nameof(orderItemsRepository));
+				_repository = repository ?? throw new ArgumentNullException(nameof(repository));
+				_productRepo = productRepo ?? throw new ArgumentNullException(nameof(productRepo));
+			}
 
 			public async Task<ProductDetailInfoGetResponse> Handle(ProductDetailInfoGetRequest request, CancellationToken cancellationToken)
 			{
-				var productDetail = await _dbContext.ProductDetailInfos
-					.AsNoTracking()
-					.Include(i => i.ProductDetail)
-					.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+				var productDetail = await _repository.GetProductDetailInofAsync(request.Code, cancellationToken);
 
-				if (productDetail is null)
-				{
-					throw new MediatorException(ExceptionType.NotFound, "Product detail info not found");
-				}
-
-				int productCount = await _dbContext.Products.CountAsync(p => p.Id == request.Id, cancellationToken);
-				int reservedProductsCount = await _dbContext.OrderItems.CountAsync(p => p.ProductId == request.Id, cancellationToken);
+				int productCount = await _productRepo.GetProductCountByCodeAsync(request.Code, cancellationToken);
+				int reservedProductsCount = await _orderItemsRepo.GetCountOfItemsByIdAsync(request.Code, cancellationToken);
 
 				var result = (ProductDetailInfoGetResponse)productDetail;
 				result.Count = productCount - reservedProductsCount;

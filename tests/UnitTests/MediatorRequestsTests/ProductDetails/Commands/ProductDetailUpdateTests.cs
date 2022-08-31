@@ -1,7 +1,10 @@
 ﻿namespace UnitTests.MediatorRequestsTests.ProductDetails.Commands
 {
+	using System;
 	using ApplicationLayer.Exceptions;
 	using ApplicationLayer.Requests.ProductDetails.Commands;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -10,7 +13,7 @@
 		[Fact]
 		public async void ProductDetailUpdateTest_ShouldPass()
 		{
-			var result = await new ProductDetailUpdateRequest.Handler(DbContext).Handle(new ProductDetailUpdateRequest { Id = 2, Description = "new" }, default);
+			var result = await new ProductDetailUpdateRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailUpdateRequest { Id = 2, Description = "new" }, default);
 
 			result.UpdateMessage.ShouldNotBeNull();
 		}
@@ -20,11 +23,11 @@
 		{
 			try
 			{
-				var result = await new ProductDetailUpdateRequest.Handler(DbContext).Handle(new ProductDetailUpdateRequest { Id = 1, Description = "description" }, default);
+				var result = await new ProductDetailUpdateRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailUpdateRequest { Id = 1, Description = "description" }, default);
 			}
-			catch(MediatorException e)
+			catch(Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotModified);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotModified);
 			}
 		}
 
@@ -33,11 +36,11 @@
 		{
 			try
 			{
-				var result = await new ProductDetailUpdateRequest.Handler(DbContext).Handle(new ProductDetailUpdateRequest { Id = 4846456, Description = "description" }, default);
+				var result = await new ProductDetailUpdateRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailUpdateRequest { Id = 4846456, Description = "description" }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 	}

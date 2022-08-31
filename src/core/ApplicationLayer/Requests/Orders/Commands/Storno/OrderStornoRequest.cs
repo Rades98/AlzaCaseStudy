@@ -1,11 +1,9 @@
 ﻿namespace ApplicationLayer.Requests.Orders.Commands.Storno
 {
-	using Exceptions;
-	using Interfaces;
-	using MediatR;
-	using Microsoft.EntityFrameworkCore;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using MediatR;
+	using PersistanceLayer.Contracts.Repositories;
 
 	public class OrderStornoRequest : IRequest<OrderStornoResponse>
 	{
@@ -14,67 +12,15 @@
 
 		public class Handler : IRequestHandler<OrderStornoRequest, OrderStornoResponse>
 		{
-			private readonly IDbContext _context;
+			private readonly IOrdersRepository _repo;
 
-			public Handler(IDbContext context) => _context = context;
+			public Handler(IOrdersRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<OrderStornoResponse> Handle(OrderStornoRequest request, CancellationToken cancellationToken)
 			{
-				var order = await _context.Orders
-					.Include(i => i.Status!)
-					.Include(i => i.Items!)
-						.ThenInclude(i => i.Product)
-							.ThenInclude(i => i!.ProductDetail)
-					.AsNoTracking()
-					.FirstOrDefaultAsync(x =>
-					x.OrderCode == request.OrderCode
-				, cancellationToken);
+				await _repo.StornoOrderAsync(request.UserId, request.OrderCode, cancellationToken);
 
-				if (order is null)
-				{
-					throw new MediatorException(ExceptionType.NotFound, "Order not found");
-				}
-
-				if(order.UserId != request.UserId)
-				{
-					throw new MediatorException(ExceptionType.Unauthorized, "This user can not change shit order");
-				}
-
-				if (order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Canceled ||
-					order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.Delivered ||
-					order.OrderStatusId == CodeLists.OrderStatuses.OrderStatuses.InExpedition)
-				{
-					throw new MediatorException(ExceptionType.Error, "Order cannot be cancelled");
-				}
-
-				using var transaction = await _context.Database.BeginTransactionAsync(cancellationToken);
-
-				try
-				{
-					order.Status = await _context.OrderStatuses
-						.AsNoTracking()
-						.FirstAsync(x => x.Id == CodeLists.OrderStatuses.OrderStatuses.Canceled, cancellationToken);
-
-					if (order.Items is not null)
-					{
-						_context.OrderItems.RemoveRange(order.Items);
-						order.Items.Clear();
-					}
-
-					_context.Orders.Update(order);
-
-					await _context.SaveChangesAsync(cancellationToken);
-
-					await transaction.CommitAsync(cancellationToken);
-
-					return new() { Message = "Order canceled" };
-				}
-				catch (Exception e)
-				{
-					transaction.Rollback();
-
-					throw new MediatorException(ExceptionType.Error, "Error while canceling order", e);
-				}
+				return new() { Message = "Order canceled" };
 			}
 		}
 	}

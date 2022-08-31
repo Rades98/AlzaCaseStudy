@@ -32,6 +32,8 @@
 			services.ConfigureResponseCompression();
 			services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 			services.RegisterDatabase(configuration);
+			services.RegisterRepositories();
+			services.RegisterRepositoryDecorators();
 			services.RegisterDapper();
 			services.AddApplicationServices();
 			services.AddCustomApiVersioning();

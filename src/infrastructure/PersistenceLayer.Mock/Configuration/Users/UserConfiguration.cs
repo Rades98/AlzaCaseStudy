@@ -1,6 +1,5 @@
 ﻿namespace PersistenceLayer.Mock.Configuration.Users
 {
-	using ApplicationLayer.Utils.PasswordHashing;
 	using DomainLayer.Entities.Users;
 	using Microsoft.EntityFrameworkCore;
 
