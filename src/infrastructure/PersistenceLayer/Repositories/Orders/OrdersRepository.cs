@@ -9,6 +9,8 @@
 	using PersistanceLayer.Contracts;
 	using PersistanceLayer.Contracts.Repositories;
 	using AppUtils.Orders;
+	using PersistanceLayer.Contracts.Models.Orders;
+	using PersistenceLayer.Extensions;
 
 	public class OrdersRepository : IOrdersRepository
 	{
@@ -167,12 +169,11 @@
 		}
 
 		/// <inheritdoc/>
-		public async Task<List<OrderEntity>> GetOrdersByUserId(int userId, Expression<Func<OrderEntity, bool>> whereFilter, CancellationToken ct)
+		public async Task<List<OrderModel>> GetOrdersByUserId(int userId, Expression<Func<OrderEntity, bool>> whereFilter, CancellationToken ct)
 		{
 			Expression<Func<OrderEntity, bool>> exp = x => x.UserId == userId;
 
-			return await _dbContext.Orders
-				.Include(i => i.Status!)
+			var result = await _dbContext.Orders
 				.Include(i => i.Items!)
 					.ThenInclude(i => i.Product!)
 						.ThenInclude(i => i.ProductDetail)
@@ -180,6 +181,14 @@
 				.Where(exp)
 				.Where(whereFilter)
 				.ToListAsync(ct);
+
+			if(result is not null)
+			{
+				return result.MapToModel();
+			}
+
+			return new();
+			
 		}
 	}
 }

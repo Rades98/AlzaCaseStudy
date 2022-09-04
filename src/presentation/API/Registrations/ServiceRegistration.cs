@@ -53,7 +53,6 @@
 				options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
 			});
 			services.AddCustomHealthChecks(configuration);
-
 			services.RegisterHateoas();
 
 			return services;

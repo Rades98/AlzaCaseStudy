@@ -6,6 +6,7 @@
 	using Microsoft.Extensions.Caching.Memory;
 	using Newtonsoft.Json;
 	using PersistanceLayer.Contracts;
+	using PersistanceLayer.Contracts.Models.Orders;
 	using PersistanceLayer.Contracts.Repositories;
 	using static ApplicationSetting.ApplicationSetting;
 
@@ -29,15 +30,15 @@
 		}
 
 		/// <inheritdoc/>
-		public async Task<List<OrderEntity>> GetOrdersByUserId(int userId, Expression<Func<OrderEntity, bool>> whereFilter, CancellationToken ct)
+		public async Task<List<OrderModel>> GetOrdersByUserId(int userId, Expression<Func<OrderEntity, bool>> whereFilter, CancellationToken ct)
 		{
-			string cacheKey = $"{nameof(List<OrderEntity>)}{userId}";
+			string cacheKey = $"{nameof(List<OrderModel>)}{userId}";
 
 			object? cachedResponse = _cache.Get(cacheKey);
 
 			if (cachedResponse != null)
 			{
-				var res = JsonConvert.DeserializeObject<List<OrderEntity>>(Encoding.Default.GetString((byte[])cachedResponse));
+				var res = JsonConvert.DeserializeObject<List<OrderModel>>(Encoding.Default.GetString((byte[])cachedResponse));
 				if (res is not null)
 				{
 					return res;

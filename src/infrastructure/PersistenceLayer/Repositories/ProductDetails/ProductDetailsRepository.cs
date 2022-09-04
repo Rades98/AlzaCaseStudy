@@ -2,7 +2,7 @@
 {
 	using CodeLists.Exceptions;
 	using DomainLayer.Entities.Product;
-	using Extensions;
+	using global::Extensions;
 	using Microsoft.EntityFrameworkCore;
 	using PersistanceLayer.Contracts;
 	using PersistanceLayer.Contracts.Repositories;

@@ -1,11 +1,12 @@
 ﻿namespace PersistenceLayer.Repositories.ProductDetailInfos
 {
 	using CodeLists.Exceptions;
-	using DomainLayer.Entities.Product;
 	using Microsoft.EntityFrameworkCore;
 	using PersistanceLayer.Contracts;
+	using PersistanceLayer.Contracts.Models.ProductDetailInfos;
 	using PersistanceLayer.Contracts.Repositories;
 	using PersistenceLayer.Exceptions;
+	using PersistenceLayer.Extensions;
 
 	public class ProductDetailInfosRepository : IProductDetailInfosRepository
 	{
@@ -14,7 +15,7 @@
 		public ProductDetailInfosRepository(IDbContext dbContext) => _dbContext = dbContext;
 
 		/// <inheritdoc/>
-		public async Task<ProductDetailInfoEntity> GetProductDetailInofAsync(string productCode, CancellationToken ct)
+		public async Task<ProductDetailInfoModel> GetProductDetailInofAsync(string productCode, CancellationToken ct)
 		{
 			var productDetailInfo = await _dbContext.ProductDetailInfos
 					.AsNoTracking()
@@ -26,7 +27,7 @@
 				throw new PersistanceLayerException(ExceptionType.NotFound, "Product detail info not found");
 			}
 
-			return productDetailInfo;
+			return productDetailInfo.MapToModel();
 		}
 	}
 }

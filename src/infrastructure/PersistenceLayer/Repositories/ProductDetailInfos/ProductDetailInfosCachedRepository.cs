@@ -3,9 +3,9 @@
 	using System.Text;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using DomainLayer.Entities.Product;
 	using Microsoft.Extensions.Caching.Memory;
 	using Newtonsoft.Json;
+	using PersistanceLayer.Contracts.Models.ProductDetailInfos;
 	using PersistanceLayer.Contracts.Repositories;
 	using static ApplicationSetting.ApplicationSetting;
 
@@ -20,15 +20,15 @@
 			_repo = repo ?? throw new ArgumentNullException(nameof(repo));
 		}
 
-		public async Task<ProductDetailInfoEntity> GetProductDetailInofAsync(string productCode, CancellationToken ct)
+		public async Task<ProductDetailInfoModel> GetProductDetailInofAsync(string productCode, CancellationToken ct)
 		{
-			string cacheKey = $"{nameof(ProductDetailInfoEntity)}{productCode}";
+			string cacheKey = $"{nameof(ProductDetailInfoModel)}{productCode}";
 
 			object? cachedResponse = _cache.Get(cacheKey);
 
 			if (cachedResponse != null)
 			{
-				var res = JsonConvert.DeserializeObject<ProductDetailInfoEntity>(Encoding.Default.GetString((byte[])cachedResponse));
+				var res = JsonConvert.DeserializeObject<ProductDetailInfoModel>(Encoding.Default.GetString((byte[])cachedResponse));
 				if (res is not null)
 				{
 					return res;

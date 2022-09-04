@@ -19,16 +19,12 @@
                 .IsRequired();
 
             builder.Property(pd => pd.DetailedDescription)
-                .HasMaxLength(5000)
+                .HasMaxLength(50000)
                 .IsRequired();
 
             builder.Property(pd => pd.Parameters)
-                .HasMaxLength(5000)
+                .HasMaxLength(50000)
                 .IsRequired();
-
-            builder.HasOne(p => p.ProductDetail)
-                .WithOne(p => p.ProductDetailInfo)
-                .HasForeignKey<ProductDetailEntity>(c => c.Id);
         }
     }
 }

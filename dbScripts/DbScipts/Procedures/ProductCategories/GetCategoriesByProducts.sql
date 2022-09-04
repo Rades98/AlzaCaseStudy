@@ -8,5 +8,3 @@ AS
     ( SELECT
           [dbo].[GetProductParentTree](Cats.Id) AS CategoryTree
     ) AS z
-
-GO

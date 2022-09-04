@@ -1,6 +1,6 @@
 ﻿namespace ApplicationSetting
 {
-	//This is for dev purposes.. it should be all stored in app settings (json)
+	//This is for dev purposes.. it should be all stored in app settings (json) or better in db maybe
 	public static class ApplicationSetting
 	{
 		public const int RegistrationActivationDelay = 14;

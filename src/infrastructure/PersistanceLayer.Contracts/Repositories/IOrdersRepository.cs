@@ -2,6 +2,7 @@
 {
 	using System.Linq.Expressions;
 	using DomainLayer.Entities.Orders;
+	using PersistanceLayer.Contracts.Models.Orders;
 
 	public interface IOrdersRepository
 	{
@@ -39,6 +40,6 @@
 		/// <param name="whereFilter">filter</param>
 		/// <param name="ct">cancellation token</param>
 		/// <returns>List of orders acceptiong filter criteria</returns>
-		Task<List<OrderEntity>> GetOrdersByUserId(int userId, Expression<Func<OrderEntity, bool>> whereFilter, CancellationToken ct);
+		Task<List<OrderModel>> GetOrdersByUserId(int userId, Expression<Func<OrderEntity, bool>> whereFilter, CancellationToken ct);
 	}
 }

@@ -13,4 +13,3 @@ AS
 
 	GROUP BY ProductDetails.ProductCode, ProductDetails.[Name], ProductDetails.[Price], UserOrder.OrderCode, UserOrder.Total, OrderStatus.[Name]
 	ORDER BY UserOrder.OrderCode
-GO

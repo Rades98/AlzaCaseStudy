@@ -10,4 +10,3 @@ AS
 	),
 	Changed = GETDATE()
 	WHERE Id=@OrderID
-GO

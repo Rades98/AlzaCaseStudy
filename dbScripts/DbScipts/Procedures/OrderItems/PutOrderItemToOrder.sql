@@ -38,4 +38,3 @@ BEGIN
 			THROW 51000, 'There is no running order for user', 1;   
 		END
 END
-GO

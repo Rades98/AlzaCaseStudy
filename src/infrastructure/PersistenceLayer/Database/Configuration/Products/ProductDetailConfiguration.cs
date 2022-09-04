@@ -19,7 +19,7 @@
                 .IsRequired();
 
             builder.Property(pd => pd.Name)
-                .HasMaxLength(50)
+                .HasMaxLength(150)
                 .IsRequired();
 
             builder.Property(pd => pd.Price)
@@ -46,10 +46,9 @@
                 .HasIndex(p => p.ProductCode)
                 .IsUnique();
 
-            builder
-                .HasOne(p => p.ProductDetailInfo)
-                .WithOne(p => p.ProductDetail)
-                .HasForeignKey<ProductDetailInfoEntity>(c => c.ProductDetailId);
+            builder.HasOne(p => p.ProductDetailInfo)
+               .WithOne(p => p.ProductDetail)
+               .HasForeignKey<ProductDetailInfoEntity>(c => c.ProductDetailId);
         }
     }
 }
