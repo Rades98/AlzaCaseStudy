@@ -16,7 +16,7 @@
 					//This approach is cool.. only till there will not be more procedures.. but for now.. its OK
 					if (Convert.ToBoolean(configuration.GetSection("AppSettings:MigrateDbScripts").Value))
 					{
-						var procedures = Directory.GetFiles(Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName, "*.sql", SearchOption.AllDirectories);
+						var procedures = Directory.GetFiles(Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName, "*.sql", SearchOption.AllDirectories);
 						procedures.Where(x=> x.Contains("Procedures")).ToList().ForEach(pr => context.Database.ExecuteSqlRaw(File.ReadAllText(pr)));
 					}
 				}

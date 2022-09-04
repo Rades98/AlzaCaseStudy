@@ -126,7 +126,7 @@
 		/// <summary>
 		/// Get product by its Id
 		/// </summary>
-		/// <param name="id">Product id</param>
+		/// <param name="code">Product code</param>
 		/// <param name="cancellationToken">cancelation token</param>
 		/// <remarks>
 		/// Returns product found by id, if there is none, returns null

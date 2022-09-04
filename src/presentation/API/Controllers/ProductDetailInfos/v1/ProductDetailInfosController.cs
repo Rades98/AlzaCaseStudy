@@ -25,7 +25,7 @@
 		/// <summary>
 		/// Get product detail info
 		/// </summary>
-		/// <param name="id">Product detail ingo id </param>
+		/// <param name="code">Product code</param>
 		/// <param name="cancellationToken">cancelation token</param>
 		/// <remarks>
 		/// Returns product detail info, if found
@@ -51,7 +51,7 @@
 
 			links.First(x => x.ActionName == "self").ReplaceInLink("{id}", result.Id.ToString());
 
-			string cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+			string? cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
 
 			if (cookieOrderCode is not null)
 			{

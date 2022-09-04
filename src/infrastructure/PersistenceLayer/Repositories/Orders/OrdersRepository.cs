@@ -95,12 +95,6 @@
 
 				await _dbContext.SaveChangesAsync(ct);
 
-				int id = await _dbContext.Orders.Where(x => x.UserId == userId &&
-				(x.OrderStatusId == OrderStatuses.New ||
-				x.OrderStatusId == OrderStatuses.Created))
-				.Select(x => x.Id)
-				.FirstOrDefaultAsync(ct);
-
 				return code;
 			}
 			catch (Exception e)
