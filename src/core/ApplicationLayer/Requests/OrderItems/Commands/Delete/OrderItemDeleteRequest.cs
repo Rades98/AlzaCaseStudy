@@ -1,10 +1,8 @@
-﻿namespace ApplicationLayer.Requests.OrderItems.Commands.Delete
-{
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.OrderItems.Commands.Delete
+{
 	public class OrderItemDeleteRequest : IRequest<OrderItemDeleteResponse>
 	{
 		public string OrderCode { get; set; } = string.Empty;

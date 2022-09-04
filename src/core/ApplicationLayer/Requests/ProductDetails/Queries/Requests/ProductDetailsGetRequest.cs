@@ -1,11 +1,10 @@
-﻿namespace ApplicationLayer.Requests.ProductDetails.Queries.Requests
-{
-	using ApplicationLayer.Requests.ProductDetails.Queries;
-	using DomainLayer.Entities.Product;
-	using Interfaces.Cache;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using ApplicationLayer.Interfaces.Cache;
+using DomainLayer.Entities.Product;
+using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.ProductDetails.Queries.Requests
+{
 	/// <summary>
 	/// Query to obtain all products
 	/// </summary>

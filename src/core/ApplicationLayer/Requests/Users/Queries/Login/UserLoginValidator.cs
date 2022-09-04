@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.Users.Queries.Login
-{
-	using FluentValidation;
+﻿using FluentValidation;
 
+namespace ApplicationLayer.Requests.Users.Queries.Login
+{
 	public class UserLoginValidator : AbstractValidator<UserLoginRequest>
 	{
 		public UserLoginValidator()

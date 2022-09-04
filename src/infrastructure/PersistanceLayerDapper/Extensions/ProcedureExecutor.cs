@@ -1,8 +1,8 @@
-﻿namespace PersistanceLayerDapper.Extensions
-{
-	using System.Data;
-	using Dapper;
+﻿using System.Data;
+using Dapper;
 
+namespace PersistanceLayerDapper.Extensions
+{
 	public static class ProcedureExecutor
 	{
 		public static async Task<List<T>> ExecuteProcedureAsync<T>(this DapperContext context, string procedureName, object parameters)

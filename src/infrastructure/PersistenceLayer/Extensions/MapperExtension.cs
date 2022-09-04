@@ -1,10 +1,10 @@
-﻿namespace PersistenceLayer.Extensions
-{
-	using DomainLayer.Entities.Orders;
-	using DomainLayer.Entities.Product;
-	using PersistanceLayer.Contracts.Models.Orders;
-	using PersistanceLayer.Contracts.Models.ProductDetailInfos;
+﻿using DomainLayer.Entities.Orders;
+using DomainLayer.Entities.Product;
+using PersistanceLayer.Contracts.Models.Orders;
+using PersistanceLayer.Contracts.Models.ProductDetailInfos;
 
+namespace PersistenceLayer.Extensions
+{
 	public static class MapperExtension
 	{
 		public static ProductDetailInfoModel MapToModel(this ProductDetailInfoEntity ent)

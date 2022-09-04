@@ -1,7 +1,8 @@
-﻿namespace API.Extensions
+﻿using Microsoft.EntityFrameworkCore;
+using PersistenceLayer.Database;
+
+namespace API.Extensions
 {
-	using Microsoft.EntityFrameworkCore;
-	using PersistenceLayer.Database;
 
 	public static class DatabaseConfigurationExtensions
 	{
@@ -17,7 +18,7 @@
 					if (Convert.ToBoolean(configuration.GetSection("AppSettings:MigrateDbScripts").Value))
 					{
 						var procedures = Directory.GetFiles(Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName, "*.sql", SearchOption.AllDirectories);
-						procedures.Where(x=> x.Contains("Procedures")).ToList().ForEach(pr => context.Database.ExecuteSqlRaw(File.ReadAllText(pr)));
+						procedures.Where(x => x.Contains("Procedures")).ToList().ForEach(pr => context.Database.ExecuteSqlRaw(File.ReadAllText(pr)));
 					}
 				}
 			}

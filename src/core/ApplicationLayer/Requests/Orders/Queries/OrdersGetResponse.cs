@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.Orders.Queries
-{
-	using ApplicationLayer.Dtos;
+﻿using ApplicationLayer.Dtos;
 
+namespace ApplicationLayer.Requests.Orders.Queries
+{
 	public class OrdersGetResponse
 	{
 		public string OrderCode { get; set; } = string.Empty;

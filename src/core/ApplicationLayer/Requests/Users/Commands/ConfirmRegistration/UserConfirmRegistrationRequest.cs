@@ -1,8 +1,8 @@
-﻿namespace ApplicationLayer.Requests.Users.Commands.ConfirmRegistration
-{
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.Users.Commands.ConfirmRegistration
+{
 	public class UserConfirmRegistrationRequest : IRequest<UserConfirmRegistrationResponse>
 	{
 		public string Code { get; set; } = string.Empty;

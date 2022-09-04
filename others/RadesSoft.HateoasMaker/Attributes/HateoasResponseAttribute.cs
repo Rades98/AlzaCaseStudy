@@ -1,9 +1,8 @@
-﻿namespace RadesSoft.HateoasMaker.Attributes
-{
-	using System.Runtime.CompilerServices;
-	using Models;
-	using RadesSoft.HateoasMaker;
+﻿using System.Runtime.CompilerServices;
+using RadesSoft.HateoasMaker.Models;
 
+namespace RadesSoft.HateoasMaker.Attributes
+{
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public class HateoasResponseAttribute : Attribute
 	{

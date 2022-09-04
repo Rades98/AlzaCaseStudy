@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.Users.Queries.Login
-{
-	using Dtos;
+﻿using ApplicationLayer.Dtos;
 
+namespace ApplicationLayer.Requests.Users.Queries.Login
+{
 	public class UserLoginResponse : RestDtoBase
 	{
 		public string UserName { get; set; } = string.Empty;

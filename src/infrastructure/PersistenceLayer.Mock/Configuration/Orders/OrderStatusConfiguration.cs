@@ -1,9 +1,8 @@
-﻿namespace PersistenceLayer.Mock.Configuration.Orders
-{
-	using CodeLists.OrderStatuses;
-	using DomainLayer.Entities.Orders;
-	using Microsoft.EntityFrameworkCore;
+﻿using DomainLayer.Entities.Orders;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Mock.Configuration.Orders
+{
 	internal static class OrderStatusConfiguration
 	{
 		public static void ConfigureOrderStatusEntity(this ModelBuilder modelBuilder)

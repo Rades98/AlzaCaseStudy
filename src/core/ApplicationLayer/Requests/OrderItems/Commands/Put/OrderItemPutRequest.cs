@@ -1,10 +1,8 @@
-﻿namespace ApplicationLayer.Requests.OrderItems.Commands.Put
-{
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.OrderItems.Commands.Put
+{
 	public class OrderItemPutRequest : IRequest<OrderItemPutResponse>
 	{
 		public string ProductCode { get; set; } = string.Empty;

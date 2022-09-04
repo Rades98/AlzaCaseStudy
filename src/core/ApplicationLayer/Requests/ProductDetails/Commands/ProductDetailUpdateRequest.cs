@@ -1,11 +1,9 @@
-﻿namespace ApplicationLayer.Requests.ProductDetails.Commands
-{
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Interfaces.Cache;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using ApplicationLayer.Interfaces.Cache;
+using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.ProductDetails.Commands
+{
 	/// <summary>
 	/// Request handling request for updating description of product choosen by Id
 	/// </summary>

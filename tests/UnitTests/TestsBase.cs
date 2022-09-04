@@ -1,12 +1,12 @@
-﻿namespace UnitTests
-{
-	using System.Security.Claims;
-	using MediatR;
-	using Microsoft.AspNetCore.Mvc;
-	using Moq;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using System.Security.Claims;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace UnitTests
+{
 	public class TestsBase
 	{
 		private readonly ServiceCollectionProvider _services = new();

@@ -1,12 +1,12 @@
-﻿namespace PersistenceLayer.Repositories.ProductCategories
-{
-	using CodeLists.Exceptions;
-	using DomainLayer.Entities.Product;
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
-	using PersistenceLayer.Exceptions;
+﻿using CodeLists.Exceptions;
+using DomainLayer.Entities.Product;
+using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Repositories;
+using PersistenceLayer.Exceptions;
 
+namespace PersistenceLayer.Repositories.ProductCategories
+{
 	public class ProductCategoriesRepository : IProductCategoriesRepository
 	{
 		private readonly IDbContext _dbContext;

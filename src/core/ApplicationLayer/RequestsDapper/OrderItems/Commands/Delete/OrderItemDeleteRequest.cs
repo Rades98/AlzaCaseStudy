@@ -1,14 +1,12 @@
-﻿namespace ApplicationLayer.RequestsDapper.OrderItems.Commands.Delete
-{
-	using System.Threading;
-	using System.Threading.Tasks;
-	using Exceptions;
-	using MediatR;
-	using System.Data.SqlClient;
-	using PersistanceLayerDapper;
-	using PersistanceLayerDapper.Extensions;
-	using CodeLists.Exceptions;
+﻿using System.Data.SqlClient;
+using ApplicationLayer.Exceptions;
+using CodeLists.Exceptions;
+using MediatR;
+using PersistanceLayerDapper;
+using PersistanceLayerDapper.Extensions;
 
+namespace ApplicationLayer.RequestsDapper.OrderItems.Commands.Delete
+{
 	public class OrderItemDeleteRequest : IRequest<OrderItemDeleteResponse>
 	{
 		public string OrderCode { get; set; } = string.Empty;

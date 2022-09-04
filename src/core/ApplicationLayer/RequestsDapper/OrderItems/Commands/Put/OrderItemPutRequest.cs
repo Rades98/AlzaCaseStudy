@@ -1,14 +1,12 @@
-﻿namespace ApplicationLayer.RequestsDapper.OrderItems.Commands.Put
-{
-	using System.Data.SqlClient;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using CodeLists.Exceptions;
-	using Exceptions;
-	using MediatR;
-	using PersistanceLayerDapper;
-	using PersistanceLayerDapper.Extensions;
+﻿using System.Data.SqlClient;
+using ApplicationLayer.Exceptions;
+using CodeLists.Exceptions;
+using MediatR;
+using PersistanceLayerDapper;
+using PersistanceLayerDapper.Extensions;
 
+namespace ApplicationLayer.RequestsDapper.OrderItems.Commands.Put
+{
 	public class OrderItemPutRequest : IRequest<OrderItemPutResponse>
 	{
 		public string ProductCode { get; set; } = string.Empty;

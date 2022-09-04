@@ -1,8 +1,8 @@
-﻿namespace API.HealthChecks
-{
-	using Microsoft.Extensions.Diagnostics.HealthChecks;
-	using PersistanceLayer.Contracts;
+﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
+using PersistanceLayer.Contracts;
 
+namespace API.HealthChecks
+{
 	public class HealthCheckDbContextCheck : IHealthCheck
 	{
 		private readonly IDbContext _dbContext;

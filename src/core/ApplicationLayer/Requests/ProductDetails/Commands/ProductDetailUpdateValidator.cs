@@ -1,15 +1,13 @@
-﻿namespace ApplicationLayer.Requests.ProductDetails.Commands
-{
-	using FluentValidation;
+﻿using FluentValidation;
+using static ApplicationSetting.ApplicationSetting;
 
+namespace ApplicationLayer.Requests.ProductDetails.Commands
+{
 	/// <summary>
 	/// validator for <see cref="ProductDetailUpdateRequest"/>
 	/// </summary>
 	internal class ProductDetailUpdateValidator : AbstractValidator<ProductDetailUpdateRequest>
 	{
-		private const int MAX_DESCRIPTION_LENGHT = 250;
-		private const int MIN_DESCRIPTION_LENGHT = 40;
-
 		public ProductDetailUpdateValidator()
 		{
 			RuleFor(product => product.Description)

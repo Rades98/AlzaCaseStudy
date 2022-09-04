@@ -7,14 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="RequestsDapper\Orders\Commands\**" />
     <Compile Remove="RequestsDapper\ProductCategories\**" />
     <Compile Remove="RequestsDapper\ProductDetailInfos\**" />
     <Compile Remove="RequestsDapper\ProductDetails\**" />
     <Compile Remove="RequestsDapper\Users\**" />
+    <EmbeddedResource Remove="RequestsDapper\Orders\Commands\**" />
     <EmbeddedResource Remove="RequestsDapper\ProductCategories\**" />
     <EmbeddedResource Remove="RequestsDapper\ProductDetailInfos\**" />
     <EmbeddedResource Remove="RequestsDapper\ProductDetails\**" />
     <EmbeddedResource Remove="RequestsDapper\Users\**" />
+    <None Remove="RequestsDapper\Orders\Commands\**" />
     <None Remove="RequestsDapper\ProductCategories\**" />
     <None Remove="RequestsDapper\ProductDetailInfos\**" />
     <None Remove="RequestsDapper\ProductDetails\**" />
@@ -41,10 +44,6 @@
     <ProjectReference Include="..\..\infrastructure\PersistanceLayer.Contracts\PersistanceLayer.Contracts.csproj" />
     <ProjectReference Include="..\..\infrastructure\PersistanceLayerDapper\PersistanceLayerDapper.csproj" />
     <ProjectReference Include="..\DomainLayer\DomainLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="RequestsDapper\Orders\Commands\" />
   </ItemGroup>
 
 </Project>

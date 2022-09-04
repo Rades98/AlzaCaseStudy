@@ -1,12 +1,12 @@
-﻿namespace ApplicationLayer
-{
-	using System.Reflection;
-	using ApplicationLayer.Pipelines;
-	using FluentValidation;
-	using MediatR;
-	using Microsoft.Extensions.DependencyInjection;
-	using Utils.Pipelines;
+﻿using System.Reflection;
+using ApplicationLayer.Pipelines;
+using ApplicationLayer.Utils.Pipelines;
+using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
+namespace ApplicationLayer
+{
 	public static class DependencyRegistrations
 	{
 		public static IServiceCollection AddApplicationServices(this IServiceCollection services)

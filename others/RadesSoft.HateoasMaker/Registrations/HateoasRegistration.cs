@@ -1,20 +1,20 @@
-﻿namespace RadesSoft.HateoasMaker.Registrations
-{
-	using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
-	using Microsoft.AspNetCore.Mvc.Routing;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.DependencyInjection.Extensions;
-	using RadesSoft.HateoasMaker;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
+namespace RadesSoft.HateoasMaker.Registrations
+{
 	public static class HateoasRegistration
 	{
 		public static IServiceCollection RegisterHateoas(this IServiceCollection services)
 		{
 			services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-			services.TryAddTransient(s => {
+			services.TryAddTransient(s =>
+			{
 				var contextAccessor = s.GetService<IHttpContextAccessor>()?.HttpContext?.User;
-				
+
 				if (contextAccessor is null)
 				{
 					throw new InvalidOperationException("cannot load IHttpContextAccessor");
@@ -31,7 +31,7 @@
 				var actionContext = acc.ActionContext;
 				var urlHelperFactory = sp.GetRequiredService<IUrlHelperFactory>();
 
-				if(actionContext is null)
+				if (actionContext is null)
 				{
 					throw new InvalidOperationException("cannot load ActionContext");
 				}

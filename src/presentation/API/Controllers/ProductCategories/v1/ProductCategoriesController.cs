@@ -1,12 +1,12 @@
-﻿namespace API.Controllers.ProductCategories.v1
-{
-	using ApplicationLayer.Requests.ProductCategories.Queries;
-	using DomainLayer.Entities.Product;
-	using MediatR;
-	using Microsoft.AspNetCore.Mvc;
-	using RadesSoft.HateoasMaker;
-	using RadesSoft.HateoasMaker.Attributes;
+﻿using ApplicationLayer.Requests.ProductCategories.Queries;
+using DomainLayer.Entities.Product;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RadesSoft.HateoasMaker;
+using RadesSoft.HateoasMaker.Attributes;
 
+namespace API.Controllers.ProductCategories.v1
+{
 	[ApiVersion("1")]
 	public class ProductCategoriesController : BaseController<ProductCategoryEntity>
 	{

@@ -1,12 +1,12 @@
-﻿namespace PersistenceLayer.Repositories.Products
-{
-	using System.Text;
-	using DomainLayer.Entities.Product;
-	using Microsoft.Extensions.Caching.Memory;
-	using Newtonsoft.Json;
-	using PersistanceLayer.Contracts.Repositories;
-	using static ApplicationSetting.ApplicationSetting;
+﻿using System.Text;
+using DomainLayer.Entities.Product;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using PersistanceLayer.Contracts.Repositories;
+using static ApplicationSetting.ApplicationSetting;
 
+namespace PersistenceLayer.Repositories.Products
+{
 	internal class ProductsCachedRepository : IProductsRepository
 	{
 		private readonly IMemoryCache _cache;

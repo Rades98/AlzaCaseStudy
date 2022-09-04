@@ -1,10 +1,10 @@
-﻿namespace UnitTests.MediatorRequestsTests.Orders.Queries
-{
-	using System.Linq;
-	using ApplicationLayer.Requests.Orders.Queries;
-	using Shouldly;
-	using Xunit;
+﻿using System.Linq;
+using ApplicationLayer.Requests.Orders.Queries;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.Orders.Queries
+{
 	public class OrdersGetByUserTests : TestsBase
 	{
 		[Fact]

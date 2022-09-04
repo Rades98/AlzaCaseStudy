@@ -1,14 +1,14 @@
-﻿namespace PersistenceLayer.Repositories.ProductDetails
-{
-	using CodeLists.Exceptions;
-	using DomainLayer.Entities.Product;
-	using global::Extensions;
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
-	using PersistenceLayer.Exceptions;
-	using X.PagedList;
+﻿using CodeLists.Exceptions;
+using DomainLayer.Entities.Product;
+using Extensions;
+using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Repositories;
+using PersistenceLayer.Exceptions;
+using X.PagedList;
 
+namespace PersistenceLayer.Repositories.ProductDetails
+{
 	public class ProductDetailsRepository : IProductDetailsRepository
 	{
 		private readonly IDbContext _dbContext;

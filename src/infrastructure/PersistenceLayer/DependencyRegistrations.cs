@@ -1,19 +1,19 @@
-﻿namespace PersistenceLayer
-{
-	using Database;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.Configuration;
-	using Microsoft.Extensions.DependencyInjection;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
-	using PersistenceLayer.Repositories.OrderItems;
-	using PersistenceLayer.Repositories.OrdersRepository;
-	using PersistenceLayer.Repositories.ProductCategories;
-	using PersistenceLayer.Repositories.ProductDetailInfos;
-	using PersistenceLayer.Repositories.ProductDetails;
-	using PersistenceLayer.Repositories.Products;
-	using PersistenceLayer.Repositories.Users;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Repositories;
+using PersistenceLayer.Database;
+using PersistenceLayer.Repositories.OrderItems;
+using PersistenceLayer.Repositories.OrdersRepository;
+using PersistenceLayer.Repositories.ProductCategories;
+using PersistenceLayer.Repositories.ProductDetailInfos;
+using PersistenceLayer.Repositories.ProductDetails;
+using PersistenceLayer.Repositories.Products;
+using PersistenceLayer.Repositories.Users;
 
+namespace PersistenceLayer
+{
 	public static class DependencyRegistrations
 	{
 		public static IServiceCollection RegisterDatabase(this IServiceCollection services, IConfiguration configuration)

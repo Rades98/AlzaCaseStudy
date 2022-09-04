@@ -1,13 +1,13 @@
-﻿namespace UnitTests.MediatorRequestsTests.ProductDetails.Queries
-{
-	using System;
-	using System.Linq;
-	using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
-	using ApplicationSetting.Exceptions;
-	using CodeLists.Exceptions;
-	using Shouldly;
-	using Xunit;
+﻿using System;
+using System.Linq;
+using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
+using ApplicationSetting.Exceptions;
+using CodeLists.Exceptions;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.ProductDetails.Queries
+{
 	public class ProductDetailsGetPaginatedTests : TestsBase
 	{
 		[Fact]

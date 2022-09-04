@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.Orders.Commands.Storno
-{
-	using FluentValidation;
+﻿using FluentValidation;
 
+namespace ApplicationLayer.Requests.Orders.Commands.Storno
+{
 	public class OrderStornoRequestValidator : AbstractValidator<OrderStornoRequest>
 	{
 		public OrderStornoRequestValidator()

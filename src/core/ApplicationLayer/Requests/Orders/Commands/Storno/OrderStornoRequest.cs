@@ -1,10 +1,8 @@
-﻿namespace ApplicationLayer.Requests.Orders.Commands.Storno
-{
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.Orders.Commands.Storno
+{
 	public class OrderStornoRequest : IRequest<OrderStornoResponse>
 	{
 		public string OrderCode { get; set; } = string.Empty;

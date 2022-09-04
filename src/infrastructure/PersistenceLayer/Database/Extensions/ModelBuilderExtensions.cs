@@ -1,17 +1,17 @@
-﻿namespace PersistenceLayer.Database.Extensions
-{
-	using AppUtils.PasswordHashing;
-	using CodeLists.Languages;
-	using CodeLists.MessageTypes;
-	using CodeLists.OrderStatuses;
-	using CodeLists.ProductCategories;
-	using CodeLists.UserRoles;
-	using DomainLayer.Entities.LanguageMutations;
-	using DomainLayer.Entities.Orders;
-	using DomainLayer.Entities.Product;
-	using DomainLayer.Entities.Users;
-	using Microsoft.EntityFrameworkCore;
+﻿using AppUtils.PasswordHashing;
+using CodeLists.Languages;
+using CodeLists.MessageTypes;
+using CodeLists.OrderStatuses;
+using CodeLists.ProductCategories;
+using CodeLists.UserRoles;
+using DomainLayer.Entities.LanguageMutations;
+using DomainLayer.Entities.Orders;
+using DomainLayer.Entities.Product;
+using DomainLayer.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Database.Extensions
+{
 	internal static class ModelBuilderExtensions
 	{
 		private static readonly DateTime _created = new(2022, 4, 12, 17, 00, 00, 222, DateTimeKind.Local);
@@ -40,7 +40,7 @@
 			var productCategories = new List<ProductCategoryEntity>()
 			{
 				new() { Name = "Eshop", Id = ProductCategories.EshopId, Created = _created },
-				
+
 				new() { Name = "Mobile devices and accessories", Id = ProductCategories.MobAndAccId, Created = _created , ParentProductCategoryId = ProductCategories.EshopId},
 				new() { Name = "Mobile Phones", Id = ProductCategories.MobilePhonesId, Created = _created, ParentProductCategoryId = ProductCategories.MobAndAccId },
 				new() { Name = "Mobile cases", Id = ProductCategories.CasesId, Created = _created, ParentProductCategoryId = ProductCategories.MobAndAccId },

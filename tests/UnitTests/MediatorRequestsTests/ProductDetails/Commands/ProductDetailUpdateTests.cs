@@ -1,13 +1,13 @@
-﻿namespace UnitTests.MediatorRequestsTests.ProductDetails.Commands
-{
-	using System;
-	using ApplicationLayer.Exceptions;
-	using ApplicationLayer.Requests.ProductDetails.Commands;
-	using ApplicationSetting.Exceptions;
-	using CodeLists.Exceptions;
-	using Shouldly;
-	using Xunit;
+﻿using System;
+using ApplicationLayer.Requests.ProductDetails.Commands;
+using ApplicationSetting.Exceptions;
+using CodeLists.Exceptions;
+using Shouldly;
+using Xunit;
 
+
+namespace UnitTests.MediatorRequestsTests.ProductDetails.Commands
+{
 	public class ProductDetailUpdateTests : TestsBase
 	{
 		[Fact]
@@ -25,7 +25,7 @@
 			{
 				var result = await new ProductDetailUpdateRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailUpdateRequest { Id = 1, Description = "description" }, default);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotModified);
 			}

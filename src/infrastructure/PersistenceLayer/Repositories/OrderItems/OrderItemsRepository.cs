@@ -1,13 +1,13 @@
-﻿namespace PersistenceLayer.Repositories.OrderItems
-{
-	using CodeLists.Exceptions;
-	using CodeLists.OrderStatuses;
-	using DomainLayer.Entities.Orders;
-	using Exceptions;
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using CodeLists.Exceptions;
+using CodeLists.OrderStatuses;
+using DomainLayer.Entities.Orders;
+using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Repositories;
+using PersistenceLayer.Exceptions;
 
+namespace PersistenceLayer.Repositories.OrderItems
+{
 	public class OrderItemsRepository : IOrderItemsRepository
 	{
 		private readonly IDbContext _dbContext;

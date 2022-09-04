@@ -1,9 +1,9 @@
-﻿namespace PersistenceLayer.Mock.Configuration.LanguageMutations
-{
-	using CodeLists.MessageTypes;
-	using DomainLayer.Entities.LanguageMutations;
-	using Microsoft.EntityFrameworkCore;
+﻿using CodeLists.MessageTypes;
+using DomainLayer.Entities.LanguageMutations;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Mock.Configuration.LanguageMutations
+{
 	internal static class MessageTypeConfiguration
 	{
 		public static void ConfigureMessageTypeEntity(this ModelBuilder modelBuilder)

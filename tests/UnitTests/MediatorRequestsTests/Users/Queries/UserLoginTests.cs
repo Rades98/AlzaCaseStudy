@@ -1,13 +1,13 @@
-﻿namespace UnitTests.MediatorRequestsTests.Users.Queries
-{
-	using System;
-	using ApplicationLayer.Exceptions;
-	using ApplicationLayer.Requests.Users.Queries.Login;
-	using ApplicationSetting.Exceptions;
-	using CodeLists.Exceptions;
-	using Shouldly;
-	using Xunit;
+﻿using System;
+using ApplicationLayer.Exceptions;
+using ApplicationLayer.Requests.Users.Queries.Login;
+using ApplicationSetting.Exceptions;
+using CodeLists.Exceptions;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.Users.Queries
+{
 	public class UserLoginTests : TestsBase
 	{
 		[Fact]

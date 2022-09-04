@@ -1,16 +1,17 @@
-﻿namespace ApplicationLayer.Cache
-{
-    using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
+using static ApplicationSetting.ApplicationSetting;
 
-    /// <summary>
-    /// Options for cache
-    /// </summary>
-    public class CacheEntryOptions : MemoryCacheEntryOptions
-    {
-        public static CacheEntryOptions Default => new()
-        {
-            AbsoluteExpiration = DateTime.Now.AddMinutes(5),
-            SlidingExpiration = TimeSpan.FromMinutes(2)
-        };
-    }
+namespace ApplicationLayer.Cache
+{
+	/// <summary>
+	/// Options for cache
+	/// </summary>
+	public class CacheEntryOptions : MemoryCacheEntryOptions
+	{
+		public static CacheEntryOptions Default => new()
+		{
+			AbsoluteExpiration = DateTime.Now.AddMinutes(CACHE_EXPIRATION_TIME_MINS),
+			SlidingExpiration = TimeSpan.FromMinutes(CACHE_SLIDING_EXPIRATION_TIME_MINS)
+		};
+	}
 }

@@ -1,10 +1,8 @@
-﻿namespace ApplicationLayer.Requests.Users.Commands.Register
-{
-	using System.Threading;
-	using System.Threading.Tasks;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.Users.Commands.Register
+{
 	public class UserRegisterRequest : IRequest<UserRegisterResponse>
 	{
 		public string FirstName { get; set; } = string.Empty;

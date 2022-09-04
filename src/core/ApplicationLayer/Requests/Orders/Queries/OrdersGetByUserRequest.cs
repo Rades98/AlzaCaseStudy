@@ -1,10 +1,10 @@
-﻿namespace ApplicationLayer.Requests.Orders.Queries
-{
-	using System.Linq.Expressions;
-	using DomainLayer.Entities.Orders;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using System.Linq.Expressions;
+using DomainLayer.Entities.Orders;
+using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.Orders.Queries
+{
 	public class OrdersGetByUserRequest : IRequest<List<OrdersGetResponse>>
 	{
 		public int UserId { get; set; }

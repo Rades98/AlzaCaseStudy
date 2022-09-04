@@ -1,9 +1,9 @@
-﻿namespace PersistenceLayer.Repositories.Products
-{
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace PersistenceLayer.Repositories.Products
+{
 	public class ProductsRepository : IProductsRepository
 	{
 		private readonly IDbContext _dbContext;

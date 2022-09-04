@@ -1,21 +1,20 @@
-﻿namespace API.Controllers.ProductDetails.v1
-{
-	using API.Constants;
-	using ApplicationLayer.Requests.ProductDetails.Commands;
-	using ApplicationLayer.Requests.ProductDetails.Queries;
-	using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
-	using CodeLists.UserRoles;
-	using DomainLayer.Entities.Product;
-	using MediatR;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.Extensions.Logging;
-	using OrderItems.v1;
-	using ProductDetailInfos.v1;
-	using RadesSoft.HateoasMaker;
-	using RadesSoft.HateoasMaker.Attributes;
-	using RadesSoft.HateoasMaker.Extensions;
+﻿using API.Constants;
+using API.Controllers.OrderItems.v1;
+using API.Controllers.ProductDetailInfos.v1;
+using ApplicationLayer.Requests.ProductDetails.Commands;
+using ApplicationLayer.Requests.ProductDetails.Queries;
+using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
+using CodeLists.UserRoles;
+using DomainLayer.Entities.Product;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RadesSoft.HateoasMaker;
+using RadesSoft.HateoasMaker.Attributes;
+using RadesSoft.HateoasMaker.Extensions;
 
+namespace API.Controllers.ProductDetails.v1
+{
 	/// <summary>
 	/// Products endpoints v1
 	/// </summary>

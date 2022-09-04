@@ -1,15 +1,15 @@
-﻿namespace API.Controllers.ProductDetailInfos.v1
-{
-	using API.Constants;
-	using API.Controllers.OrderItems.v1;
-	using ApplicationLayer.Requests.ProductDetailInfos.Queries;
-	using DomainLayer.Entities.Product;
-	using MediatR;
-	using Microsoft.AspNetCore.Mvc;
-	using RadesSoft.HateoasMaker;
-	using RadesSoft.HateoasMaker.Attributes;
-	using RadesSoft.HateoasMaker.Extensions;
+﻿using API.Constants;
+using API.Controllers.OrderItems.v1;
+using ApplicationLayer.Requests.ProductDetailInfos.Queries;
+using DomainLayer.Entities.Product;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RadesSoft.HateoasMaker;
+using RadesSoft.HateoasMaker.Attributes;
+using RadesSoft.HateoasMaker.Extensions;
 
+namespace API.Controllers.ProductDetailInfos.v1
+{
 	/// <summary>
 	/// Product detail info  endpoints v1
 	/// </summary>

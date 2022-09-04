@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.ProductDetails.Commands
-{
-	using Dtos;
+﻿using ApplicationLayer.Dtos;
 
+namespace ApplicationLayer.Requests.ProductDetails.Commands
+{
 	/// <summary>
 	/// Response for <see cref="ProductDetailUpdateRequest"/>
 	/// </summary>

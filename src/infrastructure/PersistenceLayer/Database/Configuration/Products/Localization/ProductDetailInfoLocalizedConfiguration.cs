@@ -1,9 +1,9 @@
-﻿namespace PersistenceLayer.Database.Configuration.Products.Localization
-{
-	using DomainLayer.Entities.Product.Localization;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using DomainLayer.Entities.Product.Localization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace PersistenceLayer.Database.Configuration.Products.Localization
+{
 	public class ProductDetailInfoLocalizedConfiguration : IEntityTypeConfiguration<ProductDetailInfoLocalizedEntity>
 	{
 		public void Configure(EntityTypeBuilder<ProductDetailInfoLocalizedEntity> builder)

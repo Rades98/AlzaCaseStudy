@@ -1,13 +1,13 @@
-﻿namespace ApplicationLayer.Pipelines
-{
-	using Cache;
-	using Interfaces.Cache;
-	using MediatR;
-	using Microsoft.Extensions.Caching.Memory;
-	using Microsoft.Extensions.Logging;
-	using Newtonsoft.Json;
-	using System.Text;
+﻿using System.Text;
+using ApplicationLayer.Cache;
+using ApplicationLayer.Interfaces.Cache;
+using MediatR;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
+namespace ApplicationLayer.Pipelines
+{
 	/// <summary>
 	/// Generic pipeline to store/load collections to/from cache
 	/// </summary>
@@ -22,7 +22,7 @@
 
 		public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
 		{
-			var cachedResponse = _cache.Get(request.CacheKey);
+			object? cachedResponse = _cache.Get(request.CacheKey);
 
 			if (cachedResponse != null)
 			{

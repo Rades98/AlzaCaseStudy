@@ -1,17 +1,17 @@
-﻿namespace API.Controllers.Orders.v1
-{
-	using API.Constants;
-	using ApplicationLayer.Requests.Orders.Commands.ChangeStatus;
-	using ApplicationLayer.Requests.Orders.Commands.Put;
-	using ApplicationLayer.Requests.Orders.Commands.Storno;
-	using ApplicationLayer.Requests.Orders.Queries;
-	using DomainLayer.Entities.Orders;
-	using MediatR;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-	using RadesSoft.HateoasMaker;
-	using RadesSoft.HateoasMaker.Attributes;
+﻿using API.Constants;
+using ApplicationLayer.Requests.Orders.Commands.ChangeStatus;
+using ApplicationLayer.Requests.Orders.Commands.Put;
+using ApplicationLayer.Requests.Orders.Commands.Storno;
+using ApplicationLayer.Requests.Orders.Queries;
+using DomainLayer.Entities.Orders;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RadesSoft.HateoasMaker;
+using RadesSoft.HateoasMaker.Attributes;
 
+namespace API.Controllers.Orders.v1
+{
 	[ApiVersion("1")]
 	public class OrdersController : BaseController<OrderEntity>
 	{
@@ -135,7 +135,7 @@
 		public async Task<ActionResult<OrderStornoResponse>> DeleteOrderAsync(string orderCode, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new OrderStornoRequest() { UserId = GetUserIdFromToken(), OrderCode = orderCode }, cancellationToken);
-			
+
 			RemoveActualOrderCookieIfNeeded(orderCode);
 
 			return Ok(result);
@@ -177,13 +177,13 @@
 		private void RemoveActualOrderCookieIfNeeded(string orderCode)
 		{
 			string? cookieOrderCode;
-			
+
 			Request.Cookies.TryGetValue(CookieNames.ActualOrder, out cookieOrderCode);
-			
+
 			if (cookieOrderCode == orderCode)
 			{
 				Response.Cookies.Delete(CookieNames.ActualOrder);
-			}			
+			}
 		}
 	}
 }

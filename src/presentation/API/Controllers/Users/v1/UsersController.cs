@@ -1,19 +1,18 @@
-﻿namespace API.Controllers.Users.v1
-{
-	using API.Controllers.OrderItems.v1;
-	using API.Controllers.Orders.v1;
-	using API.Controllers.ProductDetails.v1;
-	using API.Models;
-	using ApplicationLayer.Requests.Users.Commands.ConfirmRegistration;
-	using ApplicationLayer.Requests.Users.Commands.Register;
-	using ApplicationLayer.Requests.Users.Queries.Login;
-	using DomainLayer.Entities.Users;
-	using MediatR;
-	using Microsoft.AspNetCore.Mvc;
-	using RadesSoft.HateoasMaker;
-	using RadesSoft.HateoasMaker.Attributes;
-	using RadesSoft.HateoasMaker.Models;
+﻿using API.Controllers.Orders.v1;
+using API.Controllers.ProductDetails.v1;
+using API.Models;
+using ApplicationLayer.Requests.Users.Commands.ConfirmRegistration;
+using ApplicationLayer.Requests.Users.Commands.Register;
+using ApplicationLayer.Requests.Users.Queries.Login;
+using DomainLayer.Entities.Users;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using RadesSoft.HateoasMaker;
+using RadesSoft.HateoasMaker.Attributes;
+using RadesSoft.HateoasMaker.Models;
 
+namespace API.Controllers.Users.v1
+{
 	/// <summary>
 	/// Users endpoint v1
 	/// </summary>
@@ -84,7 +83,7 @@
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult<UserLoginResponse>> RegisterUserAsync(UserRegistration user, CancellationToken cancellationToken = default)
 		{
-			var result = await Mediator.Send(new UserRegisterRequest 
+			var result = await Mediator.Send(new UserRegisterRequest
 			{
 				Email = user.Email,
 				FirstName = user.FirstName,

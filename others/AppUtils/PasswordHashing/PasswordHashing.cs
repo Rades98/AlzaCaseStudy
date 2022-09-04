@@ -1,10 +1,10 @@
-﻿namespace AppUtils.PasswordHashing
-{
-	using Microsoft.IdentityModel.Tokens;
-	using System.IdentityModel.Tokens.Jwt;
-	using System.Security.Claims;
-	using System.Security.Cryptography;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
+namespace AppUtils.PasswordHashing
+{
 	public static class PasswordHashing
 	{
 		public static void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

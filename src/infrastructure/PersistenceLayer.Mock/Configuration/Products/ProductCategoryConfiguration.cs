@@ -1,9 +1,8 @@
-﻿namespace PersistenceLayer.Mock.Configuration.Products
-{
-	using CodeLists.ProductCategories;
-	using DomainLayer.Entities.Product;
-	using Microsoft.EntityFrameworkCore;
+﻿using DomainLayer.Entities.Product;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Mock.Configuration.Products
+{
 	internal static class ProductCategoryConfiguration
 	{
 		public static void ConfigureProductCategoryEntity(this ModelBuilder modelBuilder)

@@ -1,9 +1,9 @@
-﻿namespace UnitTests.MediatorRequestsTests.ProductDetails.Queries
-{
-	using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
-	using Shouldly;
-	using Xunit;
+﻿using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.ProductDetails.Queries
+{
 	public class ProductDetailsGetTests : TestsBase
 	{
 		[Fact]

@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized
-{
-	using FluentValidation;
+﻿using FluentValidation;
 
+namespace ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized
+{
 	public class OrdersGetByUserRequestValidator : AbstractValidator<OrdersGetByUserRequest>
 	{
 		public OrdersGetByUserRequestValidator()

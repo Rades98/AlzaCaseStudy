@@ -1,21 +1,21 @@
-﻿namespace PersistenceLayer.Mock
-{
-	using ApplicationLayer.Interfaces;
-	using DomainLayer.Entities.LanguageMutations;
-	using DomainLayer.Entities.Orders;
-	using DomainLayer.Entities.Orders.Localization;
-	using DomainLayer.Entities.Product;
-	using DomainLayer.Entities.Product.Localization;
-	using DomainLayer.Entities.Users;
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistenceLayer.Mock.Configuration.LanguageMutations;
-	using PersistenceLayer.Mock.Configuration.Orders;
-	using PersistenceLayer.Mock.Configuration.Orders.Localization;
-	using PersistenceLayer.Mock.Configuration.Products;
-	using PersistenceLayer.Mock.Configuration.Products.Localization;
-	using PersistenceLayer.Mock.Configuration.Users;
+﻿using DomainLayer.Entities.LanguageMutations;
+using DomainLayer.Entities.Orders;
+using DomainLayer.Entities.Orders.Localization;
+using DomainLayer.Entities.Product;
+using DomainLayer.Entities.Product.Localization;
+using DomainLayer.Entities.Users;
+using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistenceLayer.Mock.Configuration.LanguageMutations;
+using PersistenceLayer.Mock.Configuration.Orders;
+using PersistenceLayer.Mock.Configuration.Orders.Localization;
+using PersistenceLayer.Mock.Configuration.Products;
+using PersistenceLayer.Mock.Configuration.Products.Localization;
+using PersistenceLayer.Mock.Configuration.Users;
 
+
+namespace PersistenceLayer.Mock
+{
 	public class ADbContextMock : DbContext, IDbContext
 	{
 		public ADbContextMock(DbContextOptions<ADbContextMock> options) : base(options)

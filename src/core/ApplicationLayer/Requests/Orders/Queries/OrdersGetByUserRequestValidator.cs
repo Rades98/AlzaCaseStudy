@@ -1,6 +1,7 @@
-﻿namespace ApplicationLayer.Requests.Orders.Queries
+﻿using FluentValidation;
+
+namespace ApplicationLayer.Requests.Orders.Queries
 {
-	using FluentValidation;
 
 	public class OrdersGetByUserRequestValidator : AbstractValidator<OrdersGetByUserRequest>
 	{

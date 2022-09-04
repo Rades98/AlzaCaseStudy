@@ -1,14 +1,14 @@
-﻿namespace ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized
-{
-	using System.Linq.Expressions;
-	using ApplicationLayer.Dtos;
-	using Dapper;
-	using DomainLayer.Entities.Orders;
-	using MediatR;
-	using PersistanceLayerDapper;
-	using PersistanceLayerDapper.Extensions;
-	using PersistanceLayerDapper.ProcedureModels.Orders;
+﻿using System.Linq.Expressions;
+using ApplicationLayer.Dtos;
+using Dapper;
+using DomainLayer.Entities.Orders;
+using MediatR;
+using PersistanceLayerDapper;
+using PersistanceLayerDapper.Extensions;
+using PersistanceLayerDapper.ProcedureModels.Orders;
 
+namespace ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized
+{
 	public class OrdersGetByUserRequest : IRequest<List<OrdersGetResponse>>
 	{
 		public int UserId { get; set; }
@@ -44,7 +44,7 @@
 				foreach (var group in procResult.GroupBy(x => x.OrderCode))
 				{
 					var orderItems = new List<OrderItemDto>();
-					foreach(var item in group)
+					foreach (var item in group)
 					{
 						orderItems.Add(new()
 						{

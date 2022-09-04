@@ -1,7 +1,7 @@
-﻿namespace PersistanceLayer.Contracts.Repositories
-{
-	using PersistanceLayer.Contracts.Models.ProductDetailInfos;
+﻿using PersistanceLayer.Contracts.Models.ProductDetailInfos;
 
+namespace PersistanceLayer.Contracts.Repositories
+{
 	public interface IProductDetailInfosRepository
 	{
 		/// <summary>

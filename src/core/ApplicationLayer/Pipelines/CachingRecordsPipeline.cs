@@ -1,13 +1,13 @@
-﻿namespace ApplicationLayer.Utils.Pipelines
-{
-	using System.Text;
-	using Interfaces;
-	using Interfaces.Cache;
-	using MediatR;
-	using Microsoft.Extensions.Caching.Memory;
-	using Microsoft.Extensions.Logging;
-	using Newtonsoft.Json;
+﻿using System.Text;
+using ApplicationLayer.Interfaces;
+using ApplicationLayer.Interfaces.Cache;
+using MediatR;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
+namespace ApplicationLayer.Utils.Pipelines
+{
 	/// <summary>
 	/// Generic pipeline to store/load records to/from cache
 	/// </summary>

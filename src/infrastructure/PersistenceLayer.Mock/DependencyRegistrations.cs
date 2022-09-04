@@ -1,10 +1,10 @@
-﻿namespace PersistenceLayer.Mock
-{
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Diagnostics;
-	using Microsoft.Extensions.DependencyInjection;
-	using PersistanceLayer.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
+using PersistanceLayer.Contracts;
 
+namespace PersistenceLayer.Mock
+{
 	public static class DependencyRegistrations
 	{
 		public static IServiceCollection RegisterDatabase(this IServiceCollection services)

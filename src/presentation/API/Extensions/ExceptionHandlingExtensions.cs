@@ -1,19 +1,19 @@
-﻿namespace API.Extensions
-{
-    using Middleware;
+﻿using API.Middleware;
 
-    public static class ExceptionHandlingExtensions
-    {
-        public static void ConfigureExceptionHandlers(this WebApplication app)
-        {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseMiddleware<ExceptionMiddleware>();
-            }
-        }
-    }
+namespace API.Extensions
+{
+	public static class ExceptionHandlingExtensions
+	{
+		public static void ConfigureExceptionHandlers(this WebApplication app)
+		{
+			if (app.Environment.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
+			else
+			{
+				app.UseMiddleware<ExceptionMiddleware>();
+			}
+		}
+	}
 }

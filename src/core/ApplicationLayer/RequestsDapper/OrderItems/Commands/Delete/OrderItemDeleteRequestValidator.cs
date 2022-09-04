@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.RequestsDapper.OrderItems.Commands.Delete
-{
-	using FluentValidation;
+﻿using FluentValidation;
 
+namespace ApplicationLayer.RequestsDapper.OrderItems.Commands.Delete
+{
 	internal class OrderItemDeleteRequestValidator : AbstractValidator<OrderItemDeleteRequest>
 	{
 		public OrderItemDeleteRequestValidator()

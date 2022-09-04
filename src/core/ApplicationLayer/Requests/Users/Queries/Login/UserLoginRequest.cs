@@ -1,10 +1,10 @@
-﻿namespace ApplicationLayer.Requests.Users.Queries.Login
-{
-	using System.Security.Claims;
-	using AppUtils.PasswordHashing;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using System.Security.Claims;
+using AppUtils.PasswordHashing;
+using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.Users.Queries.Login
+{
 	public class UserLoginRequest : IRequest<UserLoginResponse>
 	{
 		public string UserName { get; set; } = string.Empty;

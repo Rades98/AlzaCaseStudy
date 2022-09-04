@@ -1,9 +1,9 @@
-﻿namespace PersistenceLayer.Database.Configuration.Orders.Localization
-{
-	using DomainLayer.Entities.Orders.Localization;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using DomainLayer.Entities.Orders.Localization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace PersistenceLayer.Database.Configuration.Orders.Localization
+{
 	internal class OrderStatusLocalizedConfiguration : IEntityTypeConfiguration<OrderStatusLocalizedEntity>
 	{
 		public void Configure(EntityTypeBuilder<OrderStatusLocalizedEntity> builder)

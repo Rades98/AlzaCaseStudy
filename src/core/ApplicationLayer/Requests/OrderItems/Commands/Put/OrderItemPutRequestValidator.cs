@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.OrderItems.Commands.Put
-{
-	using FluentValidation;
+﻿using FluentValidation;
 
+namespace ApplicationLayer.Requests.OrderItems.Commands.Put
+{
 	public class OrderItemPutRequestValidator : AbstractValidator<OrderItemPutRequest>
 	{
 		public OrderItemPutRequestValidator()

@@ -1,9 +1,9 @@
-﻿namespace PersistenceLayer.Database.Configuration.LanguageMutations
-{
-	using DomainLayer.Entities.LanguageMutations;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using DomainLayer.Entities.LanguageMutations;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace PersistenceLayer.Database.Configuration.LanguageMutations
+{
 	internal class LanguageConfiguration : IEntityTypeConfiguration<LanguageEntity>
 	{
 		public void Configure(EntityTypeBuilder<LanguageEntity> builder)
