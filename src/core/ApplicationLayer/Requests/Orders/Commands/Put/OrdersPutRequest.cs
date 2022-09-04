@@ -1,8 +1,8 @@
-﻿namespace ApplicationLayer.Requests.Orders.Commands.Put
-{
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.Orders.Commands.Put
+{
 	public class OrdersPutRequest : IRequest<OrdersPutResponse>
 	{
 		public int UserId { get; set; }

@@ -1,14 +1,14 @@
-﻿namespace API.Controllers.Orders.v3
-{
-	using ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser;
-	using DomainLayer.Entities.Orders;
-	using MediatR;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-	using RadesSoft.HateoasMaker;
-	using RadesSoft.HateoasMaker.Attributes;
-	using OrdersGetByUserRequest = ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized.OrdersGetByUserRequest;
+﻿using ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser;
+using DomainLayer.Entities.Orders;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RadesSoft.HateoasMaker;
+using RadesSoft.HateoasMaker.Attributes;
+using OrdersGetByUserRequest = ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser.Localized.OrdersGetByUserRequest;
 
+namespace API.Controllers.Orders.v3
+{
 	[ApiVersion("3")]
 	public class OrdersController : BaseController<OrderEntity>
 	{

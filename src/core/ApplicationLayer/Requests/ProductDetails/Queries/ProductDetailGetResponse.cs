@@ -1,9 +1,9 @@
-﻿namespace ApplicationLayer.Requests.ProductDetails.Queries
-{
-	using DomainLayer.Entities.Product;
-	using Dtos;
-	using Interfaces;
+﻿using ApplicationLayer.Dtos;
+using ApplicationLayer.Interfaces;
+using DomainLayer.Entities.Product;
 
+namespace ApplicationLayer.Requests.ProductDetails.Queries
+{
 	/// <summary>
 	/// Shared response for Get based requests
 	/// </summary>

@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.Users.Commands.Register
-{
-	using FluentValidation;
+﻿using FluentValidation;
 
+namespace ApplicationLayer.Requests.Users.Commands.Register
+{
 	public class UserRegisterValidator : AbstractValidator<UserRegisterRequest>
 	{
 		public UserRegisterValidator()
@@ -24,7 +24,7 @@
 				 .NotNull().WithMessage("Firstname is not set")
 				 .MaximumLength(ApplicationSetting.ApplicationSetting.MAX_FIRSTNAME_LENGHT).WithMessage("Firstname is too long")
 				 .MinimumLength(ApplicationSetting.ApplicationSetting.MIN_FIRSTNAME_LENGHT).WithMessage("Firstname is too short");
-				 
+
 			RuleFor(user => user.Surname)
 				 .NotNull().WithMessage("Surname is not set")
 				 .MaximumLength(ApplicationSetting.ApplicationSetting.MAX_SURNAME_LENGHT).WithMessage("Surname is too long")

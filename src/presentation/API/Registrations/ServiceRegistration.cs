@@ -1,19 +1,19 @@
-﻿namespace API.Registrations
-{
-	using System.Reflection;
-	using System.Text;
-	using ApplicationLayer;
-	using HealthChecks;
-	using Microsoft.AspNetCore.Authentication.JwtBearer;
-	using Microsoft.IdentityModel.Tokens;
-	using Microsoft.OpenApi.Models;
-	using PersistanceLayerDapper;
-	using PersistenceLayer;
-	using RadesSoft.HateoasMaker.Registrations;
-	using ResponseCompression;
-	using Swagger;
-	using Swashbuckle.AspNetCore.Filters;
+﻿using System.Reflection;
+using System.Text;
+using API.Registrations.HealthChecks;
+using API.Registrations.ResponseCompression;
+using API.Registrations.Swagger;
+using ApplicationLayer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using PersistanceLayerDapper;
+using PersistenceLayer;
+using RadesSoft.HateoasMaker.Registrations;
+using Swashbuckle.AspNetCore.Filters;
 
+namespace API.Registrations
+{
 	public static class ServiceRegistration
 	{
 		public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
@@ -26,7 +26,7 @@
 							ValidateIssuerSigningKey = true,
 							IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("AppSettings:Token").Value)),
 							ValidateIssuer = false,
-							ValidateAudience = false,						
+							ValidateAudience = false,
 						};
 					});
 			services.ConfigureResponseCompression();

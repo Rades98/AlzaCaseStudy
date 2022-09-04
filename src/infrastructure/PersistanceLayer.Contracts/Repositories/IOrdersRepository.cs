@@ -1,9 +1,9 @@
-﻿namespace PersistanceLayer.Contracts.Repositories
-{
-	using System.Linq.Expressions;
-	using DomainLayer.Entities.Orders;
-	using PersistanceLayer.Contracts.Models.Orders;
+﻿using System.Linq.Expressions;
+using DomainLayer.Entities.Orders;
+using PersistanceLayer.Contracts.Models.Orders;
 
+namespace PersistanceLayer.Contracts.Repositories
+{
 	public interface IOrdersRepository
 	{
 		/// <summary>

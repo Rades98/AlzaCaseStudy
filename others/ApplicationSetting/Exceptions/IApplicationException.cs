@@ -1,6 +1,7 @@
-﻿namespace ApplicationSetting.Exceptions
+﻿using CodeLists.Exceptions;
+
+namespace ApplicationSetting.Exceptions
 {
-	using CodeLists.Exceptions;
 
 	public interface IApplicationException
 	{

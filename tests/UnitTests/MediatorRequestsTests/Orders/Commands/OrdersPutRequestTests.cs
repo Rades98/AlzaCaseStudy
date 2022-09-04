@@ -1,12 +1,12 @@
-﻿namespace UnitTests.MediatorRequestsTests.Orders.Commands
-{
-	using System;
-	using ApplicationLayer.Requests.Orders.Commands.Put;
-	using ApplicationSetting.Exceptions;
-	using CodeLists.Exceptions;
-	using Shouldly;
-	using Xunit;
+﻿using System;
+using ApplicationLayer.Requests.Orders.Commands.Put;
+using ApplicationSetting.Exceptions;
+using CodeLists.Exceptions;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.Orders.Commands
+{
 	public class OrdersPutRequestTests : TestsBase
 	{
 		[Fact]

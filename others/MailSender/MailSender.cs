@@ -1,9 +1,9 @@
-﻿namespace MailSender
-{
-	using System.Net;
-	using System.Net.Mail;
-	using System.Reflection;
+﻿using System.Net;
+using System.Net.Mail;
+using System.Reflection;
 
+namespace MailSender
+{
 	public static class MailSender
 	{
 		public static void SendRegistrationEmail(string reciever, string code, string name)

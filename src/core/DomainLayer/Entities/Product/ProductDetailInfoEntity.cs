@@ -1,7 +1,7 @@
-﻿namespace DomainLayer.Entities.Product
-{
-	using DomainLayer.Entities.Product.Localization;
+﻿using DomainLayer.Entities.Product.Localization;
 
+namespace DomainLayer.Entities.Product
+{
 	public class ProductDetailInfoEntity : AuditableEntity
 	{
 		public int ProductDetailId { get; set; }

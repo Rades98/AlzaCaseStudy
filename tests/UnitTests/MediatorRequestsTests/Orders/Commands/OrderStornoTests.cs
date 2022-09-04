@@ -1,13 +1,12 @@
-﻿namespace UnitTests.MediatorRequestsTests.Orders.Commands
-{
-	using System;
-	using ApplicationLayer.Exceptions;
-	using ApplicationLayer.Requests.Orders.Commands.Storno;
-	using ApplicationSetting.Exceptions;
-	using CodeLists.Exceptions;
-	using Shouldly;
-	using Xunit;
+﻿using System;
+using ApplicationLayer.Requests.Orders.Commands.Storno;
+using ApplicationSetting.Exceptions;
+using CodeLists.Exceptions;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.Orders.Commands
+{
 	public class OrderStornoTests : TestsBase
 	{
 		[Fact]

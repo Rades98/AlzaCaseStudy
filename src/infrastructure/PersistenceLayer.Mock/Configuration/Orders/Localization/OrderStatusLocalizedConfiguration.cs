@@ -1,8 +1,8 @@
-﻿namespace PersistenceLayer.Mock.Configuration.Orders.Localization
-{
-	using DomainLayer.Entities.Orders.Localization;
-	using Microsoft.EntityFrameworkCore;
+﻿using DomainLayer.Entities.Orders.Localization;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Mock.Configuration.Orders.Localization
+{
 	internal static class OrderStatusLocalizedConfiguration
 	{
 		public static void ConfigureOrderStatusLocalizedEntity(this ModelBuilder modelBuilder)

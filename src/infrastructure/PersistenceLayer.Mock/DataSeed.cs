@@ -1,14 +1,14 @@
-﻿namespace PersistenceLayer.Mock
-{
-	using AppUtils.PasswordHashing;
-	using CodeLists.OrderStatuses;
-	using CodeLists.ProductCategories;
-	using CodeLists.UserRoles;
-	using DomainLayer.Entities.Orders;
-	using DomainLayer.Entities.Product;
-	using DomainLayer.Entities.Users;
-	using Microsoft.EntityFrameworkCore;
+﻿using AppUtils.PasswordHashing;
+using CodeLists.OrderStatuses;
+using CodeLists.ProductCategories;
+using CodeLists.UserRoles;
+using DomainLayer.Entities.Orders;
+using DomainLayer.Entities.Product;
+using DomainLayer.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Mock
+{
 	public static class DataSeed
 	{
 		public static void Seed(this ModelBuilder modelBuilder)

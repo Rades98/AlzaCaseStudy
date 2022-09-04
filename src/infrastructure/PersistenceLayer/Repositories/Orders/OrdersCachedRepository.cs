@@ -1,15 +1,15 @@
-﻿namespace PersistenceLayer.Repositories.OrdersRepository
-{
-	using System.Linq.Expressions;
-	using System.Text;
-	using DomainLayer.Entities.Orders;
-	using Microsoft.Extensions.Caching.Memory;
-	using Newtonsoft.Json;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Models.Orders;
-	using PersistanceLayer.Contracts.Repositories;
-	using static ApplicationSetting.ApplicationSetting;
+﻿using System.Linq.Expressions;
+using System.Text;
+using DomainLayer.Entities.Orders;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Models.Orders;
+using PersistanceLayer.Contracts.Repositories;
+using static ApplicationSetting.ApplicationSetting;
 
+namespace PersistenceLayer.Repositories.OrdersRepository
+{
 	public class OrdersCachedRepository : IOrdersRepository, ICacheableRepo
 	{
 		private readonly IMemoryCache _cache;

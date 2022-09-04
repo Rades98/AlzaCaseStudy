@@ -1,7 +1,7 @@
-﻿namespace DomainLayer.Entities.Orders
-{
-    using DomainLayer.Entities.Orders.Localization;
+﻿using DomainLayer.Entities.Orders.Localization;
 
+namespace DomainLayer.Entities.Orders
+{
     public class OrderStatusEntity : AuditableEntity
     {
         public string Name { get; set; } = string.Empty;

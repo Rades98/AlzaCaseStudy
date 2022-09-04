@@ -1,9 +1,9 @@
-﻿namespace ApplicationLayer.Pipelines
-{
-	using MediatR;
-	using Microsoft.Extensions.Logging;
-	using System.Diagnostics;
+﻿using System.Diagnostics;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
+namespace ApplicationLayer.Pipelines
+{
 	/// <summary>
 	/// Generic logging pipeline
 	/// </summary>

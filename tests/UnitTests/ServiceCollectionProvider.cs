@@ -1,15 +1,15 @@
-﻿namespace UnitTests
-{
-	using System;
-	using System.Text;
-	using ApplicationLayer;
-	using Microsoft.AspNetCore.Authentication.JwtBearer;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.Logging;
-	using Microsoft.IdentityModel.Tokens;
-	using PersistenceLayer;
-	using PersistenceLayer.Mock;
+﻿using System;
+using System.Text;
+using ApplicationLayer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using PersistenceLayer;
+using PersistenceLayer.Mock;
 
+namespace UnitTests
+{
 	internal class ServiceCollectionProvider
 	{
 		private readonly ServiceCollection _serviceCollection = new();

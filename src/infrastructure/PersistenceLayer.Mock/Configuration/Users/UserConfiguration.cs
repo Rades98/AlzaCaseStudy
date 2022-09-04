@@ -1,8 +1,8 @@
-﻿namespace PersistenceLayer.Mock.Configuration.Users
-{
-	using DomainLayer.Entities.Users;
-	using Microsoft.EntityFrameworkCore;
+﻿using DomainLayer.Entities.Users;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Mock.Configuration.Users
+{
 	public static class UserConfiguration
 	{
 		public static void ConfigureUserEntity(this ModelBuilder modelBuilder)

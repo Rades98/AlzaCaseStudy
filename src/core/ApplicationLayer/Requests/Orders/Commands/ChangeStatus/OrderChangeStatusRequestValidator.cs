@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.Requests.Orders.Commands.ChangeStatus
-{
-	using FluentValidation;
+﻿using FluentValidation;
 
+namespace ApplicationLayer.Requests.Orders.Commands.ChangeStatus
+{
 	public class OrderChangeStatusRequestValidator : AbstractValidator<OrderChangeStatusRequest>
 	{
 		public OrderChangeStatusRequestValidator()

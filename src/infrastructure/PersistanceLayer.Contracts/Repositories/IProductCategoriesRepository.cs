@@ -1,7 +1,7 @@
-﻿namespace PersistanceLayer.Contracts.Repositories
-{
-	using DomainLayer.Entities.Product;
+﻿using DomainLayer.Entities.Product;
 
+namespace PersistanceLayer.Contracts.Repositories
+{
 	public interface IProductCategoriesRepository
 	{
 		/// <summary>

@@ -1,7 +1,7 @@
-﻿namespace DomainLayer.Entities
-{
-	using DomainLayer.Entities.LanguageMutations;
+﻿using DomainLayer.Entities.LanguageMutations;
 
+namespace DomainLayer.Entities
+{
 	public class AuditableLocalizableEntity : AuditableEntity
 	{
 		public int LanguageId { get; set; }

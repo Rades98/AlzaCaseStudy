@@ -1,12 +1,12 @@
-﻿namespace UnitTests.MediatorRequestsTests.OrderItems.Commands.Delete
-{
-	using System;
-	using ApplicationLayer.Requests.OrderItems.Commands.Delete;
-	using ApplicationSetting.Exceptions;
-	using CodeLists.Exceptions;
-	using Shouldly;
-	using Xunit;
+﻿using System;
+using ApplicationLayer.Requests.OrderItems.Commands.Delete;
+using ApplicationSetting.Exceptions;
+using CodeLists.Exceptions;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.OrderItems.Commands.Delete
+{
 	public class OrderItemDeleteTests : TestsBase
 	{
 		[Fact]

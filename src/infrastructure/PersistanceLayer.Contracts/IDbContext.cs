@@ -1,14 +1,14 @@
-﻿namespace PersistanceLayer.Contracts
-{
-	using DomainLayer.Entities.LanguageMutations;
-	using DomainLayer.Entities.Orders;
-	using DomainLayer.Entities.Orders.Localization;
-	using DomainLayer.Entities.Product;
-	using DomainLayer.Entities.Product.Localization;
-	using DomainLayer.Entities.Users;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using DomainLayer.Entities.LanguageMutations;
+using DomainLayer.Entities.Orders;
+using DomainLayer.Entities.Orders.Localization;
+using DomainLayer.Entities.Product;
+using DomainLayer.Entities.Product.Localization;
+using DomainLayer.Entities.Users;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
+namespace PersistanceLayer.Contracts
+{
 	/// <summary>
 	/// App db context
 	/// </summary>

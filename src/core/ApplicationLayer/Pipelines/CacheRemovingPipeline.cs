@@ -1,10 +1,10 @@
-﻿namespace ApplicationLayer.Pipelines
-{
-	using Interfaces.Cache;
-	using MediatR;
-	using Microsoft.Extensions.Caching.Memory;
-	using Microsoft.Extensions.Logging;
+﻿using ApplicationLayer.Interfaces.Cache;
+using MediatR;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 
+namespace ApplicationLayer.Pipelines
+{
 	/// <summary>
 	/// Generic pipeline to remove data from cache
 	/// </summary>

@@ -1,13 +1,13 @@
-﻿namespace PersistenceLayer.Repositories.ProductDetailInfos
-{
-	using CodeLists.Exceptions;
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Models.ProductDetailInfos;
-	using PersistanceLayer.Contracts.Repositories;
-	using PersistenceLayer.Exceptions;
-	using PersistenceLayer.Extensions;
+﻿using CodeLists.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Models.ProductDetailInfos;
+using PersistanceLayer.Contracts.Repositories;
+using PersistenceLayer.Exceptions;
+using PersistenceLayer.Extensions;
 
+namespace PersistenceLayer.Repositories.ProductDetailInfos
+{
 	public class ProductDetailInfosRepository : IProductDetailInfosRepository
 	{
 		private readonly IDbContext _dbContext;

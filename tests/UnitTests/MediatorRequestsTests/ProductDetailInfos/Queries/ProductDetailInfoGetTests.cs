@@ -1,12 +1,12 @@
-﻿namespace UnitTests.MediatorRequestsTests.ProductDetailInfos.Queries
-{
-	using System;
-	using ApplicationLayer.Requests.ProductDetailInfos.Queries;
-	using ApplicationSetting.Exceptions;
-	using CodeLists.Exceptions;
-	using Shouldly;
-	using Xunit;
+﻿using System;
+using ApplicationLayer.Requests.ProductDetailInfos.Queries;
+using ApplicationSetting.Exceptions;
+using CodeLists.Exceptions;
+using Shouldly;
+using Xunit;
 
+namespace UnitTests.MediatorRequestsTests.ProductDetailInfos.Queries
+{
 	public class ProductDetailInfoGetTests : TestsBase
 	{
 		[Fact]

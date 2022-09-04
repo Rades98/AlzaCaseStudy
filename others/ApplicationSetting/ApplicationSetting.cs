@@ -19,5 +19,9 @@
 
 		public const int CACHE_EXPIRATION_TIME_MINS = 15;
 		public const int CACHE_SLIDING_EXPIRATION_TIME_MINS = 2;
+
+		public const int MAX_DESCRIPTION_LENGHT = 250;
+		public const int MIN_DESCRIPTION_LENGHT = 40;
+
 	}
 }

@@ -1,10 +1,9 @@
-﻿namespace ApplicationLayer.Requests.ProductDetailInfos.Queries
-{
-	using ApplicationLayer.Dtos;
-	using ApplicationLayer.Interfaces;
-	using DomainLayer.Entities.Product;
-	using PersistanceLayer.Contracts.Models.ProductDetailInfos;
+﻿using ApplicationLayer.Dtos;
+using ApplicationLayer.Interfaces;
+using PersistanceLayer.Contracts.Models.ProductDetailInfos;
 
+namespace ApplicationLayer.Requests.ProductDetailInfos.Queries
+{
 	public class ProductDetailInfoGetResponse : RestDtoBase, IRecord
 	{
 		public int Id { get; set; }

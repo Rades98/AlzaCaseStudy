@@ -1,7 +1,7 @@
-﻿namespace PersistanceLayer.Contracts.Repositories
-{
-	using DomainLayer.Entities.Users;
+﻿using DomainLayer.Entities.Users;
 
+namespace PersistanceLayer.Contracts.Repositories
+{
 	public interface IUsersRepository
 	{
 		/// <summary>
@@ -23,7 +23,6 @@
 		/// <param name="ct">cancellation token</param>
 		/// <returns>new user</returns>
 		Task<UserEntity> RegisterUserAsync(string userName, string email, string firstName, string surname, string password, CancellationToken ct);
-
 
 		/// <summary>
 		/// Login user

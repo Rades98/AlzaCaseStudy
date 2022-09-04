@@ -1,14 +1,14 @@
-﻿namespace API.Controllers.OrderItems.v1
-{
-	using ApplicationLayer.Requests.OrderItems.Commands.Delete;
-	using ApplicationLayer.Requests.OrderItems.Commands.Put;
-	using DomainLayer.Entities.Orders;
-	using MediatR;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-	using RadesSoft.HateoasMaker;
-	using RadesSoft.HateoasMaker.Attributes;
+﻿using ApplicationLayer.Requests.OrderItems.Commands.Delete;
+using ApplicationLayer.Requests.OrderItems.Commands.Put;
+using DomainLayer.Entities.Orders;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RadesSoft.HateoasMaker;
+using RadesSoft.HateoasMaker.Attributes;
 
+namespace API.Controllers.OrderItems.v1
+{
 	[ApiVersion("1")]
 	public class OrderItemsController : BaseController<OrderItemEntity>
 	{

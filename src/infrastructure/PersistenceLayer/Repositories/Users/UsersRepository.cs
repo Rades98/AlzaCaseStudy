@@ -1,15 +1,15 @@
-﻿namespace PersistenceLayer.Repositories.Users
-{
-	using System.Security.Cryptography;
-	using System.Text;
-	using AppUtils.PasswordHashing;
-	using CodeLists.Exceptions;
-	using DomainLayer.Entities.Users;
-	using Exceptions;
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using System.Security.Cryptography;
+using System.Text;
+using AppUtils.PasswordHashing;
+using CodeLists.Exceptions;
+using DomainLayer.Entities.Users;
+using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Repositories;
+using PersistenceLayer.Exceptions;
 
+namespace PersistenceLayer.Repositories.Users
+{
 	public class UsersRepository : IUsersRepository
 	{
 		private readonly IDbContext _dbContext;

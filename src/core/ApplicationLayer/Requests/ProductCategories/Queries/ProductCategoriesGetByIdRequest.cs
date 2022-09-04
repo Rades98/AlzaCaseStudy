@@ -1,10 +1,10 @@
-﻿namespace ApplicationLayer.Requests.ProductCategories.Queries
-{
-	using Dtos;
-	using Interfaces.Cache;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using ApplicationLayer.Dtos;
+using ApplicationLayer.Interfaces.Cache;
+using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.ProductCategories.Queries
+{
 	public class ProductCategoriesGetByIdRequest : IRequest<ProductCategoriesGetResponse>, ICacheableQuery
 	{
 		public int Id { get; set; }

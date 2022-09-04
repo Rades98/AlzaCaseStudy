@@ -1,11 +1,8 @@
-﻿namespace ApplicationLayer.Requests.ProductDetails.Queries.Requests
-{
-	using System.Threading;
-	using System.Threading.Tasks;
-	using ApplicationLayer.Requests.ProductDetails.Queries;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.ProductDetails.Queries.Requests
+{
 	/// <summary>
 	/// Query to obtain product by id
 	/// </summary>

@@ -1,8 +1,8 @@
-﻿namespace ApplicationLayer.Requests.Orders.Commands.ChangeStatus
-{
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.Orders.Commands.ChangeStatus
+{
 	public class OrderChangeStatusRequest : IRequest<OrderChangeStatusResponse>
 	{
 		public int UserId { get; set; }

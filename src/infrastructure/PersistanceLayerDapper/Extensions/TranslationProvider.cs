@@ -10,5 +10,5 @@ namespace PersistanceLayerDapper.Extensions
 			using var conn = context.CreateConnection();
 			return await conn.QueryFirstAsync("[dbo].[GetMessageTranslation]", new { @LanguageCode = languageCode, @MessageCode = textCode }, commandType: CommandType.StoredProcedure);
 		}
-}
+	}
 }

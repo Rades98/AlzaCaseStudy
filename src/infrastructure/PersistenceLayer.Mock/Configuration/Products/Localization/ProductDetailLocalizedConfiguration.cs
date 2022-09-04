@@ -1,8 +1,8 @@
-﻿namespace PersistenceLayer.Mock.Configuration.Products.Localization
-{
-	using DomainLayer.Entities.Product.Localization;
-	using Microsoft.EntityFrameworkCore;
+﻿using DomainLayer.Entities.Product.Localization;
+using Microsoft.EntityFrameworkCore;
 
+namespace PersistenceLayer.Mock.Configuration.Products.Localization
+{
 	internal static class ProductDetailLocalizedConfiguration
 	{
 		public static void ConfigureProductDetailLocalizedEntity(this ModelBuilder modelBuilder)

@@ -1,7 +1,7 @@
-﻿namespace RadesSoft.HateoasMaker
-{
-	using Models;
+﻿using RadesSoft.HateoasMaker.Models;
 
+namespace RadesSoft.HateoasMaker
+{
 	internal class ResponseCollection
 	{
 		internal Dictionary<string, List<LinkCreatorModel>> AvailableLinks { get; set; } = new();

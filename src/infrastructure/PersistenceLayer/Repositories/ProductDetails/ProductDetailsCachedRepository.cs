@@ -1,15 +1,12 @@
-﻿namespace PersistenceLayer.Repositories.ProductDetails
-{
-	using System.Collections.Generic;
-	using System.Text;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using DomainLayer.Entities.Product;
-	using Microsoft.Extensions.Caching.Memory;
-	using Newtonsoft.Json;
-	using PersistanceLayer.Contracts.Repositories;
-	using static ApplicationSetting.ApplicationSetting;
+﻿using System.Text;
+using DomainLayer.Entities.Product;
+using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
+using PersistanceLayer.Contracts.Repositories;
+using static ApplicationSetting.ApplicationSetting;
 
+namespace PersistenceLayer.Repositories.ProductDetails
+{
 	public class ProductDetailsCachedRepository : IProductDetailsRepository
 	{
 		private readonly IMemoryCache _cache;

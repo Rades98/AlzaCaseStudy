@@ -1,9 +1,9 @@
-﻿namespace PersistenceLayer.Database.Configuration.Users
-{
-    using DomainLayer.Entities.Users;
-    using Microsoft.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using DomainLayer.Entities.Users;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+namespace PersistenceLayer.Database.Configuration.Users
+{
 	internal class UserRegistrationConfiguration : IEntityTypeConfiguration<UserRegistrationEntity>
 	{
 		public void Configure(EntityTypeBuilder<UserRegistrationEntity> builder)

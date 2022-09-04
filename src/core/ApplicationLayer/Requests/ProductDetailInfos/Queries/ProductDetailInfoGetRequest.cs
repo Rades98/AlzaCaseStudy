@@ -1,10 +1,8 @@
-﻿namespace ApplicationLayer.Requests.ProductDetailInfos.Queries
-{
-	using CodeLists.Exceptions;
-	using Exceptions;
-	using MediatR;
-	using PersistanceLayer.Contracts.Repositories;
+﻿using MediatR;
+using PersistanceLayer.Contracts.Repositories;
 
+namespace ApplicationLayer.Requests.ProductDetailInfos.Queries
+{
 	public class ProductDetailInfoGetRequest : IRequest<ProductDetailInfoGetResponse>
 	{
 		public string Code { get; set; } = string.Empty;

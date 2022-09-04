@@ -1,7 +1,7 @@
-﻿namespace ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser
-{
-	using ApplicationLayer.Dtos;
+﻿using ApplicationLayer.Dtos;
 
+namespace ApplicationLayer.RequestsDapper.Orders.Queries.OrdersGetByUser
+{
 	public class OrdersGetResponse
 	{
 		public string OrderCode { get; set; } = string.Empty;

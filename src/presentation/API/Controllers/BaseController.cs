@@ -1,14 +1,13 @@
-﻿namespace API.Controllers
-{
-	using System.IdentityModel.Tokens.Jwt;
-	using System.Linq;
-	using System.Security.Claims;
-	using DomainLayer.Entities;
-	using MediatR;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.Net.Http.Headers;
-	using RadesSoft.HateoasMaker;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using DomainLayer.Entities;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
+using RadesSoft.HateoasMaker;
 
+namespace API.Controllers
+{
 	[ApiController]
 	[Route("api/v{version:apiVersion}/[controller]")]
 	public abstract class BaseController<T> : Controller where T : AuditableEntity

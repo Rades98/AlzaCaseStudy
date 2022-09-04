@@ -1,16 +1,15 @@
-﻿namespace RadesSoft.HateoasMaker
-{
-	using System.Linq;
-	using System.Runtime.CompilerServices;
-	using System.Security.Claims;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-	using Microsoft.AspNetCore.Mvc.Abstractions;
-	using Microsoft.AspNetCore.Mvc.Controllers;
-	using Microsoft.AspNetCore.Mvc.Infrastructure;
-	using Microsoft.AspNetCore.Mvc.Routing;
-	using RadesSoft.HateoasMaker.Models;
+﻿using System.Runtime.CompilerServices;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
+using RadesSoft.HateoasMaker.Models;
 
+namespace RadesSoft.HateoasMaker
+{
 	public class HateoasMaker
 	{
 		private readonly IReadOnlyList<ActionDescriptor> _routes;

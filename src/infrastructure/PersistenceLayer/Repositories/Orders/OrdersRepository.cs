@@ -1,17 +1,17 @@
-﻿namespace PersistenceLayer.Repositories.OrdersRepository
-{
-	using System.Linq.Expressions;
-	using CodeLists.Exceptions;
-	using CodeLists.OrderStatuses;
-	using DomainLayer.Entities.Orders;
-	using Exceptions;
-	using Microsoft.EntityFrameworkCore;
-	using PersistanceLayer.Contracts;
-	using PersistanceLayer.Contracts.Repositories;
-	using AppUtils.Orders;
-	using PersistanceLayer.Contracts.Models.Orders;
-	using PersistenceLayer.Extensions;
+﻿using System.Linq.Expressions;
+using AppUtils.Orders;
+using CodeLists.Exceptions;
+using CodeLists.OrderStatuses;
+using DomainLayer.Entities.Orders;
+using Microsoft.EntityFrameworkCore;
+using PersistanceLayer.Contracts;
+using PersistanceLayer.Contracts.Models.Orders;
+using PersistanceLayer.Contracts.Repositories;
+using PersistenceLayer.Exceptions;
+using PersistenceLayer.Extensions;
 
+namespace PersistenceLayer.Repositories.OrdersRepository
+{
 	public class OrdersRepository : IOrdersRepository
 	{
 		private readonly IDbContext _dbContext;
@@ -176,13 +176,13 @@
 				.Where(whereFilter)
 				.ToListAsync(ct);
 
-			if(result is not null)
+			if (result is not null)
 			{
 				return result.MapToModel();
 			}
 
 			return new();
-			
+
 		}
 	}
 }
