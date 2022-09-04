@@ -1,11 +1,9 @@
 ﻿namespace ApplicationLayer.Requests.Users.Queries.Login
 {
 	using System.Security.Claims;
-	using Exceptions;
-	using Interfaces;
+	using AppUtils.PasswordHashing;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
-	using Utils.PasswordHashing;
+	using PersistanceLayer.Contracts.Repositories;
 
 	public class UserLoginRequest : IRequest<UserLoginResponse>
 	{
@@ -15,27 +13,19 @@
 
 		public class Handler : IRequestHandler<UserLoginRequest, UserLoginResponse>
 		{
-			private readonly IDbContext _dbContext;
 			private readonly ClaimsPrincipal _user;
 
-			public Handler(IDbContext dbContext, ClaimsPrincipal user) => (_dbContext, _user) = (dbContext, user);
+			private readonly IUsersRepository _repo;
+
+			public Handler(IUsersRepository repo, ClaimsPrincipal user)
+			{
+				_repo = repo ?? throw new ArgumentNullException(nameof(repo));
+				_user = user ?? throw new ArgumentNullException(nameof(user));
+			}
 
 			public async Task<UserLoginResponse> Handle(UserLoginRequest request, CancellationToken cancellationToken)
 			{
-				var user = await _dbContext.Users
-					.Include(x => x.Roles)
-					.AsNoTracking()
-					.FirstOrDefaultAsync(u => u.UserName == request.UserName, cancellationToken);
-
-				if (user == null || !user.IsActive)
-				{
-					throw new MediatorException(ExceptionType.NotFound, "User not found");
-				}
-
-				if (!PasswordHashing.VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-				{
-					throw new MediatorException(ExceptionType.Unauthorized, "Wrong password");
-				}
+				var user = await _repo.LoginUserAsync(request.UserName, request.Password, cancellationToken);
 
 				var roles = user.Roles?.Select(role => role.Name).ToList() ?? new List<string>();
 

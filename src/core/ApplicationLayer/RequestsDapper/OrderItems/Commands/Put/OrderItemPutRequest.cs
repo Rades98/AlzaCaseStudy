@@ -3,6 +3,7 @@
 	using System.Data.SqlClient;
 	using System.Threading;
 	using System.Threading.Tasks;
+	using CodeLists.Exceptions;
 	using Exceptions;
 	using MediatR;
 	using PersistanceLayerDapper;

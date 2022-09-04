@@ -9,7 +9,7 @@
 		[Fact]
 		public async void ProductCategoriesGetBy_Should_Pass()
 		{
-			var result = await new ProductCategoriesGetRequest.Handler(DbContext).Handle(new ProductCategoriesGetRequest() { }, default);
+			var result = await new ProductCategoriesGetRequest.Handler(ProductCategoriesRepo).Handle(new ProductCategoriesGetRequest() { }, default);
 
 			result.ShouldNotBeNull();
 			result.CategoryTree.Id.ShouldBe(1);

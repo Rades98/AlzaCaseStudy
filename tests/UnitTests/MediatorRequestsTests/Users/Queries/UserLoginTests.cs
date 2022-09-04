@@ -1,7 +1,10 @@
 ﻿namespace UnitTests.MediatorRequestsTests.Users.Queries
 {
+	using System;
 	using ApplicationLayer.Exceptions;
 	using ApplicationLayer.Requests.Users.Queries.Login;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -10,7 +13,7 @@
 		[Fact]
 		public async void UserLoginTest_Should_Pass()
 		{
-			var result = await new UserLoginRequest.Handler(DbContext, Claims).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "Admin", Token = Token }, default);
+			var result = await new UserLoginRequest.Handler(UsersRepo, Claims).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "Admin", Token = Token }, default);
 
 			result.UserName.ShouldBe("Admin");
 		}
@@ -20,11 +23,11 @@
 		{
 			try
 			{
-				await new UserLoginRequest.Handler(DbContext, Claims).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "GuluGulu", Token = Token }, default);
+				await new UserLoginRequest.Handler(UsersRepo, Claims).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "GuluGulu", Token = Token }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 
@@ -33,11 +36,11 @@
 		{
 			try
 			{
-				await new UserLoginRequest.Handler(DbContext, Claims).Handle(new UserLoginRequest { Password = "qwqqwewqerwqrwr", UserName = "Admin", Token = Token }, default);
+				await new UserLoginRequest.Handler(UsersRepo, Claims).Handle(new UserLoginRequest { Password = "qwqqwewqerwqrwr", UserName = "Admin", Token = Token }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.Unauthorized);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.Unauthorized);
 			}
 		}
 	}

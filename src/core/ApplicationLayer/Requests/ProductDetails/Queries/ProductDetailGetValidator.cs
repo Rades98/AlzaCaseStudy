@@ -10,13 +10,13 @@
 	{
 		public ProductDetailGetValidator()
 		{
-			RuleFor(product => product.Id)
+			RuleFor(product => product.ProductCode)
 				 .NotNull()
-				 .WithMessage("Product id is not set");
+				 .WithMessage("Product code is not set");
 
-			RuleFor(product => product.Id)
+			RuleFor(product => product.ProductCode)
 				.NotEmpty()
-				.WithMessage("Product id cannot be empty or default value");
+				.WithMessage("Product code cannot be empty or default value");
 		}
 	}
 }

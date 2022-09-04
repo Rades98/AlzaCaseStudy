@@ -1,7 +1,10 @@
 ﻿namespace UnitTests.MediatorRequestsTests.Orders.Commands
 {
+	using System;
 	using ApplicationLayer.Exceptions;
 	using ApplicationLayer.Requests.Orders.Commands.ChangeStatus;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -10,7 +13,7 @@
 		[Fact]
 		public async void ChangeOrderStatus_Should_Pass()
 		{
-			var result = await new OrderChangeStatusRequest.Handler(DbContext).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 2, StatusId = 2 }, default);
+			var result = await new OrderChangeStatusRequest.Handler(OrdersRepo).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 2, StatusId = 2 }, default);
 
 			result.Message.ShouldNotBeNull();
 		}
@@ -20,11 +23,11 @@
 		{
 			try
 			{
-				var result = await new OrderChangeStatusRequest.Handler(DbContext).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 1, StatusId = 2 }, default);
+				var result = await new OrderChangeStatusRequest.Handler(OrdersRepo).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 1, StatusId = 2 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.Unauthorized);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.Unauthorized);
 			}
 		}
 
@@ -33,11 +36,11 @@
 		{
 			try
 			{
-				var result = await new OrderChangeStatusRequest.Handler(DbContext).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00010", UserId = 2, StatusId = 2 }, default);
+				var result = await new OrderChangeStatusRequest.Handler(OrdersRepo).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00010", UserId = 2, StatusId = 2 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 
@@ -46,11 +49,11 @@
 		{
 			try
 			{
-				var result = await new OrderChangeStatusRequest.Handler(DbContext).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 2, StatusId = 99 }, default);
+				var result = await new OrderChangeStatusRequest.Handler(OrdersRepo).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 2, StatusId = 99 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 
@@ -59,11 +62,11 @@
 		{
 			try
 			{
-				var result = await new OrderChangeStatusRequest.Handler(DbContext).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 2, StatusId = 5 }, default);
+				var result = await new OrderChangeStatusRequest.Handler(OrdersRepo).Handle(new OrderChangeStatusRequest() { OrderCode = "AAAAA00001", UserId = 2, StatusId = 5 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotModified);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotModified);
 			}
 		}
 	}

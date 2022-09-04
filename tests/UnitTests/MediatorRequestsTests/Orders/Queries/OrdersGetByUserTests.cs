@@ -10,7 +10,7 @@
 		[Fact]
 		public async void OrdersGetByUserTests_Should_Pass()
 		{
-			var result = await new OrdersGetByUserRequest.Handler(DbContext).Handle(new OrdersGetByUserRequest() { UserId = 2, }, default);
+			var result = await new OrdersGetByUserRequest.Handler(OrdersRepo).Handle(new OrdersGetByUserRequest() { UserId = 2, }, default);
 
 			result.Count.ShouldBe(1);
 			result.First().OrderCode.ShouldBe("AAAAA00001");

@@ -7,6 +7,7 @@
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.Logging;
 	using Microsoft.IdentityModel.Tokens;
+	using PersistenceLayer;
 	using PersistenceLayer.Mock;
 
 	internal class ServiceCollectionProvider
@@ -37,6 +38,9 @@
 							ValidateAudience = false,
 						};
 					});
+
+			_serviceCollection.RegisterRepositories();
+			_serviceCollection.RegisterRepositoryDecorators();
 
 			_provider = _serviceCollection.BuildServiceProvider();
 		}

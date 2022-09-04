@@ -7,5 +7,3 @@ AS
 	SELECT TOP(1) TranslatedMessage.[Message] FROM [dbo].[Messages] TranslatedMessage
 	INNER JOIN [dbo].[Languages] MessageLanguage ON MessageLanguage.Code = @LanguageCode
 	WHERE TranslatedMessage.MessageCode = @MessageCode
-
-GO

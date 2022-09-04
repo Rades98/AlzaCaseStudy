@@ -1,8 +1,10 @@
 ﻿namespace UnitTests.MediatorRequestsTests.ProductDetails.Queries
 {
+	using System;
 	using System.Linq;
-	using ApplicationLayer.Exceptions;
 	using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -11,7 +13,7 @@
 		[Fact]
 		public async void ProductDetailsGetPaginatedTest_Should_Pass()
 		{
-			var results = await new ProductDetailsGetPaginatedRequest.Handler(DbContext).Handle(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = 1, PageSize = 5 }, default);
+			var results = await new ProductDetailsGetPaginatedRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = 1, PageSize = 5 }, default);
 
 			results.Count().ShouldBe(5);
 			results.ShouldNotBeEmpty();
@@ -23,11 +25,11 @@
 		{
 			try
 			{
-				var results = await new ProductDetailsGetPaginatedRequest.Handler(DbContext).Handle(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = 100, PageSize = 5 }, default);
+				var results = await new ProductDetailsGetPaginatedRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = 100, PageSize = 5 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 	}

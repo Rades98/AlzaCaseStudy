@@ -33,4 +33,3 @@ BEGIN
 			THROW 51000, 'There is no item with this code on running order', 1;   
 		END
 END
-GO

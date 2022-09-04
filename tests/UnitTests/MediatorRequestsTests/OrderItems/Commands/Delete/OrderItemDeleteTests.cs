@@ -1,7 +1,9 @@
 ﻿namespace UnitTests.MediatorRequestsTests.OrderItems.Commands.Delete
 {
-	using ApplicationLayer.Exceptions;
+	using System;
 	using ApplicationLayer.Requests.OrderItems.Commands.Delete;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -13,7 +15,7 @@
 		/// </summary>
 		public async void DeleteItem_Should_Pass()
 		{
-			var response = await new OrderItemDeleteRequest.Handler(DbContext).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 1 }, default);
+			var response = await new OrderItemDeleteRequest.Handler(OrderItemsRepo).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 1 }, default);
 
 			response.Message.ShouldBe("Deleted");
 		}
@@ -26,11 +28,11 @@
 		{
 			try
 			{
-				var response = await new OrderItemDeleteRequest.Handler(DbContext).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00000", ProductCode = "AAAA0000", UserId = 1 }, default);
+				var response = await new OrderItemDeleteRequest.Handler(OrderItemsRepo).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00000", ProductCode = "AAAA0000", UserId = 1 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotModified);
 			}
 		}
 
@@ -42,11 +44,11 @@
 		{
 			try
 			{
-				var response = await new OrderItemDeleteRequest.Handler(DbContext).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 1 }, default);
+				var response = await new OrderItemDeleteRequest.Handler(OrderItemsRepo).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 1 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotModified);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotModified);
 			}
 		}
 
@@ -58,11 +60,11 @@
 		{
 			try
 			{
-				var response = await new OrderItemDeleteRequest.Handler(DbContext).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 4 }, default);
+				var response = await new OrderItemDeleteRequest.Handler(OrderItemsRepo).Handle(new OrderItemDeleteRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 4 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.Unauthorized);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.Unauthorized);
 			}
 		}
 	}

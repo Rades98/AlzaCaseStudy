@@ -3,11 +3,8 @@
 	using System.Threading;
 	using System.Threading.Tasks;
 	using ApplicationLayer.Requests.ProductDetails.Queries;
-	using Exceptions;
-	using Interfaces;
-	using Interfaces.Cache;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
+	using PersistanceLayer.Contracts.Repositories;
 
 	/// <summary>
 	/// Query to obtain product by id
@@ -15,29 +12,19 @@
 	/// <returns>
 	/// product with specified id if there is none returns null
 	/// </returns>
-	public class ProductDetailGetRequest : IRequest<ProductDetailGetResponse>, ICacheableWithIdQuery
+	public class ProductDetailGetRequest : IRequest<ProductDetailGetResponse>
 	{
-		public int Id { get; set; }
-		public string CacheKey => Cache.CacheKeys.ProductDetails;
+		public string ProductCode { get; set; } = string.Empty;
 
 		public class Handler : IRequestHandler<ProductDetailGetRequest, ProductDetailGetResponse>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IProductDetailsRepository _repo;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IProductDetailsRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<ProductDetailGetResponse> Handle(ProductDetailGetRequest request, CancellationToken cancellationToken)
 			{
-				var product = await _dbContext.ProductDetails
-					.AsNoTracking()
-					.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
-
-				if (product is null)
-				{
-					throw new MediatorException(ExceptionType.NotFound, "Product detail not found");
-				}
-
-				return (ProductDetailGetResponse)product;
+				return (ProductDetailGetResponse)await _repo.GetProductDetailByProductCode(request.ProductCode, cancellationToken);
 			}
 		}
 	}

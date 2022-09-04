@@ -3,6 +3,7 @@
 	using ApplicationLayer.Dtos;
 	using ApplicationLayer.Interfaces;
 	using DomainLayer.Entities.Product;
+	using PersistanceLayer.Contracts.Models.ProductDetailInfos;
 
 	public class ProductDetailInfoGetResponse : RestDtoBase, IRecord
 	{
@@ -13,14 +14,14 @@
 
 		public int Count { get; set; }
 
-		public static explicit operator ProductDetailInfoGetResponse(ProductDetailInfoEntity v)
+		public static explicit operator ProductDetailInfoGetResponse(ProductDetailInfoModel v)
 		{
 			return new ProductDetailInfoGetResponse()
 			{
 				Id = v.Id,
 				DetailedDescription = v.DetailedDescription,
 				Parameters = v.Parameters,
-				ProductCode = v.ProductDetail.ProductCode
+				ProductCode = v.ProductCode
 			};
 		}
 	}

@@ -9,6 +9,7 @@
 	using DomainLayer.Entities.Users;
 	using Extensions;
 	using Microsoft.EntityFrameworkCore;
+	using PersistanceLayer.Contracts;
 
 	public class ADbContext : DbContext, IDbContext
     {

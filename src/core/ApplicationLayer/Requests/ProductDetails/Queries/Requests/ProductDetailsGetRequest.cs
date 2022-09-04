@@ -2,12 +2,9 @@
 {
 	using ApplicationLayer.Requests.ProductDetails.Queries;
 	using DomainLayer.Entities.Product;
-	using Exceptions;
-	using Extensions;
-	using Interfaces;
 	using Interfaces.Cache;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
+	using PersistanceLayer.Contracts.Repositories;
 
 	/// <summary>
 	/// Query to obtain all products
@@ -23,28 +20,15 @@
 
 		public class Handler : IRequestHandler<ProductDetailsGetRequest, IEnumerable<ProductDetailGetResponse>>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IProductDetailsRepository _repo;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IProductDetailsRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<IEnumerable<ProductDetailGetResponse>> Handle(ProductDetailsGetRequest request, CancellationToken cancellationToken)
 			{
-				var products = await _dbContext.ProductDetails
-					.AsNoTracking()
-					.ToListAsync(cancellationToken);
+				var products = await _repo.GetProductDetailsAsync(request.OrderBy, request.OrderByDesc, cancellationToken);
 
-				products = products.IfThenElse(
-						() => request.OrderByDesc,
-						e => e.OrderByDescending(request.OrderBy),
-						e => e.OrderBy(request.OrderBy))
-					.ToList();
-
-				if (products.Count > 0)
-				{
-					return products.Select(x => (ProductDetailGetResponse)x);
-				}
-
-				throw new MediatorException(ExceptionType.NotFound, "Product details not found");
+				return products.Select(x => (ProductDetailGetResponse)x);
 			}
 		}
 	}

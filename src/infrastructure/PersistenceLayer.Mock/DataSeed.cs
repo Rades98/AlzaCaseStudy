@@ -1,6 +1,6 @@
 ﻿namespace PersistenceLayer.Mock
 {
-	using ApplicationLayer.Utils.PasswordHashing;
+	using AppUtils.PasswordHashing;
 	using CodeLists.OrderStatuses;
 	using CodeLists.ProductCategories;
 	using CodeLists.UserRoles;
@@ -31,15 +31,17 @@
 			{
 				new() { Name = "Eshop", Id = ProductCategories.EshopId, Created = DateTime.Now },
 				new() { Name = "Mobile Devices and accessories", Id = ProductCategories.MobAndAccId, Created = DateTime.Now , ParentProductCategoryId = ProductCategories.EshopId},
-				new() { Name = "Mobile Phones", Id = MobileAndAccesories.MobilePhonesId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.MobAndAccId },
-				new() { Name = "Cases", Id = MobileAndAccesories.CasesId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.MobAndAccId },
-				new() { Name = "Adapters", Id = MobileAndAccesories.AdaptersId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.MobAndAccId },
+				new() { Name = "Mobile Phones", Id = ProductCategories.MobilePhonesId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.MobAndAccId },
+				new() { Name = "Cases", Id = ProductCategories.CasesId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.MobAndAccId },
+				new() { Name = "NotebookAdapters", Id = ProductCategories.AdaptersId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.MobAndAccId },
 
 				new() { Name = "PC and accessories", Id = ProductCategories.PcAndAccId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.EshopId },
-				new() { Name = "Graphic cards", Id = PCAndAccesories.GraphicCarsId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.PcAndAccId },
-				new() { Name = "Disks", Id = PCAndAccesories.DisksId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.PcAndAccId },
-				new() { Name = "SSD", Id = PCAndAccesories.SsdId, Created = DateTime.Now, ParentProductCategoryId = PCAndAccesories.DisksId },
-				new() { Name = "HDD", Id = PCAndAccesories.HddId, Created = DateTime.Now, ParentProductCategoryId = PCAndAccesories.DisksId },
+				new() { Name = "Notebooks", Id = ProductCategories.Notebooks, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.PcAndAccId },
+				new() { Name = "Pcs", Id = ProductCategories.Pcs, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.PcAndAccId },
+				new() { Name = "Graphic cards", Id = ProductCategories.GraphicCarsId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.PcAndAccId },
+				new() { Name = "Disks", Id = ProductCategories.DisksId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.PcAndAccId },
+				new() { Name = "SSD", Id = ProductCategories.SsdId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.DisksId },
+				new() { Name = "HDD", Id = ProductCategories.HddId, Created = DateTime.Now, ParentProductCategoryId = ProductCategories.DisksId },
 			};
 
 			//Add Product categories
@@ -131,7 +133,7 @@
 			modelBuilder.Entity<OrderEntity>()
 				.HasData(orders);
 
-			var orderItems = new List <OrderItemEntity>()
+			var orderItems = new List<OrderItemEntity>()
 			{
 				new(){ Id = 1, Created = DateTime.Now, OrderId = 1, ProductId = 1},
 				new(){ Id = 2, Created = DateTime.Now, OrderId = 1, ProductId = 4},

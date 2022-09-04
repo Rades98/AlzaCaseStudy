@@ -9,7 +9,7 @@
 		[Fact]
 		public async void ProductDetailsGetTest_Should_Pass()
 		{
-			var results = await new ProductDetailsGetRequest.Handler(DbContext).Handle(new ProductDetailsGetRequest() { OrderBy = p => p.Name }, default);
+			var results = await new ProductDetailsGetRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailsGetRequest() { OrderBy = p => p.Name }, default);
 
 			results.ShouldNotBeNull();
 			results.ShouldNotBeEmpty();

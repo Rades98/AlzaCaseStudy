@@ -7,4 +7,3 @@ AS
 	INNER JOIN [dbo].[ProductCategories] ProCat ON ProCat.[Id]=ProDet.[ProductCategoryId]
 	LEFT JOIN [dbo].[ProductDetailInfos] ProDetInf ON ProDetInf.ProductDetailId=ProDet.Id
 	WHERE ProDet.ProductCode=@ProductCode
-GO

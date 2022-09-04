@@ -1,6 +1,7 @@
 ﻿namespace ApplicationLayer
 {
 	using System.Reflection;
+	using ApplicationLayer.Pipelines;
 	using FluentValidation;
 	using MediatR;
 	using Microsoft.Extensions.DependencyInjection;

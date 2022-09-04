@@ -1,7 +1,9 @@
 ﻿namespace UnitTests.MediatorRequestsTests.ProductDetails.Queries
 {
-	using ApplicationLayer.Exceptions;
+	using System;
 	using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -10,7 +12,7 @@
 		[Fact]
 		public async void ProductDetailGetTest_Should_Pass()
 		{
-			var result = await new ProductDetailGetRequest.Handler(DbContext).Handle(new ProductDetailGetRequest { Id = 1 }, default);
+			var result = await new ProductDetailGetRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailGetRequest { ProductCode = "AAAA0000" }, default);
 			result.ProductCode.ShouldBe("AAAA0000");
 		}
 
@@ -20,11 +22,11 @@
 		{
 			try
 			{
-				var result = await new ProductDetailGetRequest.Handler(DbContext).Handle(new ProductDetailGetRequest { Id = 1 }, default);
+				var result = await new ProductDetailGetRequest.Handler(ProductDetailsRepo).Handle(new ProductDetailGetRequest { ProductCode = "ZZZZZZZZ" }, default);
 			}
-			catch(MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 	}

@@ -36,7 +36,7 @@
 		/// Returns token if credentials were correct 
 		/// for test purpose use Admin aJc48262_1Kjkz>X!
 		/// </remarks>
-		[HttpGet(Name = nameof(LoginUserAsync))]
+		[HttpPost(Name = nameof(LoginUserAsync))]
 		[MapToApiVersion("1")]
 		[MapToApiVersion("2")]
 		[MapToApiVersion("3")]

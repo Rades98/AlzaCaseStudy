@@ -23,4 +23,3 @@ AS
 			 UserOrder.Total, 
 			 COALESCE(OrderStatusLocalized.[Name], OrderStatus.[Name])
 	ORDER BY UserOrder.OrderCode
-GO

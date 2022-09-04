@@ -1,10 +1,9 @@
 ﻿namespace ApplicationLayer.Requests.Orders.Queries
 {
-	using DomainLayer.Entities.Orders;
-	using Interfaces;
-	using MediatR;
-	using Microsoft.EntityFrameworkCore;
 	using System.Linq.Expressions;
+	using DomainLayer.Entities.Orders;
+	using MediatR;
+	using PersistanceLayer.Contracts.Repositories;
 
 	public class OrdersGetByUserRequest : IRequest<List<OrdersGetResponse>>
 	{
@@ -13,65 +12,38 @@
 
 		public class Handler : IRequestHandler<OrdersGetByUserRequest, List<OrdersGetResponse>>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IOrdersRepository _repo;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IOrdersRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<List<OrdersGetResponse>> Handle(OrdersGetByUserRequest request, CancellationToken cancellationToken)
 			{
 				var result = new List<OrdersGetResponse>();
 
-				Expression<Func<OrderEntity, bool>> exp = x => x.UserId == request.UserId;
+				var orders = await _repo.GetOrdersByUserId(request.UserId, request.WhereFilter, cancellationToken);
 
-				var orders = await _dbContext.Orders
-					.Include(i => i.Status!)
-					.Include(i => i.Items!)
-						.ThenInclude(i => i.Product!)
-							.ThenInclude(i => i.ProductDetail)
-					.AsNoTracking()
-					.Where(exp)
-					.Where(request.WhereFilter)
-					.ToListAsync(cancellationToken);
-
-				foreach (var order in orders)
+				orders.ForEach(order =>
 				{
-
 					var response = new OrdersGetResponse
 					{
 						OrderCode = order.OrderCode,
 						Total = order.Total,
+						OrderStatus = order.OrderStatusId
 					};
 
-					if (order.Status is not null)
+					order.OrderItems.ForEach(item =>
 					{
-						response.OrderStatus = order.Status.Id;
-					}
-
-					order.Items!.AsEnumerable().Where(p => p.Product != null && p.Product.ProductDetail != null).ToList().ForEach(p =>
-					{
-						var detail = p.Product!.ProductDetail!;
-
-						var opt = response.OrderItems.FirstOrDefault(x => x.ProductCode == detail.ProductCode);
-
-						if (opt is not null)
+						response.OrderItems.Add(new Dtos.OrderItemDto
 						{
-							opt.Count++;
-						}
-						else
-						{
-							response.OrderItems.Add(new Dtos.OrderItemDto
-							{
-								Name = detail.Name,
-								Price = detail.Price,
-								ProductCode = detail.ProductCode,
-								Count = 1
-							});
-						}
-						
+							Name = item.Name,
+							Price = item.Price,
+							ProductCode = item.ProductCode,
+							Count = item.Count
+						});
 					});
 
 					result.Add(response);
-				}
+				});
 
 				return result;
 			}

@@ -25,6 +25,6 @@ app.UseAuthorization();
 app.ConfigureEndpoints();
 app.ConfigureSwagger();
 app.ConfigureExceptionHandlers();
-app.MigrateDatabase();
+app.MigrateDatabase(builder.Configuration);
 
 app.Run();

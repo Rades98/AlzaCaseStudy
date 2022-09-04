@@ -14,4 +14,3 @@ AS
 	)
 
 	EXEC [dbo].[RecalculateOrderTotal] @OrderID=@OrderID
-GO

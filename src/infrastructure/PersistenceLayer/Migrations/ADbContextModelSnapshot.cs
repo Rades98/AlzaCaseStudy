@@ -17,10 +17,86 @@ namespace PersistenceLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("DomainLayer.Entities.LanguageMutations.LanguageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Changed")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nchar(2)")
+                        .IsFixedLength();
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Deleted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Languages", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "cs",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Čeština"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "en",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "English"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "sk",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Slovenčina"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "pl",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Polski"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "de",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Deutsch"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "fe",
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Name = "Français"
+                        });
+                });
 
             modelBuilder.Entity("DomainLayer.Entities.LanguageMutations.MessageEntity", b =>
                 {
@@ -465,7 +541,7 @@ namespace PersistenceLayer.Migrations
                             Id = 2,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
-                            Name = "Mobile Devices and accessories",
+                            Name = "Mobile devices and accessories",
                             ParentProductCategoryId = 1
                         },
                         new
@@ -481,7 +557,7 @@ namespace PersistenceLayer.Migrations
                             Id = 1002,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
-                            Name = "Cases",
+                            Name = "Mobile cases",
                             ParentProductCategoryId = 2
                         },
                         new
@@ -489,7 +565,7 @@ namespace PersistenceLayer.Migrations
                             Id = 1003,
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
-                            Name = "Adapters",
+                            Name = "Mobile adapters",
                             ParentProductCategoryId = 2
                         },
                         new
@@ -506,6 +582,46 @@ namespace PersistenceLayer.Migrations
                             Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
                             Description = "",
                             Name = "Graphic cards",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 2005,
+                            Created = new DateTime(2022, 9, 2, 0, 19, 31, 539, DateTimeKind.Local).AddTicks(9880),
+                            Description = "",
+                            Name = "Notebooks",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 2006,
+                            Created = new DateTime(2022, 9, 2, 0, 19, 31, 539, DateTimeKind.Local).AddTicks(9907),
+                            Description = "",
+                            Name = "PCs",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 4000,
+                            Created = new DateTime(2022, 9, 2, 0, 19, 31, 539, DateTimeKind.Local).AddTicks(9910),
+                            Description = "",
+                            Name = "Notebook adapters",
+                            ParentProductCategoryId = 2005
+                        },
+                        new
+                        {
+                            Id = 4001,
+                            Created = new DateTime(2022, 9, 2, 0, 19, 31, 539, DateTimeKind.Local).AddTicks(9912),
+                            Description = "",
+                            Name = "Notebook bags",
+                            ParentProductCategoryId = 2005
+                        },
+                        new
+                        {
+                            Id = 2009,
+                            Created = new DateTime(2022, 9, 2, 0, 19, 31, 539, DateTimeKind.Local).AddTicks(9914),
+                            Description = "",
+                            Name = "Webcams",
                             ParentProductCategoryId = 3
                         },
                         new
@@ -531,6 +647,174 @@ namespace PersistenceLayer.Migrations
                             Description = "",
                             Name = "HDD",
                             ParentProductCategoryId = 2002
+                        },
+                        new
+                        {
+                            Id = 2010,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Mouses",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 2012,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Monitors",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 2013,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Microphones",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 6000,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Bent monitors",
+                            ParentProductCategoryId = 2012
+                        },
+                        new
+                        {
+                            Id = 2011,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Keyboards",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 5000,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Bluetooth keyboards",
+                            ParentProductCategoryId = 2011
+                        },
+                        new
+                        {
+                            Id = 5001,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Gaming keyboards",
+                            ParentProductCategoryId = 2011
+                        },
+                        new
+                        {
+                            Id = 2007,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Headphones",
+                            ParentProductCategoryId = 3
+                        },
+                        new
+                        {
+                            Id = 3000,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Headphones with microphone",
+                            ParentProductCategoryId = 2007
+                        },
+                        new
+                        {
+                            Id = 3001,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Headsets",
+                            ParentProductCategoryId = 2007
+                        },
+                        new
+                        {
+                            Id = 3002,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Bluetooth headsets",
+                            ParentProductCategoryId = 2007
+                        },
+                        new
+                        {
+                            Id = 3003,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Bluetooth headphones",
+                            ParentProductCategoryId = 2007
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Printers and accessories",
+                            ParentProductCategoryId = 1
+                        },
+                        new
+                        {
+                            Id = 7000,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Laser printers",
+                            ParentProductCategoryId = 4
+                        },
+                        new
+                        {
+                            Id = 7001,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Ink printers",
+                            ParentProductCategoryId = 4
+                        },
+                        new
+                        {
+                            Id = 7002,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "3D printers",
+                            ParentProductCategoryId = 4
+                        },
+                        new
+                        {
+                            Id = 7003,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Tank printers",
+                            ParentProductCategoryId = 4
+                        },
+                        new
+                        {
+                            Id = 7004,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Printers accessories",
+                            ParentProductCategoryId = 4
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "PC chairs and accessories",
+                            ParentProductCategoryId = 1
+                        },
+                        new
+                        {
+                            Id = 8000,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "Gaming chairs",
+                            ParentProductCategoryId = 8001
+                        },
+                        new
+                        {
+                            Id = 8001,
+                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
+                            Description = "",
+                            Name = "PC chairs",
+                            ParentProductCategoryId = 8001
                         });
                 });
 
@@ -539,6 +823,8 @@ namespace PersistenceLayer.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime?>("Changed")
                         .HasColumnType("datetime2");
@@ -559,8 +845,8 @@ namespace PersistenceLayer.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<decimal>("Price")
                         .HasPrecision(12, 2)
@@ -606,18 +892,21 @@ namespace PersistenceLayer.Migrations
 
                     b.Property<string>("DetailedDescription")
                         .IsRequired()
-                        .HasMaxLength(5000)
+                        .HasMaxLength(50000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Parameters")
                         .IsRequired()
-                        .HasMaxLength(5000)
+                        .HasMaxLength(50000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProductDetailId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductDetailId")
+                        .IsUnique();
 
                     b.ToTable("ProductDetailInfos", (string)null);
                 });
@@ -647,82 +936,6 @@ namespace PersistenceLayer.Migrations
                     b.HasIndex("ProductDetailId");
 
                     b.ToTable("Products", (string)null);
-                });
-
-            modelBuilder.Entity("DomainLayer.Entities.Texts.LanguageEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime?>("Changed")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(2)
-                        .HasColumnType("nchar(2)")
-                        .IsFixedLength();
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("Deleted")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Languages", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Code = "cs",
-                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
-                            Name = "Čeština"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Code = "en",
-                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
-                            Name = "English"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "sk",
-                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
-                            Name = "Slovenčina"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Code = "pl",
-                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
-                            Name = "Polski"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Code = "de",
-                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
-                            Name = "Deutsch"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Code = "fe",
-                            Created = new DateTime(2022, 4, 12, 17, 0, 0, 222, DateTimeKind.Local),
-                            Name = "Français"
-                        });
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Users.UserEntity", b =>
@@ -793,8 +1006,8 @@ namespace PersistenceLayer.Migrations
                             Email = "some@email.com",
                             IsActive = true,
                             Name = "Admin",
-                            PasswordHash = new byte[] { 210, 168, 188, 13, 195, 102, 139, 235, 41, 169, 112, 139, 59, 202, 185, 57, 65, 135, 39, 46, 8, 56, 18, 221, 193, 93, 4, 22, 114, 224, 147, 118, 170, 58, 160, 70, 251, 110, 169, 187, 69, 237, 115, 246, 220, 185, 149, 80, 101, 81, 28, 52, 82, 30, 100, 43, 101, 41, 49, 39, 61, 114, 8, 166 },
-                            PasswordSalt = new byte[] { 146, 110, 164, 107, 166, 145, 162, 131, 86, 251, 117, 147, 239, 38, 131, 141, 197, 210, 232, 106, 46, 197, 235, 77, 125, 129, 209, 51, 106, 83, 235, 119, 3, 174, 223, 248, 13, 105, 31, 28, 162, 7, 170, 94, 43, 209, 4, 162, 69, 136, 148, 98, 39, 149, 176, 125, 131, 107, 69, 194, 45, 171, 104, 113, 45, 20, 216, 198, 169, 30, 58, 167, 150, 213, 97, 16, 229, 143, 236, 133, 96, 229, 101, 144, 129, 59, 56, 92, 148, 46, 180, 101, 40, 77, 117, 70, 165, 125, 93, 44, 101, 45, 18, 34, 176, 74, 87, 143, 244, 208, 50, 251, 152, 10, 118, 18, 60, 242, 31, 124, 95, 195, 184, 149, 27, 156, 58, 233 },
+                            PasswordHash = new byte[] { 0, 160, 26, 174, 216, 87, 36, 244, 67, 159, 76, 3, 164, 80, 202, 65, 54, 153, 92, 237, 64, 247, 73, 186, 199, 173, 98, 179, 207, 204, 202, 112, 228, 97, 226, 72, 81, 252, 70, 8, 38, 64, 181, 100, 61, 198, 205, 197, 43, 44, 102, 131, 159, 248, 74, 165, 212, 237, 38, 232, 4, 187, 241, 95 },
+                            PasswordSalt = new byte[] { 160, 140, 37, 170, 187, 16, 94, 136, 36, 28, 76, 111, 97, 228, 227, 62, 119, 139, 35, 84, 132, 161, 111, 167, 170, 75, 154, 105, 153, 70, 184, 26, 176, 153, 206, 217, 158, 30, 136, 217, 20, 83, 80, 127, 239, 255, 57, 29, 43, 27, 41, 53, 246, 197, 125, 229, 164, 93, 128, 58, 72, 173, 97, 66, 58, 9, 129, 74, 43, 89, 243, 49, 156, 54, 232, 30, 181, 161, 65, 255, 138, 35, 19, 110, 141, 98, 139, 44, 65, 227, 185, 249, 140, 228, 38, 40, 186, 128, 36, 224, 29, 71, 176, 154, 177, 131, 166, 9, 216, 226, 73, 92, 35, 162, 225, 235, 90, 182, 56, 153, 166, 123, 120, 165, 155, 47, 62, 129 },
                             RegistrationId = 1,
                             Surname = "Admin",
                             UserName = "Admin"
@@ -906,7 +1119,7 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.LanguageMutations.MessageEntity", b =>
                 {
-                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                    b.HasOne("DomainLayer.Entities.LanguageMutations.LanguageEntity", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -925,7 +1138,7 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Orders.Localization.OrderStatusLocalizedEntity", b =>
                 {
-                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                    b.HasOne("DomainLayer.Entities.LanguageMutations.LanguageEntity", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -982,7 +1195,7 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductCategoryLocalizedEntity", b =>
                 {
-                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                    b.HasOne("DomainLayer.Entities.LanguageMutations.LanguageEntity", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1001,7 +1214,7 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductDetailInfoLocalizedEntity", b =>
                 {
-                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                    b.HasOne("DomainLayer.Entities.LanguageMutations.LanguageEntity", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1020,7 +1233,7 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.Localization.ProductDetailLocalizedEntity", b =>
                 {
-                    b.HasOne("DomainLayer.Entities.Texts.LanguageEntity", "Language")
+                    b.HasOne("DomainLayer.Entities.LanguageMutations.LanguageEntity", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1048,12 +1261,6 @@ namespace PersistenceLayer.Migrations
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailEntity", b =>
                 {
-                    b.HasOne("DomainLayer.Entities.Product.ProductDetailInfoEntity", "ProductDetailInfo")
-                        .WithOne("ProductDetail")
-                        .HasForeignKey("DomainLayer.Entities.Product.ProductDetailEntity", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DomainLayer.Entities.Product.ProductCategoryEntity", "ProductCategory")
                         .WithMany("ProductDetails")
                         .HasForeignKey("ProductCategoryId")
@@ -1061,8 +1268,17 @@ namespace PersistenceLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
+                });
 
-                    b.Navigation("ProductDetailInfo");
+            modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
+                {
+                    b.HasOne("DomainLayer.Entities.Product.ProductDetailEntity", "ProductDetail")
+                        .WithOne("ProductDetailInfo")
+                        .HasForeignKey("DomainLayer.Entities.Product.ProductDetailInfoEntity", "ProductDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProductDetail");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductEntity", b =>
@@ -1136,14 +1352,14 @@ namespace PersistenceLayer.Migrations
                 {
                     b.Navigation("Localizations");
 
+                    b.Navigation("ProductDetailInfo");
+
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Product.ProductDetailInfoEntity", b =>
                 {
                     b.Navigation("Localizations");
-
-                    b.Navigation("ProductDetail");
                 });
 
             modelBuilder.Entity("DomainLayer.Entities.Users.UserEntity", b =>

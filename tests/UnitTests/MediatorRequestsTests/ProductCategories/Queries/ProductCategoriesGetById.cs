@@ -1,7 +1,9 @@
 ﻿namespace UnitTests.MediatorRequestsTests.ProductCategories.Queries
 {
-	using ApplicationLayer.Exceptions;
+	using System;
 	using ApplicationLayer.Requests.ProductCategories.Queries;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -10,7 +12,7 @@
 		[Fact]
 		public async void ProductCategoriesGetById_Shoul_Pass()
 		{
-			var result = await new ProductCategoriesGetByIdRequest.Handler(DbContext).Handle(new ProductCategoriesGetByIdRequest() { Id = 1 }, default);
+			var result = await new ProductCategoriesGetByIdRequest.Handler(ProductCategoriesRepo).Handle(new ProductCategoriesGetByIdRequest() { Id = 1 }, default);
 
 			result.ShouldNotBeNull();
 			result.CategoryTree.Id.ShouldBe(1);
@@ -23,11 +25,11 @@
 		{
 			try
 			{
-				var result = await new ProductCategoriesGetByIdRequest.Handler(DbContext).Handle(new ProductCategoriesGetByIdRequest() { Id = 1000 }, default);
+				var result = await new ProductCategoriesGetByIdRequest.Handler(ProductCategoriesRepo).Handle(new ProductCategoriesGetByIdRequest() { Id = 1000 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 	}

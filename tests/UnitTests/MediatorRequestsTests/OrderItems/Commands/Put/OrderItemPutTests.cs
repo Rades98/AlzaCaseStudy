@@ -1,7 +1,9 @@
 ﻿namespace UnitTests.MediatorRequestsTests.OrderItems.Commands.Put
 {
-	using ApplicationLayer.Exceptions;
+	using System;
 	using ApplicationLayer.Requests.OrderItems.Commands.Put;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -15,11 +17,11 @@
 		{
 			try
 			{
-				var response = await new OrderItemPutRequest.Handler(DbContext).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00000", ProductCode = "AAAA0000", UserId = 1 }, default);
+				var response = await new OrderItemPutRequest.Handler(OrderItemsRepo).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00000", ProductCode = "AAAA0000", UserId = 1 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotModified);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotModified);
 			}
 		}
 
@@ -31,11 +33,11 @@
 		{
 			try
 			{
-				var response = await new OrderItemPutRequest.Handler(DbContext).Handle(new OrderItemPutRequest() { OrderCode = "ZAAAA00000", ProductCode = "AAAA0000", UserId = 1 }, default);
+				var response = await new OrderItemPutRequest.Handler(OrderItemsRepo).Handle(new OrderItemPutRequest() { OrderCode = "ZAAAA00000", ProductCode = "AAAA0000", UserId = 1 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 
@@ -47,11 +49,11 @@
 		{
 			try
 			{
-				var response = await new OrderItemPutRequest.Handler(DbContext).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00002", ProductCode = "ZZZZ0000", UserId = 1 }, default);
+				var response = await new OrderItemPutRequest.Handler(OrderItemsRepo).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00002", ProductCode = "ZZZZ0000", UserId = 1 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 
@@ -61,7 +63,7 @@
 		/// </summary>
 		public async void PutItem_Should_Pass()
 		{
-			var response = await new OrderItemPutRequest.Handler(DbContext).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 1 }, default);
+			var response = await new OrderItemPutRequest.Handler(OrderItemsRepo).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 1 }, default);
 			response.Message.ShouldNotBeNull();
 		}
 
@@ -73,11 +75,11 @@
 		{
 			try
 			{
-				var response = await new OrderItemPutRequest.Handler(DbContext).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 2 }, default);
+				var response = await new OrderItemPutRequest.Handler(OrderItemsRepo).Handle(new OrderItemPutRequest() { OrderCode = "AAAAA00002", ProductCode = "AAAA0000", UserId = 2 }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.Unauthorized);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.Unauthorized);
 			}
 		}
 	}

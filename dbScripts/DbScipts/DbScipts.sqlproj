@@ -56,25 +56,25 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Functions" />
     <Folder Include="Procedures" />
     <Folder Include="Procedures\OrderItems" />
     <Folder Include="Procedures\Orders" />
     <Folder Include="Procedures\ProductCategories" />
     <Folder Include="Procedures\Products" />
-    <Folder Include="TestDataInsert" />
+    <Folder Include="DataInserts" />
     <Folder Include="Views" />
     <Folder Include="Views\Products" />
     <Folder Include="Procedures\Orders\Localized" />
     <Folder Include="Procedures\Messages" />
+    <Folder Include="ProceduresUsed" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Functions\GetProductParentTree.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestDataInsert\TestData.sql">
+    <None Include="DataInserts\InsertLocalizations.sql">
       <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
     </None>
+    <None Include="DataInserts\InsertOrders.sql" />
+    <None Include="DataInserts\InsertUsers.sql" />
+    <None Include="DataInserts\InsertProducts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\OrderItems\DeleteOrderItem.sql">
@@ -121,5 +121,13 @@
     <None Include="Procedures\Messages\GetMessageTranslation.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Procedures\ProductCategories\GetProductParentTree.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Procedures\Orders\Localized\GetOrderItemsByOrderCodeLocalized.sql" />
   </ItemGroup>
 </Project>

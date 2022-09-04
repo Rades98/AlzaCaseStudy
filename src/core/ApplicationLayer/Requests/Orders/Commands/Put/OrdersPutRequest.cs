@@ -1,12 +1,7 @@
 ﻿namespace ApplicationLayer.Requests.Orders.Commands.Put
 {
-	using CodeLists.OrderStatuses;
-	using DomainLayer.Entities.Orders;
-	using Exceptions;
-	using Interfaces;
 	using MediatR;
-	using Microsoft.EntityFrameworkCore;
-	using Utils.Orders;
+	using PersistanceLayer.Contracts.Repositories;
 
 	public class OrdersPutRequest : IRequest<OrdersPutResponse>
 	{
@@ -14,58 +9,14 @@
 
 		public class Handler : IRequestHandler<OrdersPutRequest, OrdersPutResponse>
 		{
-			private readonly IDbContext _dbContext;
+			private readonly IOrdersRepository _repo;
 
-			public Handler(IDbContext dbContext) => _dbContext = dbContext;
+			public Handler(IOrdersRepository repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
 
 			public async Task<OrdersPutResponse> Handle(OrdersPutRequest request, CancellationToken cancellationToken)
 			{
-				var actual = await _dbContext.Orders.Where(x => x.UserId == request.UserId &&
-					(x.OrderStatusId == OrderStatuses.New ||
-					x.OrderStatusId == OrderStatuses.Created))
-					.ToListAsync(cancellationToken);
-
-				if (actual is not null && actual.Count > 0)
-				{
-					throw new MediatorException(ExceptionType.Error, $"There aleready is unfinished order: {actual.First().OrderCode}");
-				}
-
-				string lastOrderCode = (await _dbContext.Orders.OrderBy(x => x.OrderCode).LastOrDefaultAsync(cancellationToken))?.OrderCode ?? string.Empty;
-
-				string code = "AAAAA00000";
-
-				if (!string.IsNullOrEmpty(lastOrderCode))
-				{
-					code = OrderUtils.GetOrderCode(lastOrderCode);
-				}
-
-				try
-				{
-					var status = await _dbContext.OrderStatuses.FirstAsync(x => x.Id == OrderStatuses.New, cancellationToken);
-					var user = await _dbContext.Users.FirstAsync(x => x.Id == request.UserId, cancellationToken);
-
-					_dbContext.Orders.Add(new OrderEntity()
-					{
-						OrderCode = code,
-						UserId = user.Id,
-						Total = 0,
-						OrderStatusId = status.Id
-					});
-
-					await _dbContext.SaveChangesAsync(cancellationToken);
-
-					int id = await _dbContext.Orders.Where(x => x.UserId == request.UserId &&
-					(x.OrderStatusId == OrderStatuses.New ||
-					x.OrderStatusId == OrderStatuses.Created))
-					.Select(x => x.Id)
-					.FirstOrDefaultAsync(cancellationToken);
-
-					return new OrdersPutResponse { OrderCode = code, Message = "Order created", OrderId = id };
-				}
-				catch (Exception e)
-				{
-					throw new MediatorException(ExceptionType.Error, "Error while creating order", e);
-				}
+				var code = await _repo.CreateOrderAsync(request.UserId, cancellationToken);
+				return new OrdersPutResponse { OrderCode = code, Message = "Order created" };
 			}
 		}
 	}

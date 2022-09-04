@@ -7,6 +7,7 @@
 	using System.Data.SqlClient;
 	using PersistanceLayerDapper;
 	using PersistanceLayerDapper.Extensions;
+	using CodeLists.Exceptions;
 
 	public class OrderItemDeleteRequest : IRequest<OrderItemDeleteResponse>
 	{

@@ -1,7 +1,10 @@
 ﻿namespace UnitTests.MediatorRequestsTests.Orders.Commands
 {
+	using System;
 	using ApplicationLayer.Exceptions;
 	using ApplicationLayer.Requests.Orders.Commands.Storno;
+	using ApplicationSetting.Exceptions;
+	using CodeLists.Exceptions;
 	using Shouldly;
 	using Xunit;
 
@@ -10,7 +13,7 @@
 		[Fact]
 		public async void OrderStornoTest_Should_Pass()
 		{
-			var result = await new OrderStornoRequest.Handler(DbContext).Handle(new OrderStornoRequest() { UserId = 4, OrderCode = "AAAAA00003" }, default);
+			var result = await new OrderStornoRequest.Handler(OrdersRepo).Handle(new OrderStornoRequest() { UserId = 4, OrderCode = "AAAAA00003" }, default);
 
 			result.Message.ShouldNotBeNull();
 		}
@@ -20,11 +23,11 @@
 		{
 			try
 			{
-				var result = await new OrderStornoRequest.Handler(DbContext).Handle(new OrderStornoRequest() { UserId = 4, OrderCode = "ZZZZZ00003" }, default);
+				var result = await new OrderStornoRequest.Handler(OrdersRepo).Handle(new OrderStornoRequest() { UserId = 4, OrderCode = "ZZZZZ00003" }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.NotFound);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.NotFound);
 			}
 		}
 
@@ -34,11 +37,11 @@
 		{
 			try
 			{
-				var result = await new OrderStornoRequest.Handler(DbContext).Handle(new OrderStornoRequest() { UserId = 4, OrderCode = "AAAAA00002" }, default);
+				var result = await new OrderStornoRequest.Handler(OrdersRepo).Handle(new OrderStornoRequest() { UserId = 4, OrderCode = "AAAAA00002" }, default);
 			}
-			catch (MediatorException e)
+			catch (Exception e)
 			{
-				e.Type.ShouldBe(ExceptionType.Unauthorized);
+				((IApplicationException)e).Type.ShouldBe(ExceptionType.Unauthorized);
 			}
 		}
 	}
