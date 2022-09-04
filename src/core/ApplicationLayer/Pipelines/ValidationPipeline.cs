@@ -34,13 +34,13 @@
 
 			if (failures.Count != 0)
 			{
-				failures.ForEach(f => _logger.LogError(f.ErrorMessage));
+				failures.ForEach(f => _logger.LogError("{errorCode} : {errorMessage}", f.ErrorMessage, f.ErrorCode));
 				throw new ValidationException(failures);
 			}
 
 			if (warnings.Count != 0)
 			{
-				warnings.ForEach(f => _logger.LogWarning(f.ErrorMessage));
+				warnings.ForEach(f => _logger.LogWarning("{errorCode} : {errorMessage}", f.ErrorMessage, f.ErrorCode));
 			}
 
 			return next();

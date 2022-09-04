@@ -67,9 +67,10 @@
 				throw new PersistanceLayerException(ExceptionType.Error, "There is running registration for provided email");
 			}
 
-			MD5 md5 = MD5.Create();
-			byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(firstName + surname + userName + email);
-			byte[] hash = md5.ComputeHash(inputBytes);
+			var hashProvider = HashAlgorithm.Create("SHA512Managed");
+
+			byte[] inputBytes = Encoding.ASCII.GetBytes(firstName + surname + userName + email);
+			byte[] hash = hashProvider!.ComputeHash(inputBytes);
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < hash.Length; i++)
 			{
