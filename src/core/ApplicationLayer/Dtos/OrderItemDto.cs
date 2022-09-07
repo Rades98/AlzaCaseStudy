@@ -1,6 +1,6 @@
 ﻿namespace ApplicationLayer.Dtos
 {
-	public class OrderItemDto
+	public class OrderItemDto : RestDtoBase
 	{
 		public string Name { get; set; } = string.Empty;
 		public Decimal Price { get; set; }

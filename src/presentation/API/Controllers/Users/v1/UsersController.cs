@@ -1,10 +1,11 @@
-﻿using API.Controllers.Orders.v1;
+﻿using API.Constants;
+using API.Controllers.Orders.v1;
 using API.Controllers.ProductDetails.v1;
 using API.Models;
+using API.Models.ControllerResponse.User;
 using ApplicationLayer.Requests.Users.Commands.ConfirmRegistration;
 using ApplicationLayer.Requests.Users.Commands.Register;
 using ApplicationLayer.Requests.Users.Queries.Login;
-using DomainLayer.Entities.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RadesSoft.HateoasMaker;
@@ -17,11 +18,11 @@ namespace API.Controllers.Users.v1
 	/// Users endpoint v1
 	/// </summary>
 	[ApiVersion("1")]
-	public class UsersController : BaseController<UserEntity>
+	public class UsersController : BaseController<UsersController>
 	{
 		private IConfiguration _configuration { get; }
 
-		public UsersController(IMediator mediator, ILogger<UserEntity> logger, IConfiguration configuration, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public UsersController(IMediator mediator, ILogger<UsersController> logger, IConfiguration configuration, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 			_configuration = configuration;
 		}
@@ -52,16 +53,31 @@ namespace API.Controllers.Users.v1
 		{
 			var result = await Mediator.Send(new UserLoginRequest { Password = user.Password, UserName = user.UserName, Token = System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value) }, cancellationToken);
 
-			result.Links = HateoasMaker.GetByNames(
-				new Dictionary<string, string?>
-				{
-					{ nameof(OrdersController.GetOrdersAsync), "onMyOrdersClick" },
-					{ nameof(OrdersController.GetOrdersFilteredAsync), "onCartClick" },
-					{ nameof(ProductDetailsController.GetProductDetailsPaginatedAsync), "loadProductCards" },
-					{ nameof(ProductDetailsController.GetProductDetailByIdAsync), "onProductClick" },
-				}, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+			// when there will be used identity server, cookies should be stored there aswell with token and so on...
 
-			return Ok(result);
+			if (result.OrderCode is not null)
+			{
+				var cookieOptions = new CookieOptions()
+				{
+					Path = "/",
+					Expires = DateTimeOffset.UtcNow.AddDays(1),
+					IsEssential = true,
+					HttpOnly = true,
+					Secure = true,
+				};
+
+				Response.Cookies.Append(CookieNames.ActualOrder, result.OrderCode, cookieOptions);
+			}
+
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(OrdersController.GetActiveOrdersAsync), "activeOrders" },
+				{ nameof(OrdersController.GetArchiveOrdersAsync), "archiveOrders" },
+				{ nameof(OrdersController.GetOrdersFilteredAsync), "basket" },
+				//TODO Logout
+			};
+
+			return Ok(result.GetResponseModel(HateoasMaker.GetByNames(choices, ApiVersion)));
 		}
 
 		/// <summary>

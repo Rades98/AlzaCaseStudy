@@ -9,9 +9,9 @@ using RadesSoft.HateoasMaker.Attributes;
 namespace API.Controllers.Orders.v2
 {
 	[ApiVersion("2")]
-	public class OrdersController : BaseController<OrderEntity>
+	public class OrdersController : BaseController<OrdersController>
 	{
-		public OrdersController(IMediator mediator, ILogger<OrderEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public OrdersController(IMediator mediator, ILogger<OrdersController> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 

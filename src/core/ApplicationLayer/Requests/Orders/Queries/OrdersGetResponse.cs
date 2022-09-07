@@ -2,7 +2,7 @@
 
 namespace ApplicationLayer.Requests.Orders.Queries
 {
-	public class OrdersGetResponse
+	public class OrdersGetResponse : RestDtoBase
 	{
 		public string OrderCode { get; set; } = string.Empty;
 		public List<OrderItemDto> OrderItems { get; set; } = new();

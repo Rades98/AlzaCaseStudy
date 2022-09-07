@@ -1,4 +1,5 @@
-﻿using DomainLayer.Entities.Product.Localization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DomainLayer.Entities.Product.Localization;
 
 namespace DomainLayer.Entities.Product
 {

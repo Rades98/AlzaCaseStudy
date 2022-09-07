@@ -24,9 +24,9 @@ namespace AppUtils.PasswordHashing
 		public static string CreateToken(int id, byte[] appToken, List<string> roles)
 		{
 			List<Claim> claims = new()
-				{
-					new Claim(ClaimTypes.NameIdentifier, id.ToString()),
-				};
+			{
+				new Claim(ClaimTypes.NameIdentifier, id.ToString()),
+			};
 
 			roles.ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
 

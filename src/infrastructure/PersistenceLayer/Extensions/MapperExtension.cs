@@ -15,7 +15,8 @@ namespace PersistenceLayer.Extensions
 				Parameters = ent.Parameters,
 				ProductDetailId = ent.ProductDetailId,
 				Id = ent.Id,
-				ProductCode = ent.ProductDetail!.ProductCode
+				ProductCode = ent.ProductDetail!.ProductCode,
+				InStock = ent.ProductDetail.Products?.Count
 			};
 		}
 

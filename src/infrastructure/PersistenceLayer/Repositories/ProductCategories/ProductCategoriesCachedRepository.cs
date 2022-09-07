@@ -19,34 +19,6 @@ namespace PersistenceLayer.Repositories.ProductCategories
 		}
 
 		/// <inheritdoc/>
-		public async Task<List<ProductCategoryEntity>> GetProductCategoriesAsync(CancellationToken ct)
-		{
-			string cacheKey = $"{nameof(List<ProductCategoryEntity>)}";
-
-			object? cachedResponse = _cache.Get(cacheKey);
-
-			if (cachedResponse != null)
-			{
-				var res = JsonConvert.DeserializeObject<List<ProductCategoryEntity>>(Encoding.Default.GetString((byte[])cachedResponse));
-				if (res is not null)
-				{
-					return res;
-				}
-			}
-
-			var response = await _productCategoryRepo.GetProductCategoriesAsync(ct);
-
-			byte[]? serializedData = Encoding.Default.GetBytes(JsonConvert.SerializeObject(response));
-			_cache.Set(cacheKey, serializedData, new MemoryCacheEntryOptions()
-			{
-				AbsoluteExpiration = DateTime.Now.AddMinutes(CACHE_EXPIRATION_TIME_MINS),
-				SlidingExpiration = TimeSpan.FromMinutes(CACHE_SLIDING_EXPIRATION_TIME_MINS)
-			});
-
-			return response;
-		}
-
-		/// <inheritdoc/>
 		public async Task<List<ProductCategoryEntity>> GetProductCategoriesByIdAsync(int id, CancellationToken ct)
 		{
 			string cacheKey = $"{nameof(List<ProductCategoryEntity>)}{id}";

@@ -20,12 +20,11 @@ namespace ApplicationLayer.Requests.ProductCategories.Queries
 			{
 				var productCategories = await _repo.GetProductCategoriesByIdAsync(request.Id, cancellationToken);
 
-				productCategories.ForEach(cat =>
-				{
-					cat.ChildrenCategories = productCategories.Where(x => x.ParentProductCategoryId == cat.Id).ToList();
-				});
+				var result = new List<ProductCategoryDto>();
 
-				return new ProductCategoriesGetResponse { CategoryTree = (ProductCategoryDto)productCategories.First(x => x.Id == request.Id) };
+				productCategories.ForEach(cat => result.Add((ProductCategoryDto)cat));
+
+				return new ProductCategoriesGetResponse { Categories = result, CategoryId = request.Id };
 			}
 		}
 	}

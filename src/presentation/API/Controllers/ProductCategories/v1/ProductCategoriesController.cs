@@ -1,16 +1,21 @@
-﻿using ApplicationLayer.Requests.ProductCategories.Queries;
+﻿using API.Controllers.ProductDetails.v1;
+using API.Models.ControllerResponse.ProductCategories;
+using ApplicationLayer.Dtos;
+using ApplicationLayer.Requests.ProductCategories.Queries;
 using DomainLayer.Entities.Product;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using RadesSoft.HateoasMaker;
 using RadesSoft.HateoasMaker.Attributes;
+using RadesSoft.HateoasMaker.Extensions;
+using RadesSoft.HateoasMaker.Models;
 
 namespace API.Controllers.ProductCategories.v1
 {
 	[ApiVersion("1")]
-	public class ProductCategoriesController : BaseController<ProductCategoryEntity>
+	public class ProductCategoriesController : BaseController<ProductCategoriesController>
 	{
-		public ProductCategoriesController(IMediator mediator, ILogger<ProductCategoryEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public ProductCategoriesController(IMediator mediator, ILogger<ProductCategoriesController> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -30,9 +35,15 @@ namespace API.Controllers.ProductCategories.v1
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		public async Task<ActionResult<IEnumerable<ProductCategoriesGetResponse>>> GetProductCategopriesAsync(CancellationToken cancellationToken = default)
 		{
-			var result = await Mediator.Send(new ProductCategoriesGetRequest() { }, cancellationToken);
+			var result = await Mediator.Send(new ProductCategoriesGetByIdRequest() { Id = CodeLists.ProductCategories.ProductCategories.EshopId }, cancellationToken);
 
-			return Ok(result);
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(ProductCategoriesController.GetProductCategoriesByIdAsync), "getCategories" },
+				{ nameof(ProductDetailsController.SearchProductByCategory), "getProductsByCategory" },
+			};
+
+			return Ok(result.GetResponseModel(HateoasMaker.GetByNames(choices, ApiVersion)));
 		}
 
 		/// <summary>
@@ -54,7 +65,13 @@ namespace API.Controllers.ProductCategories.v1
 		{
 			var result = await Mediator.Send(new ProductCategoriesGetByIdRequest() { Id = id }, cancellationToken);
 
-			return Ok(result);
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(ProductCategoriesController.GetProductCategoriesByIdAsync), "getCategories" },
+				{ nameof(ProductDetailsController.SearchProductByCategory), "getProductsByCategory" },
+			};
+
+			return Ok(result.GetResponseModel(HateoasMaker.GetByNames(choices, ApiVersion)));
 		}
 	}
 }

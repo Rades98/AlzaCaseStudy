@@ -10,7 +10,7 @@ namespace API.Controllers
 {
 	[ApiController]
 	[Route("api/v{version:apiVersion}/[controller]")]
-	public abstract class BaseController<T> : Controller where T : AuditableEntity
+	public abstract class BaseController<T> : Controller where T : class
 	{
 		private readonly IMediator _mediator;
 		private readonly ILogger<T> _logger;
@@ -19,6 +19,7 @@ namespace API.Controllers
 		public IMediator Mediator => _mediator;
 		public HateoasMaker HateoasMaker => _hateoasMaker;
 		public ILogger<T> Logger => _logger;
+		public int ApiVersion => Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1;
 
 		protected BaseController(IMediator mediator, ILogger<T> logger, HateoasMaker hateoasMaker) => (_mediator, _logger, _hateoasMaker) = (mediator, logger, hateoasMaker);
 

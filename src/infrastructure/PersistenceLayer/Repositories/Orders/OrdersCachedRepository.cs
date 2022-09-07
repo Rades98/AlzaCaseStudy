@@ -32,7 +32,7 @@ namespace PersistenceLayer.Repositories.OrdersRepository
 		/// <inheritdoc/>
 		public async Task<List<OrderModel>> GetOrdersByUserId(int userId, Expression<Func<OrderEntity, bool>> whereFilter, CancellationToken ct)
 		{
-			string cacheKey = $"{nameof(List<OrderModel>)}{userId}";
+			string cacheKey = $"{nameof(List<OrderModel>)}{userId}{whereFilter}";
 
 			object? cachedResponse = _cache.Get(cacheKey);
 
