@@ -40,5 +40,25 @@ namespace PersistanceLayer.Contracts.Repositories
 		/// <param name="ct">cancellation token</param>
 		/// <returns>list of product details</returns>
 		Task<List<ProductDetailEntity>> GetProductDetailsAsync(Func<ProductDetailEntity, object> orderBy, bool orderByDesc, CancellationToken ct);
+
+		/// <summary>
+		/// Gets searched product
+		/// </summary>
+		/// <param name="phrase">phrase</param>
+		/// <param name="pageNumber">page number</param>
+		/// <param name="pageSize">page size</param>
+		/// <param name="ct">cancellation token</param>
+		/// <returns></returns>
+		Task<List<ProductDetailEntity>> SearchProductDetailAsync(string phrase, int pageNumber, int pageSize, CancellationToken ct);
+
+		/// <summary>
+		/// Gets products by category
+		/// </summary>
+		/// <param name="catId">Category id</param>
+		/// <param name="pageNumber">page number</param>
+		/// <param name="pageSize">page size</param>
+		/// <param name="ct">cancellation token</param>
+		/// <returns></returns>
+		Task<List<ProductDetailEntity>> GetProductDetailByCategoryAsync(int catId, int pageNumber, int pageSize, CancellationToken ct);
 	}
 }

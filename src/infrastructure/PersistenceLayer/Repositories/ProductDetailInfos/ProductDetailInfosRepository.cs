@@ -20,6 +20,7 @@ namespace PersistenceLayer.Repositories.ProductDetailInfos
 			var productDetailInfo = await _dbContext.ProductDetailInfos
 					.AsNoTracking()
 					.Include(i => i.ProductDetail)
+						.ThenInclude(i => i!.Products)
 					.FirstOrDefaultAsync(x => x.ProductDetail!.ProductCode == productCode, ct);
 
 			if (productDetailInfo is null)

@@ -1,9 +1,13 @@
 ﻿using API.Constants;
+using API.Controllers.OrderItems.v1;
+using API.Controllers.ProductDetails.v1;
+using API.Models.ControllerResponse.Orders;
+using API.Models.Orders;
 using ApplicationLayer.Requests.Orders.Commands.ChangeStatus;
 using ApplicationLayer.Requests.Orders.Commands.Put;
 using ApplicationLayer.Requests.Orders.Commands.Storno;
 using ApplicationLayer.Requests.Orders.Queries;
-using DomainLayer.Entities.Orders;
+using CodeLists.UserRoles;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +17,9 @@ using RadesSoft.HateoasMaker.Attributes;
 namespace API.Controllers.Orders.v1
 {
 	[ApiVersion("1")]
-	public class OrdersController : BaseController<OrderEntity>
+	public class OrdersController : BaseController<OrdersController>
 	{
-		public OrdersController(IMediator mediator, ILogger<OrderEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public OrdersController(IMediator mediator, ILogger<OrdersController> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -52,20 +56,79 @@ namespace API.Controllers.Orders.v1
 		/// Returns all user orders where status id is as defined - for test purpose use Admin aJc48262_1Kjkz>X!
 		/// </remarks>
 		[HttpGet("status", Name = nameof(GetOrdersFilteredAsync)), Authorize()]
-		[HateoasResponse("orders_getFiltered", nameof(GetOrdersFilteredAsync), 1)]
+		[HateoasResponse("orders_getByStatus", nameof(GetOrdersFilteredAsync), 1, "?statusId={statusId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<OrdersGetResponse>>> GetOrdersFilteredAsync(int statusId, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<GetOrdersResult>> GetOrdersFilteredAsync(int statusId, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken(), WhereFilter = x => x.OrderStatusId == statusId }, cancellationToken);
 
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(ProductDetailsController.GetProductDetailByIdAsync), "getProduct" },
+			};
+
 			AddCookieWithActualOrder(result);
 
-			return Ok(result);
+			return Ok(result.GetResponseModels(HateoasMaker.GetByNames(choices, ApiVersion), statusId));
+		}
+
+		/// <summary>
+		/// Get active user orders
+		/// </summary>
+		/// <param name="cancellationToken">cancelation token</param>
+		/// <remarks>
+		/// Returns all user orders where status id is as defined - for test purpose use Admin aJc48262_1Kjkz>X!
+		/// </remarks>
+		[HttpGet("active", Name = nameof(GetActiveOrdersAsync)), Authorize()]
+		[HateoasResponse("orders_getActive", nameof(GetActiveOrdersAsync), 1)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<IEnumerable<OrdersGetResponse>>> GetActiveOrdersAsync(CancellationToken cancellationToken = default)
+		{
+			var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken(), WhereFilter = x => CodeLists.OrderStatuses.OrderStatuses.Active.Contains(x.OrderStatusId) }, cancellationToken);
+
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(ProductDetailsController.GetProductDetailByIdAsync), "getProduct" },
+			};
+
+			return Ok(result.GetResponseModels(HateoasMaker.GetByNames(choices, ApiVersion)));
+		}
+
+		/// <summary>
+		/// Get archive user orders
+		/// </summary>
+		/// <param name="cancellationToken">cancelation token</param>
+		/// <remarks>
+		/// Returns all user orders where status id is as defined - for test purpose use Admin aJc48262_1Kjkz>X!
+		/// </remarks>
+		[HttpGet("archive", Name = nameof(GetArchiveOrdersAsync)), Authorize()]
+		[HateoasResponse("orders_getArchive", nameof(GetArchiveOrdersAsync), 1)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<IEnumerable<OrdersGetResponse>>> GetArchiveOrdersAsync(CancellationToken cancellationToken = default)
+		{
+			var result = await Mediator.Send(new OrdersGetByUserRequest() { UserId = GetUserIdFromToken(), WhereFilter = x => CodeLists.OrderStatuses.OrderStatuses.Archive.Contains(x.OrderStatusId) }, cancellationToken);
+
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(ProductDetailsController.GetProductDetailByIdAsync), "getProduct" },
+			};
+
+			return Ok(result.GetResponseModels(HateoasMaker.GetByNames(choices, ApiVersion)));
 		}
 
 		/// <summary>
@@ -100,7 +163,7 @@ namespace API.Controllers.Orders.v1
 		/// <remarks>
 		/// Changes order status
 		/// </remarks>
-		[HttpPatch(Name = nameof(ChangeOrderStatusAsync)), Authorize()]
+		[HttpPatch(Name = nameof(ChangeOrderStatusAsync)), Authorize(Roles = UserRoles.Admin)]
 		[HateoasResponse("orders_changeStatus", nameof(ChangeOrderStatusAsync), 1, "?orderCode={orderCode}&statusId={statusId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]

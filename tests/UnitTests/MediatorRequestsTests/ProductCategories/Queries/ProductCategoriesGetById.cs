@@ -15,9 +15,6 @@ namespace UnitTests.MediatorRequestsTests.ProductCategories.Queries
 			var result = await new ProductCategoriesGetByIdRequest.Handler(ProductCategoriesRepo).Handle(new ProductCategoriesGetByIdRequest() { Id = 1 }, default);
 
 			result.ShouldNotBeNull();
-			result.CategoryTree.Id.ShouldBe(1);
-			result.CategoryTree.Children.ShouldNotBeNull();
-			result.CategoryTree.Children.Count.ShouldBe(2);
 		}
 
 		[Fact]

@@ -1,5 +1,6 @@
 ﻿using API.Constants;
 using API.Controllers.OrderItems.v1;
+using API.Models.ControllerResponse.ProductDetailInfos;
 using ApplicationLayer.Requests.ProductDetailInfos.Queries;
 using DomainLayer.Entities.Product;
 using MediatR;
@@ -15,12 +16,11 @@ namespace API.Controllers.ProductDetailInfos.v1
 	/// </summary>
 	/// <seealso cref="BaseController{ProductDetailInfoEntity}"/>
 	[ApiVersion("1")]
-	public class ProductDetailInfosController : BaseController<ProductDetailInfoEntity>
+	public class ProductDetailInfosController : BaseController<ProductDetailInfosController>
 	{
-		public ProductDetailInfosController(IMediator mediator, ILogger<ProductDetailInfoEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public ProductDetailInfosController(IMediator mediator, ILogger<ProductDetailInfosController> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
-
 
 		/// <summary>
 		/// Get product detail info
@@ -37,31 +37,23 @@ namespace API.Controllers.ProductDetailInfos.v1
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<ProductDetailInfoGetResponse>>> GetProductDetailInfoAsync(string code, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<ProductDetailInfoGetResponse>> GetProductDetailInfoAsync(string code, CancellationToken cancellationToken = default)
 		{
 			var result = await Mediator.Send(new ProductDetailInfoGetRequest() { Code = code }, cancellationToken);
 
-			var choices = new Dictionary<string, string?>
-				{
-					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
-					{ nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart" },
-				};
+			var choices = new Dictionary<string, string?>();
 
-			var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+			var orderCode = GetCookieValue(CookieNames.ActualOrder);
 
-			links.First(x => x.ActionName == "self").ReplaceInLink("{id}", result.Id.ToString());
-
-			string? cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
-
-			if (cookieOrderCode is not null)
+			if (orderCode is not null)
 			{
-				links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
-				links.First(x => x.ActionName == "onRemoveFromCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
+				choices.Add(nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart");
+				choices.Add(nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart");
 			}
 
-			result.Links = links;
+			var links = HateoasMaker.GetByNames(choices, ApiVersion);
 
-			return Ok(result);
+			return Ok(result.GetResponseModel(links, orderCode));
 		}
 	}
 }

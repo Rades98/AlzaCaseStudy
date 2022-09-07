@@ -5,13 +5,6 @@ namespace PersistanceLayer.Contracts.Repositories
 	public interface IProductCategoriesRepository
 	{
 		/// <summary>
-		/// Get product categories
-		/// </summary>
-		/// <param name="ct">cancellation token</param>
-		/// <returns>product categories</returns>
-		Task<List<ProductCategoryEntity>> GetProductCategoriesAsync(CancellationToken ct);
-
-		/// <summary>
 		/// Get product categories by id
 		/// </summary>
 		/// <param name="id">category id</param>

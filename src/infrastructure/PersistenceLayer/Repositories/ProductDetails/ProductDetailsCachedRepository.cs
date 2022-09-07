@@ -18,6 +18,9 @@ namespace PersistenceLayer.Repositories.ProductDetails
 			_repo = repo ?? throw new ArgumentNullException(nameof(repo));
 		}
 
+		public Task<List<ProductDetailEntity>> GetProductDetailByCategoryAsync(int catId, int pageNumber, int pageSize, CancellationToken ct) 
+			=> _repo.GetProductDetailByCategoryAsync(catId, pageNumber, pageSize, ct);
+
 		public async Task<ProductDetailEntity> GetProductDetailByProductCode(string productCode, CancellationToken ct)
 		{
 			var cacheKey = $"{nameof(ProductDetailEntity)}{productCode}";
@@ -34,7 +37,7 @@ namespace PersistenceLayer.Repositories.ProductDetails
 			}
 
 			var response = await _repo.GetProductDetailByProductCode(productCode, ct);
-
+			response.Products?.ForEach(p => p.ProductDetail = null);
 			var serializedData = Encoding.Default.GetBytes(JsonConvert.SerializeObject(response));
 			_cache.Set(cacheKey, serializedData, new MemoryCacheEntryOptions()
 			{
@@ -50,6 +53,9 @@ namespace PersistenceLayer.Repositories.ProductDetails
 
 		public Task<List<ProductDetailEntity>> GetProductDetailsPaginatedAsync(int pageNumber, int pageSize, Func<ProductDetailEntity, object> orderBy, bool orderByDesc, CancellationToken ct)
 			=> _repo.GetProductDetailsPaginatedAsync(pageNumber, pageSize, orderBy, orderByDesc, ct);
+		
+		public Task<List<ProductDetailEntity>> SearchProductDetailAsync(string phrase, int pageNumber, int pageSize, CancellationToken ct)
+			=> _repo.SearchProductDetailAsync(phrase, pageNumber, pageSize, ct);
 
 		public async Task<ProductDetailEntity> UpdateProductDetailDescriptionAsync(int productId, string newDescription, CancellationToken ct)
 		{

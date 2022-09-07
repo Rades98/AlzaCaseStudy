@@ -14,31 +14,17 @@ namespace PersistenceLayer.Repositories.ProductCategories
 		public ProductCategoriesRepository(IDbContext dbContext) => _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
 		/// <inheritdoc/>
-		public async Task<List<ProductCategoryEntity>> GetProductCategoriesAsync(CancellationToken ct)
-		{
-			var productCategories = await _dbContext.ProductCategories
-					.AsNoTracking()
-					.ToListAsync(ct);
-
-			if (!productCategories.Any())
-			{
-				throw new PersistanceLayerException(ExceptionType.NotFound, "Product categories not found");
-			}
-
-			return productCategories;
-		}
-
-		/// <inheritdoc/>
 		public async Task<List<ProductCategoryEntity>> GetProductCategoriesByIdAsync(int id, CancellationToken ct)
 		{
 
 			var productCategories = await _dbContext.ProductCategories
 					.AsNoTracking()
+					.Where(c => c.ParentProductCategoryId == id)
 					.ToListAsync(ct);
 
-			if (productCategories is null || !productCategories.Any() || productCategories.FirstOrDefault(x => x.Id == id) is null)
+			if (productCategories is null || !productCategories.Any())
 			{
-				throw new PersistanceLayerException(ExceptionType.NotFound, "Product category not found");
+				throw new PersistanceLayerException(ExceptionType.NotFound, "Product categories not found");
 			}
 
 			return productCategories;

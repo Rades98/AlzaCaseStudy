@@ -14,10 +14,9 @@ namespace ApplicationLayer.Requests.ProductDetails.Queries
 		public decimal Price { get; set; }
 		public string? Description { get; set; }
 		public int Id { get; set; }
-		public DateTime Created { get; set; }
-		public DateTime? Changed { get; set; }
-		public DateTime? Deleted { get; set; }
 		public string ProductCode { get; set; } = string.Empty;
+		public int ProductCategoryId { get; set; }
+		public int InStock { get; set; }
 
 		public ProductDetailGetResponse() { }
 
@@ -29,12 +28,11 @@ namespace ApplicationLayer.Requests.ProductDetails.Queries
 				ImgUri = v.ImgUri,
 				Name = v.Name,
 				Price = v.Price,
-				Changed = v.Changed,
-				Created = v.Created,
-				Deleted = v.Deleted,
 				Description = v.Description,
 				Id = v.Id,
 				ProductCode = v.ProductCode,
+				ProductCategoryId = v.ProductCategoryId,
+				InStock = v.Products?.Count ?? 0
 			};
 		}
 	}

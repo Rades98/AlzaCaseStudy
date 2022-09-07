@@ -10,9 +10,9 @@ using OrdersGetByUserRequest = ApplicationLayer.RequestsDapper.Orders.Queries.Or
 namespace API.Controllers.Orders.v3
 {
 	[ApiVersion("3")]
-	public class OrdersController : BaseController<OrderEntity>
+	public class OrdersController : BaseController<OrdersController>
 	{
-		public OrdersController(IMediator mediator, ILogger<OrderEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public OrdersController(IMediator mediator, ILogger<OrdersController> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 

@@ -1,6 +1,5 @@
 ﻿using ApplicationLayer.Requests.OrderItems.Commands.Delete;
 using ApplicationLayer.Requests.OrderItems.Commands.Put;
-using DomainLayer.Entities.Orders;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +9,9 @@ using RadesSoft.HateoasMaker.Attributes;
 namespace API.Controllers.OrderItems.v1
 {
 	[ApiVersion("1")]
-	public class OrderItemsController : BaseController<OrderItemEntity>
+	public class OrderItemsController : BaseController<OrderItemsController>
 	{
-		public OrderItemsController(IMediator mediator, ILogger<OrderItemEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public OrderItemsController(IMediator mediator, ILogger<OrderItemsController> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 

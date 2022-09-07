@@ -1,11 +1,12 @@
 ﻿using API.Constants;
 using API.Controllers.OrderItems.v1;
 using API.Controllers.ProductDetailInfos.v1;
+using API.Models.ControllerResponse.ProductDetails;
+using API.Models.ProductDetails;
 using ApplicationLayer.Requests.ProductDetails.Commands;
 using ApplicationLayer.Requests.ProductDetails.Queries;
 using ApplicationLayer.Requests.ProductDetails.Queries.Requests;
 using CodeLists.UserRoles;
-using DomainLayer.Entities.Product;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,9 @@ namespace API.Controllers.ProductDetails.v1
 	/// </summary>
 	/// <seealso cref="BaseController{ProductDetailEntity}"/>
 	[ApiVersion("1")]
-	public class ProductDetailsController : BaseController<ProductDetailEntity>
+	public class ProductDetailsController : BaseController<ProductDetailsController>
 	{
-		public ProductDetailsController(IMediator mediator, ILogger<ProductDetailEntity> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
+		public ProductDetailsController(IMediator mediator, ILogger<ProductDetailsController> logger, HateoasMaker hateoasMaker) : base(mediator, logger, hateoasMaker)
 		{
 		}
 
@@ -40,38 +41,29 @@ namespace API.Controllers.ProductDetails.v1
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<ProductDetailGetResponse>>> GetProductDetailsAsync(CancellationToken cancellationToken = default)
+		public async Task<ActionResult<ProductDetailsGet>> GetProductDetailsAsync(CancellationToken cancellationToken = default)
 		{
 			var results = await Mediator.Send(new ProductDetailsGetRequest() { OrderBy = p => p.Name }, cancellationToken);
 
-			results.ToList().ForEach(result =>
+			var choices = new Dictionary<string, string?>
 			{
-				var choices = new Dictionary<string, string?>
-				{
-					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
-					{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "productDetail" },
-				};
+				{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "productDetail" },
+			};
 
-				if (User.IsInRole(UserRoles.Admin))
-				{
-					choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
-				}
+			if (User.IsInRole(UserRoles.Admin))
+			{
+				choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
+			}
 
-				var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+			var orderCode = GetCookieValue(CookieNames.ActualOrder);
 
-				var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+			if (orderCode is not null)
+			{
+				choices.Add(nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart");
+				choices.Add(nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart");
+			}
 
-				if (cookieOrderCode is not null)
-				{
-					links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
-				}
-
-				links.First(x => x.ActionName == "productDetail").ReplaceInLink("{id}", result.Id.ToString());
-
-				result.Links = links;
-			});
-
-			return Ok(results);
+			return Ok(results.GetResponseModels(HateoasMaker.GetByNames(choices, ApiVersion), orderCode));
 		}
 
 		/// <summary>
@@ -90,36 +82,29 @@ namespace API.Controllers.ProductDetails.v1
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-		public async Task<ActionResult<IEnumerable<ProductDetailGetResponse>>> GetProductDetailsPaginatedAsync(int pageSize, int pageNum, CancellationToken cancellationToken = default)
+		public async Task<ActionResult<ProductDetailsGet>> GetProductDetailsPaginatedAsync(int pageSize, int pageNum, CancellationToken cancellationToken = default)
 		{
 			var results = await Mediator.Send(new ProductDetailsGetPaginatedRequest() { OrderBy = p => p.Name, PageNumber = pageNum, PageSize = pageSize }, cancellationToken);
-			results.ToList().ForEach(result =>
+
+			var choices = new Dictionary<string, string?>
 			{
-				var choices = new Dictionary<string, string?>
-				{
-					{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
-					{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "productDetail" },
-				};
+				{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "productDetail" },
+			};
 
-				if (User.IsInRole(UserRoles.Admin))
-				{
-					choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
-				}
+			if (User.IsInRole(UserRoles.Admin))
+			{
+				choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
+			}
 
-				var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
+			var orderCode = GetCookieValue(CookieNames.ActualOrder);
 
-				var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
+			if (orderCode is not null)
+			{
+				choices.Add(nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart");
+				choices.Add(nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart");
+			}
 
-				if (cookieOrderCode is not null)
-				{
-					links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
-				}
-
-				links.First(x => x.ActionName == "productDetail").ReplaceInLink("{id}", result.Id.ToString());
-
-				result.Links = links;
-			});
-			return Ok(results);
+			return Ok(results.GetResponseModels(HateoasMaker.GetByNames(choices, ApiVersion), orderCode, pageSize, pageNum));
 		}
 
 		/// <summary>
@@ -143,22 +128,23 @@ namespace API.Controllers.ProductDetails.v1
 
 			var choices = new Dictionary<string, string?>
 			{
-				{ nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart" },
+				{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "productDetail" },
 			};
 
-			var links = HateoasMaker.GetByNames(choices, Url.ActionContext.HttpContext.GetRequestedApiVersion()?.MajorVersion ?? 1);
-			var cookieOrderCode = GetCookieValue(CookieNames.ActualOrder);
-
-			if (cookieOrderCode is not null)
+			if (User.IsInRole(UserRoles.Admin))
 			{
-				links.First(x => x.ActionName == "onAddToCart").ReplaceInLink("{orderCode}", cookieOrderCode, "{productCode}", result.ProductCode);
+				choices.Add(nameof(UpdateProductDetailAsync), "updateDescription");
 			}
 
-			links.First(x => x.ActionName == "self").ReplaceInLink("{id}", result.Id.ToString());
+			var orderCode = GetCookieValue(CookieNames.ActualOrder);
 
-			result.Links = links;
+			if (orderCode is not null)
+			{
+				choices.Add(nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart");
+				choices.Add(nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart");
+			}
 
-			return Ok(result);
+			return Ok(result.GetResponseModel(HateoasMaker.GetByNames(choices, ApiVersion), orderCode));
 		}
 
 		/// <summary>
@@ -184,6 +170,76 @@ namespace API.Controllers.ProductDetails.v1
 			var result = await Mediator.Send(new ProductDetailUpdateRequest { Id = id, Description = description }, cancellationToken);
 
 			return Ok(result);
+		}
+
+		/// <summary>
+		/// Search product
+		/// </summary>
+		/// <param name="phrase">phrase</param>
+		/// <param name="pageSize">page size</param>
+		/// <param name="pageNum">page num</param>
+		/// <param name="cancellationToken">cancellation token</param>
+		/// <returns></returns>
+		[HttpPost(Name = nameof(SearchProduct))]
+		[HateoasResponse("productDetais_search", nameof(SearchProduct), 1, "?phrase={phrase}&pageSize={pageSize}&pageNum={pageNum}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<ProductDetailSearch>> SearchProduct(string phrase, int pageSize, int pageNum, CancellationToken cancellationToken = default)
+		{
+			var result = await Mediator.Send(new ProductDetailSearchRequest { Phrase = phrase, PageNum = pageNum, PageSize = pageSize }, cancellationToken);
+
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "getDetail" },
+			};
+
+			var orderCode = GetCookieValue(CookieNames.ActualOrder);
+
+			if (orderCode is not null)
+			{
+				choices.Add(nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart");
+				choices.Add(nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart");
+			}
+
+			return Ok(result.GetSearchResponseModels(phrase, HateoasMaker.GetByNames(choices, ApiVersion), orderCode));
+		}
+
+		/// <summary>
+		/// Search product
+		/// </summary>
+		/// <param name="catId">categoryId</param>
+		/// <param name="pageSize">page size</param>
+		/// <param name="pageNum">page num</param>
+		/// <param name="cancellationToken">cancellation token</param>
+		/// <returns></returns>
+		[HttpPost("catId", Name = nameof(SearchProductByCategory))]
+		[HateoasResponse("productDetais_searchByCat", nameof(SearchProductByCategory), 1, "?catId={catId}&pageSize={pageSize}&pageNum={pageNum}")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status408RequestTimeout)]
+		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+		public async Task<ActionResult<ProductDetailSearch>> SearchProductByCategory(int catId, int pageSize, int pageNum, CancellationToken cancellationToken = default)
+		{
+			var result = await Mediator.Send(new ProductDetailsGetByCategory { CategoryId = catId, PageNum = pageNum, PageSize = pageSize }, cancellationToken);
+
+			var choices = new Dictionary<string, string?>()
+			{
+				{ nameof(ProductDetailInfosController.GetProductDetailInfoAsync), "getDetail" },
+			};
+
+			var orderCode = GetCookieValue(CookieNames.ActualOrder);
+
+			if (orderCode is not null)
+			{
+				choices.Add(nameof(OrderItemsController.PutOrderItemAsync), "onAddToCart");
+				choices.Add(nameof(OrderItemsController.DeleteOrderItemAsync), "onRemoveFromCart");
+			}
+
+			return Ok(result.GetSearchByCatIdResponseModels(catId, HateoasMaker.GetByNames(choices, ApiVersion), orderCode));
 		}
 	}
 }

@@ -13,7 +13,7 @@ namespace UnitTests.MediatorRequestsTests.Users.Queries
 		[Fact]
 		public async void UserLoginTest_Should_Pass()
 		{
-			var result = await new UserLoginRequest.Handler(UsersRepo, Claims).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "Admin", Token = Token }, default);
+			var result = await new UserLoginRequest.Handler(UsersRepo, Claims, OrdersRepo).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "Admin", Token = Token }, default);
 
 			result.UserName.ShouldBe("Admin");
 		}
@@ -23,7 +23,7 @@ namespace UnitTests.MediatorRequestsTests.Users.Queries
 		{
 			try
 			{
-				await new UserLoginRequest.Handler(UsersRepo, Claims).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "GuluGulu", Token = Token }, default);
+				await new UserLoginRequest.Handler(UsersRepo, Claims, OrdersRepo).Handle(new UserLoginRequest { Password = "aJc48262_1Kjkz>X!", UserName = "GuluGulu", Token = Token }, default);
 			}
 			catch (Exception e)
 			{
@@ -36,7 +36,7 @@ namespace UnitTests.MediatorRequestsTests.Users.Queries
 		{
 			try
 			{
-				await new UserLoginRequest.Handler(UsersRepo, Claims).Handle(new UserLoginRequest { Password = "qwqqwewqerwqrwr", UserName = "Admin", Token = Token }, default);
+				await new UserLoginRequest.Handler(UsersRepo, Claims, OrdersRepo).Handle(new UserLoginRequest { Password = "qwqqwewqerwqrwr", UserName = "Admin", Token = Token }, default);
 			}
 			catch (Exception e)
 			{

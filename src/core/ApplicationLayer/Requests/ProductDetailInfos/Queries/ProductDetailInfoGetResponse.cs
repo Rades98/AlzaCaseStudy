@@ -10,6 +10,7 @@ namespace ApplicationLayer.Requests.ProductDetailInfos.Queries
 		public string DetailedDescription { get; set; } = string.Empty;
 		public string Parameters { get; set; } = string.Empty;
 		public string ProductCode { get; set; } = string.Empty;
+		public int InStock { get; set; }
 
 		public int Count { get; set; }
 
@@ -20,7 +21,8 @@ namespace ApplicationLayer.Requests.ProductDetailInfos.Queries
 				Id = v.Id,
 				DetailedDescription = v.DetailedDescription,
 				Parameters = v.Parameters,
-				ProductCode = v.ProductCode
+				ProductCode = v.ProductCode,
+				InStock = v.InStock ?? 0,
 			};
 		}
 	}

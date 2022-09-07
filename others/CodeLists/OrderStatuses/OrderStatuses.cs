@@ -19,5 +19,18 @@
 
 		//Cancelled order
 		public const int Canceled = 6;
+
+		public static List<int> Active => new()
+		{
+			Created, 
+			WaitingForPayment,
+			InExpedition
+		};
+
+		public static List<int> Archive => new()
+		{
+			Delivered,
+			Canceled
+		};
 	}
 }

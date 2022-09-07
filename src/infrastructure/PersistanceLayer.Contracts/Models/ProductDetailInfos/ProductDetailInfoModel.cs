@@ -7,5 +7,6 @@
 		public string DetailedDescription { get; set; } = string.Empty;
 		public string Parameters { get; set; } = string.Empty;
 		public string ProductCode { get; set; } = string.Empty;
+		public int? InStock { get; set; }
 	}
 }

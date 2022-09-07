@@ -52,6 +52,7 @@ namespace PersistenceLayer.Repositories.ProductDetails
 		{
 			var productDetail = await _dbContext.ProductDetails
 					.AsNoTracking()
+					.Include(i => i.Products)
 					.FirstOrDefaultAsync(x => x.ProductCode == productCode, ct);
 
 			if (productDetail is null)
@@ -67,6 +68,7 @@ namespace PersistenceLayer.Repositories.ProductDetails
 		{
 			var products = await _dbContext.ProductDetails
 					.AsNoTracking()
+					.Include(i => i.Products)
 					.IfThenElse(
 						() => orderByDesc,
 						e => e.OrderByDescending(orderBy),
@@ -86,6 +88,7 @@ namespace PersistenceLayer.Repositories.ProductDetails
 		{
 			var products = await _dbContext.ProductDetails
 					.AsNoTracking()
+					.Include(i => i.Products)
 					.ToListAsync(ct);
 
 			products = products.IfThenElse(
@@ -98,6 +101,54 @@ namespace PersistenceLayer.Repositories.ProductDetails
 			{
 				throw new PersistanceLayerException(ExceptionType.NotFound, "Product details not found");
 			}
+
+			return products;
+		}
+
+		/// <inheritdoc/>
+		public async Task<List<ProductDetailEntity>> SearchProductDetailAsync(string phrase, int pageNumber, int pageSize, CancellationToken ct)
+		{
+			var products = await _dbContext.ProductDetails
+				.AsNoTracking()
+				.Include(i => i.Products)
+				.Where(p => p.Name.Contains(phrase))
+				.ToPagedListAsync(pageNumber, pageSize, ct);
+
+			if (products.Count == 0)
+			{
+				var productsWOdiacritics = await _dbContext.ProductDetails
+					.AsNoTracking()
+					.ToListAsync();
+
+				productsWOdiacritics.ForEach(p => p.Name = p.Name.RemoveDiacritics());
+
+				var prodsIds = productsWOdiacritics
+					.Where(p => p.Name.Contains(phrase.RemoveDiacritics()))
+					.Select(x => x.Id)
+					.ToPagedList(pageNumber, pageSize);
+
+				products = await _dbContext.ProductDetails
+					.AsNoTracking()
+					.Where(p => prodsIds.Contains(p.Id))
+					.ToPagedListAsync(pageNumber, pageSize, ct);
+
+				if (products.Count == 0)
+				{
+					throw new PersistanceLayerException(ExceptionType.NotFound, "Product details not found");
+				}
+			}
+
+			return products.ToList();
+		}
+
+		public async Task<List<ProductDetailEntity>> GetProductDetailByCategoryAsync(int catId, int pageNumber, int pageSize, CancellationToken ct)
+		{
+			var products = (await _dbContext.ProductDetails
+					.AsNoTracking()
+					.Include(i => i.Products)
+					.Where(p => p.ProductCategoryId == catId)
+					.ToPagedListAsync(pageNumber, pageSize, ct))
+					.ToList();
 
 			return products;
 		}
