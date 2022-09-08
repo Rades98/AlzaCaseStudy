@@ -61,20 +61,11 @@
     <Folder Include="Procedures\Orders" />
     <Folder Include="Procedures\ProductCategories" />
     <Folder Include="Procedures\Products" />
-    <Folder Include="DataInserts" />
     <Folder Include="Views" />
     <Folder Include="Views\Products" />
     <Folder Include="Procedures\Orders\Localized" />
     <Folder Include="Procedures\Messages" />
     <Folder Include="ProceduresUsed" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DataInserts\InsertLocalizations.sql">
-      <CopyToOutputDirectory>DoNotCopy</CopyToOutputDirectory>
-    </None>
-    <None Include="DataInserts\InsertOrders.sql" />
-    <None Include="DataInserts\InsertUsers.sql" />
-    <None Include="DataInserts\InsertProducts.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Procedures\OrderItems\DeleteOrderItem.sql">
